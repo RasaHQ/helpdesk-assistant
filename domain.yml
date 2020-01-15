@@ -1,0 +1,70 @@
+intents:
+- greet
+- goodbye
+- affirm
+- deny
+- mood_great
+- mood_unhappy
+- bot_challenge
+- inform
+- open_incident:
+    use_entities: []
+- out_of_scope
+entities:
+- email
+- priority
+slots:
+  email:
+    type: unfeaturized
+  incident_title:
+    type: unfeaturized
+  priority:
+    type: categorical
+    values:
+    - low
+    - medium
+    - high
+  problem_description:
+    type: unfeaturized
+  requested_slot:
+    type: unfeaturized
+templates:
+  utter_greet:
+  - text: Hey! How are you?
+  utter_cheer_up:
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_ask_email:
+  - text: What is your email address to lookup for creating the ticket?
+  utter_ask_incident_title:
+  - text: What should we use for the title of this incident?
+  utter_ask_problem_description:
+  - text: Ok what is the problem description for the issue?
+  utter_ask_priority:
+  - text: Ok what should the priority be?  Low, medium, or high?
+  utter_no_email:
+  - text: Sorry that email isn't in our incident management system.
+  utter_incident_opened:
+  - text: 'Ok incident has been opened successfully for email: {email}.'
+  out_of_scope:
+  - text: Sorry I don't know how to answer this yet, but I'm learning new things every
+      day.
+actions:
+- utter_greet
+- utter_cheer_up
+- utter_did_that_help
+- utter_happy
+- utter_goodbye
+- utter_iamabot
+- open_incident_form
+- out_of_scope
+forms:
+- utter_no_email

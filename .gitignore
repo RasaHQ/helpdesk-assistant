@@ -1,0 +1,7 @@
+venv
+*.db
+results/
+models/
+__pycache__/
+.DS_Store
+rasa.db*
