@@ -7,3 +7,4 @@ __pycache__/
 rasa.db*
 *.db-*
 .vscode/
+credentials.yml

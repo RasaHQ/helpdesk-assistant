@@ -6,6 +6,14 @@ Basic demo use case showing Rasa X with Service Now API calls to open incidents.
 
 **You have to deactivate after installation due to tensorflow and other libraries requiring it to start working**
 
+Also note how we are setting 3 exports, these are used in the script to connect to your service now instance.
+
+`snow_instance` - This is just the instance address, you don't need the leading https.
+
+`snow_user` - The username of the service account this action code will use to open a incident.
+
+`snow_pw` - The password of the service account this action code will use to open a incident.
+
 ```
 export SNOW_INSTANCE=devxxx.service-now.com
 export SNOW_USER=user
@@ -30,14 +38,6 @@ source venv/bin/activate
 rasa train --debug
 rasa shell --debug
 ```
-
-Also note how we are setting 3 exports, these are used in the script to connect to your service now instance.
-
-`snow_instance` - This is just the instance address, you don't need the leading https.
-
-`snow_user` - The username of the service account this action code will use to open a incident.
-
-`snow_pw` - The password of the service account this action code will use to open a incident.
 
 # Docker Deployment Information
 TODO
