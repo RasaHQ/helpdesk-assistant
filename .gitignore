@@ -1,10 +1,13 @@
+# Standard Ignores
 venv
+__pycache__/
+.DS_Store
+.vscode/
+
+# Rasa Ignores
+credentials.yml
+*.db-*
+rasa.db*
 *.db
 results/
 models/
-__pycache__/
-.DS_Store
-rasa.db*
-*.db-*
-.vscode/
-credentials.yml

@@ -39,7 +39,6 @@
     - form{"name": null}
 
 ## New Story
-
 * open_incident
     - open_incident_form
     - action_deactivate_form

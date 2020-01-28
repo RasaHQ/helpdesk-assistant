@@ -1,2 +1,3 @@
-rasa==1.5.3
+rasa==1.6.1
 requests~=2.21.0
+pytablewriter
