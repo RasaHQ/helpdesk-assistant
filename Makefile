@@ -48,7 +48,6 @@ test:
 crossval:
 	rasa test nlu -f 5 --cross-validation
 	python format_results.py
-	code results.md
 
 shell:
 	rasa train --debug
