@@ -1,0 +1,55 @@
+help:
+	@echo "make"
+	@echo "    clean"
+	@echo "        Remove Python/build artifacts."
+	@echo "    formatter"
+	@echo "        Apply black formatting to code."
+	@echo "    lint"
+	@echo "        Lint code with flake8, and check if black formatter should be applied."
+	@echo "    types"
+	@echo "        Check for type errors using pytype."
+	@echo "    validate"
+	@echo "        Runs the rasa data validate to verify data."
+	@echo "    test"
+	@echo "        Runs the rasa test suite checking for issues."
+	@echo "    crossval"
+	@echo "        Runs the rasa cross validation tests and creates results.md"
+	@echo "    shell"
+	@echo "        Runs the rasa train and rasa shell for testing"
+
+
+clean:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f  {} +
+	rm -rf build/
+	rm -rf .pytype/
+	rm -rf dist/
+	rm -rf docs/_build
+
+formatter:
+	black actions.py
+
+lint:
+	flake8 actions.py
+	black --check actions.py
+
+types:
+	pytype --keep-going actions.py
+
+validate:
+	rasa train
+	rasa data validate --debug
+
+test:
+	rasa train
+	rasa test --stories tests/e2e-stories.md --fail-on-prediction-errors --e2e
+
+crossval:
+	rasa test nlu -f 5 --cross-validation
+	python format_results.py
+	code results.md
+
+shell:
+	rasa train --debug
+	rasa shell --debug
