@@ -1,5 +1,5 @@
 # helpdesk_assistant
-Basic demo use case showing Rasa X with Service Now API calls to open incidents.
+Basic demo use case showing Rasa with Service Now API calls to open incidents.
 
 # Setup locally with Python
 1. Setup a virtualenv of your choice ensuring to use python3 then run the following in the first terminal to setup the action server:
