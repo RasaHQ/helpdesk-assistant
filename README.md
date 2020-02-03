@@ -58,3 +58,6 @@ rasa shell --debug
 
 # Docker Deployment Information
 TODO
+
+# Screenshot Example
+![Screenshot](https://github.com/RasaHQ/helpdesk-assistant/blob/master/screenshots/demo_ss.png?raw=true)
