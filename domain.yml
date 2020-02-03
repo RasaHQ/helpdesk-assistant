@@ -28,7 +28,7 @@ slots:
     type: unfeaturized
   requested_slot:
     type: unfeaturized
-templates:
+responses:
   utter_greet:
   - text: Hey! How are you?
   utter_cheer_up:
@@ -64,7 +64,6 @@ actions:
 - utter_happy
 - utter_goodbye
 - utter_iamabot
-- open_incident_form
 - out_of_scope
 forms:
-- utter_no_email
+- open_incident_form
