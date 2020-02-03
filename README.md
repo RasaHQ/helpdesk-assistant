@@ -38,23 +38,6 @@ rasa run shell
 
 **You have to deactivate after installation due to tensorflow and other libraries requiring it to start working**
 
-2. On another terminal screen run the following to run duckling in a container:
-
-```
-docker run -p 8000:8000 rasa/duckling
-
-```
-
-3. Now finally we can train our model then start up the shell to test it in a 3rd terminal:
-
-```
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-source venv/bin/activate
-rasa train --debug
-rasa shell --debug
-```
 
 # Docker Deployment Information
 TODO
