@@ -5,4 +5,3 @@
     - open_incident_form
     - form{"name": "open_incident_form"}
     - form{"name": null}
-    - action_deactivate_form

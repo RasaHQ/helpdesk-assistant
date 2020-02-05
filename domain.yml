@@ -53,9 +53,6 @@ responses:
   - text: Sorry I don't know how to answer this yet, but I'm learning new things every
       day.
 actions:
-- utter_greet
-- utter_goodbye
-- utter_iamabot
 - out_of_scope
 forms:
 - open_incident_form
