@@ -1,10 +1,11 @@
+session_config:
+  session_expiration_time: 0.0
+  carry_over_slots_to_new_session: true
 intents:
 - greet
 - goodbye
 - affirm
 - deny
-- mood_great
-- mood_unhappy
 - bot_challenge
 - inform
 - open_incident:
@@ -30,14 +31,8 @@ slots:
     type: unfeaturized
 responses:
   utter_greet:
-  - text: Hey! How are you?
-  utter_cheer_up:
-  - text: 'Here is something to cheer you up:'
-    image: https://i.imgur.com/nGF1K8f.jpg
-  utter_did_that_help:
-  - text: Did that help you?
-  utter_happy:
-  - text: Great, carry on!
+  - text: Hello, I'm an assistant that can assist you in opening up a new case.  
+      You can start by saying I want to open a case.
   utter_goodbye:
   - text: Bye
   utter_iamabot:
@@ -59,9 +54,6 @@ responses:
       day.
 actions:
 - utter_greet
-- utter_cheer_up
-- utter_did_that_help
-- utter_happy
 - utter_goodbye
 - utter_iamabot
 - out_of_scope

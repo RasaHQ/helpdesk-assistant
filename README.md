@@ -1,5 +1,5 @@
 # helpdesk_assistant
-Basic demo use case showing Rasa with Service Now API calls to open incidents.
+Basic demo use case showing Rasa with Service Now API calls to open incidents.  You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
 # Setup locally with Python
 Also note how we are setting 3 exports, these are used in the script to connect to your service now instance.
@@ -10,13 +10,12 @@ Also note how we are setting 3 exports, these are used in the script to connect 
 
 `snow_pw` - The password of the service account this action code will use to open a incident.
 
-1. Setup a virtualenv of your choice ensuring to use python3 then run the following in seperate terminal/shell windows:
+Setup a virtualenv of your choice ensuring to use python3 then run the following in seperate terminal/shell windows:
 
 Terminal 1 - Action Server
 ```
 source venv/bin/activate
-pip install rasa
-pip install rasa-sdk
+pip install -r requirements.txt
 deactivate
 source venv/bin/activate
 rasa run actions --actions actions
