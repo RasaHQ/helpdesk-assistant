@@ -1,6 +1,6 @@
 name: Lint and Test PR
 on:
-  push:
+  pull_request:
     paths-ignore:
     - "README.md"
     - "Makefile"
@@ -76,3 +76,19 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: |
         make test
+    - name: Cross-validate NLU model
+      run: |
+        make crossval
+    - name: post cross-val results to PR
+      uses: amn41/comment-on-pr@comment-file-contents
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        msg: results.md
+    - name: Upload model
+      if: github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@master
+      with:
+        name: model
+        path: models
