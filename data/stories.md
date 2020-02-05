@@ -16,7 +16,6 @@
 * open_incident
     - open_incident_form
     - form{"name": "open_incident_form"}
-    - slot{"priority": "low"}
     - form{"name": null}
 
 ## open incident

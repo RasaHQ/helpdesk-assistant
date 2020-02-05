@@ -61,6 +61,8 @@
 - [high](priority)
 - it should be a [low](priority) priority
 - it should be [medium](priority)
+- [escalated](priority)
+- [super high](priority)
 - Fridge Isn't Running
 
 ## intent:out_of_scope

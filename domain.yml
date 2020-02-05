@@ -20,11 +20,7 @@ slots:
   incident_title:
     type: unfeaturized
   priority:
-    type: categorical
-    values:
-    - low
-    - medium
-    - high
+    type: unfeaturized
   problem_description:
     type: unfeaturized
   requested_slot:
@@ -45,6 +41,8 @@ responses:
   - text: Ok what is the problem description for the issue?
   utter_ask_priority:
   - text: Ok what should the priority be?  Low, medium, or high?
+  utter_no_priority:
+  - text: Sorry that is not a valid priority, can you please try again.
   utter_no_email:
   - text: Sorry that email isn't in our incident management system.
   utter_incident_opened:

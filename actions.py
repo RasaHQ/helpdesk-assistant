@@ -75,6 +75,16 @@ class OpenIncidentForm(FormAction):
             "incident_title": self.from_text(intent="inform"),
             "priority": self.from_entity(entity="priority"),
         }
+    
+    @staticmethod
+    def priority_db() -> List[Text]:
+        """Database of supported priorities"""
+
+        return [
+            "low",
+            "medium",
+            "high"
+        ]
 
     def validate_email(
         self,
@@ -95,6 +105,26 @@ class OpenIncidentForm(FormAction):
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
+
+
+    def validate_priority(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        """Validate priority is a valid value."""
+    
+        if value.lower() in self.priority_db():
+            # validation succeeded, set the value of the "priority" slot to value
+            return {"priority": value}
+        else:
+            dispatcher.utter_template("utter_no_priority", tracker)
+            # validation failed, set this slot to None, meaning the
+            # user will be asked for the slot again
+            return {"priority": None}
+
 
     def submit(
         self,
