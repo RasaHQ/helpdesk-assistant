@@ -1,4 +1,4 @@
-name: Lint and Test PR
+name: Lint and Test
 on:
   push:
     paths-ignore:

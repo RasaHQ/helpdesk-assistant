@@ -1,4 +1,6 @@
-# helpdesk_assistant
+# Rasa Helpdesk Assistant Demo
+![Lint and Test](https://github.com/RasaHQ/helpdesk-assistant/workflows/Lint%20and%20Test/badge.svg)
+
 Basic demo use case showing Rasa with Service Now API calls to open incidents.  You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
 # Setup locally with Python
