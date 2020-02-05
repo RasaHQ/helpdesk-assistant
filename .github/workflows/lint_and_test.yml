@@ -5,6 +5,11 @@ on:
     - "README.md"
     - "Makefile"
     - "Dockerfile"
+  push:
+    paths-ignore:
+    - "README.md"
+    - "Makefile"
+    - "Dockerfile"
 
 jobs:
   lint-testing:
