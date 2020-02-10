@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, Text, Any, List, Union
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -7,9 +8,13 @@ import requests
 import json
 import os
 
+logger = logging.getLogger(__name__)
+
+
 snow_user = os.getenv("SNOW_USER")
 snow_pw = os.getenv("SNOW_PW")
 snow_instance = os.getenv("SNOW_INSTANCE")
+local_mode = json.loads(os.getenv("LOCAL_MODE", "False").lower())
 
 base_api_url = "https://{}/api/now".format(snow_instance)
 
@@ -75,16 +80,12 @@ class OpenIncidentForm(FormAction):
             "incident_title": self.from_text(intent="inform"),
             "priority": self.from_entity(entity="priority"),
         }
-    
+
     @staticmethod
     def priority_db() -> List[Text]:
         """Database of supported priorities"""
 
-        return [
-            "low",
-            "medium",
-            "high"
-        ]
+        return ["low", "medium", "high"]
 
     def validate_email(
         self,
@@ -94,18 +95,19 @@ class OpenIncidentForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         """Validate email is in ticket system."""
-
+        if local_mode == True:
+            print("Made it to line 99 in validate email")
+            return {"email": value}
         caller = email_to_sysid(value)
 
         if len(caller) == 1:
             # validation succeeded, set the value of the "email" slot to value
             return {"email": value}
         else:
-            dispatcher.utter_template("utter_no_email", tracker)
+            dispatcher.utter_message("utter_no_email", tracker)
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
-
 
     def validate_priority(
         self,
@@ -115,16 +117,15 @@ class OpenIncidentForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         """Validate priority is a valid value."""
-    
+
         if value.lower() in self.priority_db():
             # validation succeeded, set the value of the "priority" slot to value
             return {"priority": value}
         else:
-            dispatcher.utter_template("utter_no_priority", tracker)
+            dispatcher.utter_message("utter_no_priority", tracker)
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"priority": None}
-
 
     def submit(
         self,
@@ -143,8 +144,6 @@ class OpenIncidentForm(FormAction):
         incident_number = ""
         snow_priority = None
 
-        print(f"The email is: {email}")
-
         # Check priority and set number value accordingly
         if priority == "low":
             snow_priority = "3"
@@ -153,20 +152,25 @@ class OpenIncidentForm(FormAction):
         else:
             snow_priority = "1"
 
-        print(f"The snow priority is: {snow_priority}")
-
-        caller = email_to_sysid(email)
-        response = create_incident(
-            description=problem_description,
-            short_description=incident_title,
-            priority=snow_priority,
-            caller=caller[0]["sys_id"],
-        )
-        incident_number = response.json()["result"]["number"]
-        message = (
-            f"Successfully opened up incident {incident_number} for you.  "
-            f"Someone will reach out soon."
-        )
-        # utter submit template
+        if local_mode == True:
+            message = (
+                f"We would open a case with the following: email: {email}\n"
+                f"problem description: {problem_description}\n"
+                f"title: {incident_title}\npriority: {priority}"
+            )
+        else:
+            caller = email_to_sysid(email)
+            response = create_incident(
+                description=problem_description,
+                short_description=incident_title,
+                priority=snow_priority,
+                caller=caller[0]["sys_id"],
+            )
+            incident_number = response.json()["result"]["number"]
+            message = (
+                f"Successfully opened up incident {incident_number} for you.  "
+                f"Someone will reach out soon."
+            )
+            # utter submit template
         dispatcher.utter_message(message)
         return []

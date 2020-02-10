@@ -12,6 +12,8 @@ Also note how we are setting 3 exports, these are used in the script to connect 
 
 `snow_pw` - The password of the service account this action code will use to open a incident.
 
+`local_mode` - You can set this to `True` and the action server will not reach out to a Service Now instance, instead it will just take all the data in and message out the information that would normally be sent.
+
 Setup a virtualenv of your choice ensuring to use python3 then run the following in seperate terminal/shell windows:
 
 Terminal 1 - Action Server
