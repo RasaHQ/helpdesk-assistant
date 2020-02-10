@@ -3,6 +3,7 @@ from typing import Dict, Text, Any, List, Union
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
+from rasa_sdk.events import AllSlotsReset
 
 import requests
 import json
@@ -96,7 +97,6 @@ class OpenIncidentForm(FormAction):
     ) -> Dict[Text, Any]:
         """Validate email is in ticket system."""
         if local_mode == True:
-            print("Made it to line 99 in validate email")
             return {"email": value}
         caller = email_to_sysid(value)
 
@@ -173,4 +173,4 @@ class OpenIncidentForm(FormAction):
             )
             # utter submit template
         dispatcher.utter_message(message)
-        return []
+        return [AllSlotsReset()]

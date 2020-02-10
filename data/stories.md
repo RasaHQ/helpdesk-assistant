@@ -21,6 +21,5 @@
 ## open incident
 * open_incident
     - open_incident_form
-    - slot{"priority": "low"}
     - form{"name":null}
     - slot{"requested_slot":null}
