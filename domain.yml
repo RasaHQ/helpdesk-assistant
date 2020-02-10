@@ -7,7 +7,9 @@ intents:
 - affirm
 - deny
 - bot_challenge
+- password_reset
 - inform
+- help
 - open_incident:
     use_entities: []
 - out_of_scope
@@ -26,9 +28,10 @@ slots:
   requested_slot:
     type: unfeaturized
 responses:
+  utter_default:
+  - text: Sorry I'm not sure how to respond to that, You can ask me help for assistance.
   utter_greet:
-  - text: Hello, I'm an assistant that can assist you in opening up a new case.  
-      You can start by saying I want to open a case.
+  - text: Hello
   utter_goodbye:
   - text: Bye
   utter_iamabot:
@@ -47,6 +50,9 @@ responses:
   - text: Sorry that email isn't in our incident management system.
   utter_incident_opened:
   - text: 'Ok incident has been opened successfully for email: {email}.'
+  utter_help:
+  - text: I can help you open a case for your password reset or any other issue.
+      You can say things like, help me reset my password, or I'm having a issue to get started.
   out_of_scope:
   - text: Sorry I don't know how to answer this yet, but I'm learning new things every
       day.
