@@ -79,12 +79,16 @@ class OpenIncidentForm(FormAction):
             "email": self.from_entity(entity="email"),
             "problem_description": [
                 self.from_text(intent="inform"),
-                self.from_trigger_intent(intent="password_reset", value="password reset issue")
-                ],
+                self.from_trigger_intent(
+                    intent="password_reset", value="password reset issue"
+                ),
+            ],
             "incident_title": [
                 self.from_text(intent="inform"),
-                self.from_trigger_intent(intent="password_reset", value="Password Reset")
-                ],
+                self.from_trigger_intent(
+                    intent="password_reset", value="Password Reset"
+                ),
+            ],
             "priority": self.from_entity(entity="priority"),
         }
 
@@ -102,7 +106,7 @@ class OpenIncidentForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         """Validate email is in ticket system."""
-        if local_mode == True:
+        if local_mode:
             return {"email": value}
         caller = email_to_sysid(value)
 
@@ -125,7 +129,8 @@ class OpenIncidentForm(FormAction):
         """Validate priority is a valid value."""
 
         if value.lower() in self.priority_db():
-            # validation succeeded, set the value of the "priority" slot to value
+            # validation succeeded,
+            # set the value of the "priority" slot to value
             return {"priority": value}
         else:
             dispatcher.utter_message("utter_no_priority", tracker)
@@ -158,7 +163,7 @@ class OpenIncidentForm(FormAction):
         else:
             snow_priority = "1"
 
-        if local_mode == True:
+        if local_mode:
             message = (
                 f"We would open a case with the following: email: {email}\n"
                 f"problem description: {problem_description}\n"
