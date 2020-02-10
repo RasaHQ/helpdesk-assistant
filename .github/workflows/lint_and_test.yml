@@ -1,6 +1,8 @@
 name: Lint and Test
 on:
   push:
+    branches:
+      - master
     paths-ignore:
     - "README.md"
     - "Makefile"
