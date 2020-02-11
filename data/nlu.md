@@ -12,21 +12,6 @@
 - see you around
 - see you later
 
-## intent:affirm
-- yes
-- indeed
-- of course
-- that sounds good
-- correct
-
-## intent:deny
-- no
-- never
-- I don't think so
-- don't like that
-- no way
-- not really
-
 ## intent:bot_challenge
 - are you a bot?
 - are you a human?
@@ -78,9 +63,10 @@
 - it should be [medium](priority)
 - [escalated](priority)
 - [super high](priority)
-- Fridge Isn't Running
 
 ## intent:out_of_scope
 - what is the square root of 5
 - I want to know the weather
 - what is the meaning of life.
+- Fridge Isn't Running
+- my tv isn't working

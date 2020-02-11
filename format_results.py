@@ -17,7 +17,6 @@ def format_cell(data, c, k):
     if not data[c].get(k):
         return "N/A"
     if k == "confused_with":
-        print(f"The confused with line is: {k}")
         return ", ".join([f"{k}({v})" for k,v in data[c][k].items()])
     else:
         return data[c][k]

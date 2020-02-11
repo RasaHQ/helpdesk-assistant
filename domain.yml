@@ -4,8 +4,6 @@ session_config:
 intents:
 - greet
 - goodbye
-- affirm
-- deny
 - bot_challenge
 - password_reset
 - inform

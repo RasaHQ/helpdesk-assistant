@@ -1,3 +1,7 @@
+## bot challenge
+* bot_challenge: Are you a bot?
+  - utter_iamabot
+
 ## open incident
 * greet: hello
     - utter_greet
