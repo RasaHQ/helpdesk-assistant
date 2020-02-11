@@ -2,6 +2,10 @@
 * bot_challenge: Are you a bot?
   - utter_iamabot
 
+## out of scope
+* out_of_scope: I want a pizza
+  - utter_out_of_scope
+
 ## open incident
 * greet: hello
     - utter_greet

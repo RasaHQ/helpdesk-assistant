@@ -14,7 +14,8 @@ pipeline:
   dimensions:
   - email
 policies:
-- name: FallbackPolicy
+- name: TwoStageFallbackPolicy
+  nlu_threshold: 0.8
 - name: AugmentedMemoizationPolicy
 - name: FormPolicy
 - name: MappingPolicy

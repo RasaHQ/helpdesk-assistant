@@ -12,7 +12,7 @@ Also note how we are setting 3 exports, these are used in the script to connect 
 
 `snow_pw` - The password of the service account this action code will use to open a incident.
 
-`local_mode` - You can set this to `True` and the action server will not reach out to a Service Now instance, instead it will just take all the data in and message out the information that would normally be sent.
+`local_mode` - You can set this to `True` and the action server will not reach out to a Service Now instance, instead it will just take all the data in and message out the information that would normally be sent.  By default this is set to `False` in the code and will try to reach out to a `snow_instance` based on the env var.
 
 Setup a virtualenv of your choice ensuring to use python3 then run the following in seperate terminal/shell windows:
 
@@ -42,8 +42,34 @@ rasa run shell
 **You have to deactivate after installation due to tensorflow and other libraries requiring it to start working**
 
 
-# Docker Deployment Information
-TODO
+# Dialog Example
+In `local_mode=True` mode this is the dialog example.
 
-# Screenshot Example
-![Screenshot](https://github.com/RasaHQ/helpdesk-assistant/blob/master/screenshots/demo_ss.png?raw=true)
+```
+Bot loaded. Type a message and press enter (use '/stop' to exit):
+
+Your input ->  hello
+Hello
+I can help you open a case for your password reset or any other issue. You can say things like, help me reset my password, or I'm having a issue to get started.
+
+Your input ->  help me reset my password
+What is your email address to lookup for creating the ticket?
+
+Your input ->  test@test.com
+
+Ok what should the priority be?  Low, medium, or high?
+Your input ->  medium
+
+We would open a case with the following: email: test@test.com
+problem description: password reset issue
+title: Password Reset
+priority: medium
+
+```
+
+For a Service Now connected flow its basically the same except for the final response:
+
+```
+Successfully opened up incident INCXXX for you.
+Someone will reach out shortly.
+```

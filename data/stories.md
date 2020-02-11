@@ -1,3 +1,7 @@
+## out of scope path
+* out_of_scope
+  - utter_out_of_scope
+
 ## happy path
 * greet
   - utter_greet
