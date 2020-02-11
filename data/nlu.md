@@ -49,6 +49,8 @@
 - can you help me
 - what can you do
 - I need some help
+- help me
+- can you please help me
 
 ## intent:inform
 - my email is test@example.com
@@ -75,3 +77,5 @@
 - Fridge Isn't Running
 - my tv isn't working
 - I want a pizza
+- my washing machine isn't working
+- what year is it

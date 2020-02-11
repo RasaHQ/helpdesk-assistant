@@ -15,7 +15,7 @@ pipeline:
   - email
 policies:
 - name: TwoStageFallbackPolicy
-  nlu_threshold: 0.8
+  nlu_threshold: 0.5
 - name: AugmentedMemoizationPolicy
 - name: FormPolicy
 - name: MappingPolicy
