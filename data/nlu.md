@@ -63,6 +63,7 @@
 - Application won't install
 - my outlook application won't open
 - I'm having issues with outlook.
+- issues with outlook
 - Application will not open
 - [low](priority)
 - [medium](priority)
