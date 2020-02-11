@@ -11,12 +11,16 @@
 - goodbye
 - see you around
 - see you later
+- see ya
+- buh bye
 
 ## intent:bot_challenge
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
 - am I talking to a human?
+- you are a bot right
+- aren't you a bot
 
 ## intent:password_reset
 - need to reset my password
