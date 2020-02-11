@@ -5,6 +5,8 @@
 - good morning
 - good evening
 - hey there
+- hi there
+- hello there
 
 ## intent:goodbye
 - bye
@@ -79,3 +81,5 @@
 - I want a pizza
 - my washing machine isn't working
 - what year is it
+- order a pizza
+- I want to order a pizza
