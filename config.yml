@@ -8,7 +8,8 @@ pipeline:
   analyzer: "char_wb"
   min_ngram: 1
   max_ngram: 4
-- name: "EmbeddingIntentClassifier"
+- name: EmbeddingIntentClassifier
+  random_seed: 1
 - name: DucklingHTTPExtractor
   url: http://localhost:8000
   dimensions:

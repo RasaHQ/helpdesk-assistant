@@ -71,6 +71,7 @@
 - it should be a [low](priority) priority
 - it should be [medium](priority)
 - [escalated](priority)
+- [escalate](priority)
 - [super high](priority)
 
 ## intent:out_of_scope
@@ -84,3 +85,5 @@
 - what year is it
 - order a pizza
 - I want to order a pizza
+- what is the weather today
+- what is the weather
