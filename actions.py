@@ -4,6 +4,7 @@ from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
 from rasa_sdk.events import AllSlotsReset
+import ruamel.yaml
 
 import requests
 import json
@@ -11,11 +12,11 @@ import os
 
 logger = logging.getLogger(__name__)
 
-
-snow_user = os.getenv("SNOW_USER")
-snow_pw = os.getenv("SNOW_PW")
-snow_instance = os.getenv("SNOW_INSTANCE")
-local_mode = json.loads(os.getenv("LOCAL_MODE", "False").lower())
+snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
+snow_user = snow_config.get("snow_user")
+snow_pw = snow_config.get("snow_pw")
+snow_instance = snow_config.get("snow_instance")
+local_mode = snow_config.get("local_mode", False)
 
 base_api_url = "https://{}/api/now".format(snow_instance)
 
