@@ -4,6 +4,7 @@ from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
 from rasa_sdk.events import AllSlotsReset
+import ruamel.yaml
 
 import requests
 import json
@@ -11,11 +12,11 @@ import os
 
 logger = logging.getLogger(__name__)
 
-
-snow_user = os.getenv("SNOW_USER")
-snow_pw = os.getenv("SNOW_PW")
-snow_instance = os.getenv("SNOW_INSTANCE")
-local_mode = json.loads(os.getenv("LOCAL_MODE", "False").lower())
+snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
+snow_user = snow_config.get("snow_user")
+snow_pw = snow_config.get("snow_pw")
+snow_instance = snow_config.get("snow_instance")
+local_mode = snow_config.get("local_mode", False)
 
 base_api_url = "https://{}/api/now".format(snow_instance)
 
@@ -77,8 +78,18 @@ class OpenIncidentForm(FormAction):
 
         return {
             "email": self.from_entity(entity="email"),
-            "problem_description": self.from_text(intent="inform"),
-            "incident_title": self.from_text(intent="inform"),
+            "problem_description": [
+                self.from_text(intent="inform"),
+                self.from_trigger_intent(
+                    intent="password_reset", value="password reset issue"
+                ),
+            ],
+            "incident_title": [
+                self.from_text(intent="inform"),
+                self.from_trigger_intent(
+                    intent="password_reset", value="Password Reset"
+                ),
+            ],
             "priority": self.from_entity(entity="priority"),
         }
 
@@ -96,7 +107,7 @@ class OpenIncidentForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         """Validate email is in ticket system."""
-        if local_mode == True:
+        if local_mode:
             return {"email": value}
         caller = email_to_sysid(value)
 
@@ -119,7 +130,8 @@ class OpenIncidentForm(FormAction):
         """Validate priority is a valid value."""
 
         if value.lower() in self.priority_db():
-            # validation succeeded, set the value of the "priority" slot to value
+            # validation succeeded,
+            # set the value of the "priority" slot to value
             return {"priority": value}
         else:
             dispatcher.utter_message("utter_no_priority", tracker)
@@ -152,7 +164,7 @@ class OpenIncidentForm(FormAction):
         else:
             snow_priority = "1"
 
-        if local_mode == True:
+        if local_mode:
             message = (
                 f"We would open a case with the following: email: {email}\n"
                 f"problem description: {problem_description}\n"

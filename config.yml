@@ -1,17 +1,22 @@
 language: en
 pipeline:
-- name: WhitespaceTokenizer
-- name: CRFEntityExtractor
-- name: EntitySynonymMapper
-- name: CountVectorsFeaturizer
-  token_pattern: (?u)\b\w+\b
+- name: "WhitespaceTokenizer"
+- name: "RegexFeaturizer"
+- name: "CRFEntityExtractor"
+- name: "EntitySynonymMapper"
+- name: "CountVectorsFeaturizer"
+  analyzer: "char_wb"
+  min_ngram: 1
+  max_ngram: 4
 - name: EmbeddingIntentClassifier
+  random_seed: 1
 - name: DucklingHTTPExtractor
   url: http://localhost:8000
   dimensions:
   - email
 policies:
-- name: FallbackPolicy
+- name: TwoStageFallbackPolicy
+  nlu_threshold: 0.5
 - name: AugmentedMemoizationPolicy
 - name: FormPolicy
 - name: MappingPolicy

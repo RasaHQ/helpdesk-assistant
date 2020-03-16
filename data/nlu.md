@@ -5,33 +5,32 @@
 - good morning
 - good evening
 - hey there
+- hi there
+- hello there
 
 ## intent:goodbye
 - bye
 - goodbye
 - see you around
 - see you later
-
-## intent:affirm
-- yes
-- indeed
-- of course
-- that sounds good
-- correct
-
-## intent:deny
-- no
-- never
-- I don't think so
-- don't like that
-- no way
-- not really
+- see ya
+- buh bye
 
 ## intent:bot_challenge
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
 - am I talking to a human?
+- you are a bot right
+- aren't you a bot
+
+## intent:password_reset
+- need to reset my password
+- need help resetting my password
+- I can't reset my password
+- need help with my password
+- having issues resetting my password
+- freaking password won't work
 
 ## intent:open_incident
 - I need to open an incident
@@ -42,6 +41,18 @@
 - I want to open a new incident
 - I want to open a incident
 - I'm having a weird issue.
+- I'm having a problem
+- I'm having a issue I need to open a incident for.
+- I have a issue I need to open a case for.
+
+## intent:help
+- I need help
+- what can you help me with
+- can you help me
+- what can you do
+- I need some help
+- help me
+- can you please help me
 
 ## intent:inform
 - my email is test@example.com
@@ -49,23 +60,30 @@
 - abraham.licoln@example.com
 - it is abraham.licoln@example.com
 - abraham.lincolon@example.com
-- I need help resetting my password
-- Reset my password
 - Application won't install
 - my outlook application won't open
+- I'm having issues with outlook.
+- issues with outlook
 - Application will not open
-- reset my password
-- I need to reset my password
 - [low](priority)
 - [medium](priority)
 - [high](priority)
 - it should be a [low](priority) priority
 - it should be [medium](priority)
 - [escalated](priority)
+- [escalate](priority)
 - [super high](priority)
-- Fridge Isn't Running
 
 ## intent:out_of_scope
 - what is the square root of 5
 - I want to know the weather
 - what is the meaning of life.
+- Fridge Isn't Running
+- my tv isn't working
+- I want a pizza
+- my washing machine isn't working
+- what year is it
+- order a pizza
+- I want to order a pizza
+- what is the weather today
+- what is the weather
