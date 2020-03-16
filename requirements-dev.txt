@@ -1,4 +1,4 @@
--r requirements.txt
+-r actions/requirements.txt
 
 # lint/format/types
 black==19.10b0

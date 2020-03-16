@@ -3,26 +3,38 @@
 
 Basic demo use case showing Rasa with Service Now API calls to open incidents.  You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
-# Setup locally with Python
-Also note how we are setting 3 exports, these are used in the script to connect to your service now instance.
+# Screenshot Example
+![Screenshot](https://github.com/RasaHQ/helpdesk-assistant/blob/master/screenshots/demo_ss.png?raw=true)
 
-`snow_instance` - This is just the instance address, you don't need the leading https.
 
-`snow_user` - The username of the service account this action code will use to open a incident.
+## Setup locally with Python
+Setup a virtualenv of your choice ensuring to use python3 then install the requirements:
 
-`snow_pw` - The password of the service account this action code will use to open a incident.
+```
+pip install -r requirements.txt
+```
 
-`local_mode` - You can set this to `True` and the action server will not reach out to a Service Now instance, instead it will just take all the data in and message out the information that would normally be sent.  By default this is set to `False` in the code and will try to reach out to a `snow_instance` based on the env var.
+To connect to your service now instance, configure the following in `snow_credentials.yml`:
 
-Setup a virtualenv of your choice ensuring to use python3 then run the following in seperate terminal/shell windows:
+- `snow_instance` - This is just the instance address, you don't need the leading https.
+
+- `snow_user` - The username of the service account this action code will use to open a incident.
+
+- `snow_pw` - The password of the service account this action code will use to open a incident.
+
+- `local_mode` - You can set this to `True` and the action server will not reach out to a Service Now instance, instead it will just take all the data in and message out the information that would normally be sent. By default this is set to `False` in the code and will try to reach out to a `snow_instance` based on the credentials in `snow_credentials.yml`.
+
+## Train a model
+
+```bash
+rasa train
+```
+
+## Test the assistant
 
 Terminal 1 - Action Server
 ```
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-source venv/bin/activate
-rasa run actions --actions actions
+rasa run actions --actions actions.actions
 ```
 
 Terminal 2 - Duckling for Email Extraction
@@ -32,14 +44,21 @@ docker run -p 8000:8000 rasa/duckling
 
 Terminal 3 - Rasa Shell
 ```
-source venv/bin/activate
-export SNOW_INSTANCE=devxxx.service-now.com
-export SNOW_USER=user
-export SNOW_PW=password
 rasa run shell
 ```
 
-**You have to deactivate after installation due to tensorflow and other libraries requiring it to start working**
+# Docker Deployment Information
+To build a docker image for the action server:
+
+```bash
+docker build . -t <name of your custom image>:<tag of your custom image>
+```
+
+You can then run the action server with:
+
+```bash
+docker run <name of your custom image>:<tag of your custom image>
+```
 
 
 # Dialog Example
