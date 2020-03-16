@@ -1,13 +1,17 @@
-FROM rasa/rasa-sdk:1.7.0
+FROM rasa/rasa-sdk:1.8.0
 
 WORKDIR /app
 
 COPY requirements.txt ./
 
-RUN pip install -r requirements.txt
+USER root
 
-COPY . /app
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN  pip install -e . --no-cache-dir
+COPY ./actions.py ./__init__.py ./snow_credentials.yml ./
 
-CMD ["start", "--actions", "actions"]
+RUN pip install .
+
+USER 1001
+
+CMD ["start", "--actions", "actions", "--debug"]

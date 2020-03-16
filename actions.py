@@ -32,6 +32,7 @@ def email_to_sysid(email):
     }  # noqa: 501
     # Do the HTTP request
     response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
+    print(response.json())
     results = response.json()["result"]
     return results
 
