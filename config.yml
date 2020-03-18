@@ -2,22 +2,23 @@ language: en
 pipeline:
 - name: "WhitespaceTokenizer"
 - name: "RegexFeaturizer"
-- name: "CRFEntityExtractor"
 - name: "EntitySynonymMapper"
 - name: "CountVectorsFeaturizer"
   analyzer: "char_wb"
   min_ngram: 1
   max_ngram: 4
-- name: EmbeddingIntentClassifier
+- name: DIETClassifier
+  epochs: 150
   random_seed: 1
 - name: DucklingHTTPExtractor
   url: http://localhost:8000
   dimensions:
   - email
 policies:
-- name: TwoStageFallbackPolicy
+- name: FallbackPolicy
   nlu_threshold: 0.5
 - name: AugmentedMemoizationPolicy
+  max_history: 4
 - name: FormPolicy
 - name: MappingPolicy
-- name: EmbeddingPolicy
+- name: TEDPolicy

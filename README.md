@@ -9,7 +9,7 @@ This is a basic demo bot showing Rasa with Service Now API calls to open inciden
 
 ## To install the dependencies:
 
-In a virtual environment (`python >=3.5`) run:
+In a Python3 virtual environment run:
 ```bash
 pip install -r requirements.txt
 ```
@@ -67,36 +67,39 @@ docker run <name of your custom image>:<tag of your custom image>
 
 ## Things you can ask the bot
 
-The bot currently has one skill which can be triggered in two ways.
+The bot has one main skill, i.e. opening an incident in ServiceNow.
+For the purposes of illustration, the bot recognises the following as requests to open an incident:
+1. Asking to open an incident directly e.g. "I want to open an incident"
+2. Asking about a problem resetting their password e.g. "I can't reset my password"
+3. Asking about a problem with outlook/email e.g. "I can't log in to my outlook"
 
-It also has a limited ability to switch skills mid-transaction and then return to the transaction at hand.
+Take a look at `data/nlu.md` to see what the bot is currently trained to recognize.
 
-For the purposes of illustration, the bot recognises the following fictional credit card accounts:
+It can also respond to requests for help (e.g. "help me")
 
-- `gringots`
-- `justice bank`
-- `credit all`
-- `iron bank`
-
-It recognises the following payment amounts (besides actual currency amounts):
-
-- `minimum balance`
-- `current balance`
-
-It recognises the following vendors (for spending history):
-
-- `Starbucks`
-- `Amazon`
-- `Target`
-
-You can change any of these by modifying `actions.py` and the corresponding NLU data.
 
 
 # Dialog Example
 With `localmode=True`: 
 
 ```
-
+Bot loaded. Type a message and press enter (use '/stop' to exit): 
+Your input ->  hi                                                                                                                              
+Hello
+    I can help you open a service request ticket. You can ask me things like "Open an incident", "Help me reset my password", or "I'm having a issue with my email."
+Your input ->  i have a problem with my email                                                                                                  
+    What is your email address to lookup for creating the incident?
+Your input ->  anything@example.com                                                                                                            
+    ? What is the priority of this issue?  3: high (/inform{"priority":"high"})      # This is a button                                                                
+    What is the problem description for the issue?
+Your input ->  can't log in to outlook                                                                                                         
+    An incident with the following details would be opened if ServiceNow was connected:
+    email: anything@example.com
+    problem description: can't log in to outlook
+    title: Problem with email
+    priority: high
+Your input ->  bye!                                                                                                                            
+    Bye
 
 ```
 With `localmode=False`:
@@ -104,5 +107,15 @@ With `localmode=False`:
 With a Service Now instance connected, it will check if the email address is in the instance database and provide an incident number for the final response:
 
 ```
-
+Your input ->  help me reset my password                                                                    
+    What is your email address to lookup for creating the incident?
+Your input ->  idontexist@example.com                                                                       
+    Sorry, "idontexist@example.com" isn't in our incident management system. Please try again.
+    What is your email address to lookup for creating the incident?
+Your input ->  abraham.lincoln@example.com                                                                  
+    ? What is the priority of this issue?  Type out your own message...                                         
+Your input ->  low                                                                                          
+    Successfully opened up incident INC0010016 for you.  Someone will reach out soon.
+Your input ->  thanks!                                                                                      
+    You're welcome!
 ```

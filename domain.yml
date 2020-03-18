@@ -7,10 +7,14 @@ intents:
 - bot_challenge
 - password_reset
 - inform
+- thank
 - help
+- problem_email
 - open_incident:
     use_entities: []
 - out_of_scope
+- restart
+
 entities:
 - email
 - priority
@@ -27,7 +31,7 @@ slots:
     type: unfeaturized
 responses:
   utter_out_of_scope:
-  - text: Sorry I'm not sure how to respond to that, You can ask me help for assistance.
+  - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
   - text: Hello
   utter_goodbye:
@@ -35,22 +39,30 @@ responses:
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_ask_email:
-  - text: What is your email address to lookup for creating the ticket?
+  - text: What is your email address to lookup for creating the incident?
   utter_ask_incident_title:
   - text: What should we use for the title of this incident?
   utter_ask_problem_description:
   - text: What is the problem description for the issue?
   utter_ask_priority:
-  - text: What should the priority be?  Low, medium, or high?
+  - text: What is the priority of this issue?
+    buttons:
+      - payload: /inform{"priority":"low"}
+        title: low
+      - payload: /inform{"priority":"medium"}
+        title: medium
+      - payload: /inform{"priority":"high"}
+        title: high
   utter_no_priority:
-  - text: Sorry {priority} is not a valid priority. Please try again.
+  - text: Sorry "{priority}" is not a valid priority. Please try again.
   utter_no_email:
-  - text: Sorry, {email} isn't in our incident management system. Please try again.
+  - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_help:
-  - text: I can help you open a case for your password reset or any other issue.
-      You can say things like, help me reset my password, or I'm having a issue to get started.
+  - text: I can help you open a service request ticket.
+      You can ask me things like "Open an incident", "Help me reset my password", or 
+      "I'm having a issue with my email."
+  utter_welcome:
+  - text: You're welcome!
 
-actions:
-- out_of_scope
 forms:
 - open_incident_form

@@ -12,7 +12,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
+snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r")) or {}
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
@@ -33,7 +33,6 @@ def email_to_sysid(email):
     }  # noqa: 501
     # Do the HTTP request
     response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
-    print(response.json())
     results = response.json()["result"]
     return results
 
@@ -69,7 +68,7 @@ class OpenIncidentForm(FormAction):
     def required_slots(tracker: Tracker) -> List[Text]:
         """A list of required slots that the form has to fill"""
 
-        return ["email", "problem_description", "incident_title", "priority"]
+        return ["email", "priority","problem_description", "incident_title"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -80,19 +79,19 @@ class OpenIncidentForm(FormAction):
 
         return {
             "email": self.from_entity(entity="email"),
+            "priority": self.from_entity(entity="priority"),
             "problem_description": [
-                self.from_trigger_intent(
-                    intent="password_reset", value="Problem resetting password"
-                ),
-                self.from_text()
+                self.from_text(intent=["password_reset","problem_email","inform"])
             ],
             "incident_title": [
                 self.from_trigger_intent(
-                    intent="password_reset", value="Password Reset"
+                    intent="password_reset", value="Problem resetting password"
                 ),
-                self.from_text(intent="inform")
+                self.from_trigger_intent(
+                    intent="problem_email", value="Problem with email"
+                ),
+                self.from_text(intent=["password_reset","problem_email","inform"]),
             ],
-            "priority": self.from_entity(entity="priority"),
         }
 
     @staticmethod
@@ -155,9 +154,6 @@ class OpenIncidentForm(FormAction):
         problem_description = tracker.get_slot("problem_description")
         incident_title = tracker.get_slot("incident_title")
 
-        incident_number = ""
-        snow_priority = None
-
         # Check priority and set number value accordingly
         if priority == "low":
             snow_priority = "3"
@@ -168,7 +164,7 @@ class OpenIncidentForm(FormAction):
 
         if localmode:
             message = (
-                f"An incident with the following details would be opened if ServiceNow was connected:"
+                f"An incident with the following details would be opened if ServiceNow was connected:\n"
                 f"email: {email}\n"
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"

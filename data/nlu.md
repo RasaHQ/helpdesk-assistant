@@ -16,6 +16,14 @@
 - see ya
 - buh bye
 
+## intent:thank
+- thanks!
+- thank you
+- thanks a lot
+- great thanks
+- appreciate it
+- cool thanks
+
 ## intent:bot_challenge
 - are you a bot?
 - are you a human?
@@ -31,6 +39,9 @@
 - need help with my password
 - having issues resetting my password
 - freaking password won't work
+- reset my password
+- password reset
+- forgot my password and can't reset it
 
 ## intent:open_incident
 - I need to open an incident
@@ -54,24 +65,28 @@
 - help me
 - can you please help me
 
+## intent:problem_email
+- Application won't install
+- my outlook application won't open
+- I'm having issues with outlook.
+- issues with outlook
+- Application will not open
+- there's a problem with my email
+- something is broken with outlook
+
 ## intent:inform
 - my email is test@example.com
 - my email is abraham.lincoln@example.com
 - abraham.licoln@example.com
 - it is abraham.licoln@example.com
 - abraham.lincolon@example.com
-- Application won't install
-- my outlook application won't open
-- I'm having issues with outlook.
-- issues with outlook
-- Application will not open
 - [low](priority)
 - [medium](priority)
 - [high](priority)
 - it should be a [low](priority) priority
 - it should be [medium](priority)
-- [escalated](priority)
-- [escalate](priority)
+- [escalated](priority:high)
+- [escalate](priority:high)
 - [super high](priority)
 
 ## intent:out_of_scope
