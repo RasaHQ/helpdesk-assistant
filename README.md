@@ -1,20 +1,18 @@
 # Rasa Helpdesk Assistant Demo
-![Lint and Test](https://github.com/RasaHQ/helpdesk-assistant/workflows/Lint%20and%20Test/badge.svg)
 
 This is a basic demo bot showing Rasa with Service Now API calls to open incidents.  You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
-# Screenshot Example
 ![Screenshot](./screenshots/demo_ss.png?raw=true)
 
-
-## To install the dependencies:
+## Setup
+### Install the dependencies:
 
 In a Python3 virtual environment run:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Connect to a ServiceNow instance
+### Connect to a ServiceNow instance
 
 To connect to your service now instance, configure the following in `snow_credentials.yml`:
 
@@ -27,7 +25,7 @@ To connect to your service now instance, configure the following in `snow_creden
 - `localmode` -  Whether the action server should **not** try to reach out to a `snow_instance` based on the credentials in `snow_credentials.yml`. When set to `True` (default in the code), it will just take all the data in and message out the information that would normally be sent. 
 
 
-## To run the bot:
+## Running the bot
 
 Use `rasa train` to train a model.
 
@@ -51,20 +49,6 @@ Note that `--debug` mode will produce a lot of output meant to help you understa
 under the hood. You can also add this flag to the action server command. To simply talk to the bot, you can remove this flag.
 
 
-# Docker Deployment of Action Server
-You can also build and run a docker image for the action server instead of running it in a seperate terminal:
-
-```bash
-docker build . -t <name of your custom image>:<tag of your custom image>
-```
-
-You can then run the action server with:
-
-```bash
-docker run <name of your custom image>:<tag of your custom image>
-```
-
-
 ## Things you can ask the bot
 
 The bot has one main skill, i.e. opening an incident in ServiceNow.
@@ -79,7 +63,7 @@ It can also respond to requests for help (e.g. "help me")
 
 
 
-# Dialog Example
+## Example conversations
 With `localmode=True`: 
 
 ```
@@ -119,3 +103,18 @@ Your input ->  low
 Your input ->  thanks!                                                                                      
     You're welcome!
 ```
+
+
+## Docker Deployment of Action Server
+You can also build and run a docker image for the action server instead of running it in a seperate terminal:
+
+```bash
+docker build . -t <name of your custom image>:<tag of your custom image>
+```
+
+You can then run the action server with:
+
+```bash
+docker run <name of your custom image>:<tag of your custom image>
+```
+
