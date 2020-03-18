@@ -16,7 +16,8 @@ snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
-local_mode = snow_config.get("local_mode", False)
+localmode = snow_config.get("localmode", False)
+logger.debug(f"Local mode: {localmode}")
 
 base_api_url = "https://{}/api/now".format(snow_instance)
 
@@ -107,7 +108,7 @@ class OpenIncidentForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         """Validate email is in ticket system."""
-        if local_mode:
+        if localmode:
             return {"email": value}
         caller = email_to_sysid(value)
 
@@ -164,7 +165,7 @@ class OpenIncidentForm(FormAction):
         else:
             snow_priority = "1"
 
-        if local_mode:
+        if localmode:
             message = (
                 f"We would open a case with the following: email: {email}\n"
                 f"problem description: {problem_description}\n"
