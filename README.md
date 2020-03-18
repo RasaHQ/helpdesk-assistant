@@ -74,7 +74,8 @@ With `localmode=True`:
 Bot loaded. Type a message and press enter (use '/stop' to exit): 
 Your input ->  hi                                                                                                                              
 Hello
-    I can help you open a service request ticket. You can ask me things like "Open an incident", "Help me reset my password", or "I'm having a issue with my email."
+    I can help you open a service request ticket. You can ask me things like "Open an incident", 
+    "Help me reset my password", or "I'm having a issue with my email."
 Your input ->  i have a problem with my email                                                                                                  
     What is your email address to lookup for creating the incident?
 Your input ->  anything@example.com                                                                                                            
