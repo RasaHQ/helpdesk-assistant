@@ -16,7 +16,7 @@ snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
-localmode = snow_config.get("localmode", False)
+localmode = snow_config.get("localmode", True)
 logger.debug(f"Local mode: {localmode}")
 
 base_api_url = "https://{}/api/now".format(snow_instance)
@@ -81,16 +81,16 @@ class OpenIncidentForm(FormAction):
         return {
             "email": self.from_entity(entity="email"),
             "problem_description": [
-                self.from_text(intent="inform"),
                 self.from_trigger_intent(
-                    intent="password_reset", value="password reset issue"
+                    intent="password_reset", value="Problem resetting password"
                 ),
+                self.from_text()
             ],
             "incident_title": [
-                self.from_text(intent="inform"),
                 self.from_trigger_intent(
                     intent="password_reset", value="Password Reset"
                 ),
+                self.from_text(intent="inform")
             ],
             "priority": self.from_entity(entity="priority"),
         }
@@ -117,7 +117,7 @@ class OpenIncidentForm(FormAction):
             # validation succeeded, set the value of the "email" slot to value
             return {"email": value}
         else:
-            dispatcher.utter_message("utter_no_email", tracker)
+            dispatcher.utter_message(template = "utter_no_email")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -136,7 +136,7 @@ class OpenIncidentForm(FormAction):
             # set the value of the "priority" slot to value
             return {"priority": value}
         else:
-            dispatcher.utter_message("utter_no_priority", tracker)
+            dispatcher.utter_message(template = "utter_no_priority")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"priority": None}
@@ -168,7 +168,8 @@ class OpenIncidentForm(FormAction):
 
         if localmode:
             message = (
-                f"We would open a case with the following: email: {email}\n"
+                f"An incident with the following details would be opened if ServiceNow was connected:"
+                f"email: {email}\n"
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"
             )
