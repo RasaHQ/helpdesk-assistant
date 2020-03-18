@@ -1,6 +1,8 @@
 # Rasa Helpdesk Assistant Demo
 
-This is a basic demo bot showing Rasa with Service Now API calls to open incidents.  You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
+This is a basic demo bot showing Rasa with Service Now API calls to open incidents.  
+
+Here is an example of a conversation you can have with this bot:
 
 ![Screenshot](./screenshots/demo_ss.png?raw=true)
 
@@ -13,6 +15,8 @@ pip install -r requirements.txt
 ```
 
 ### Connect to a ServiceNow instance
+
+You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
 To connect to your service now instance, configure the following in `snow_credentials.yml`:
 
