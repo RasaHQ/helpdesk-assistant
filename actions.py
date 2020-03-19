@@ -8,11 +8,10 @@ import ruamel.yaml
 
 import requests
 import json
-import os
 
 logger = logging.getLogger(__name__)
 
-snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r")) or {}
+snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
@@ -68,7 +67,7 @@ class OpenIncidentForm(FormAction):
     def required_slots(tracker: Tracker) -> List[Text]:
         """A list of required slots that the form has to fill"""
 
-        return ["email", "priority","problem_description", "incident_title"]
+        return ["email", "priority", "problem_description", "incident_title"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -81,7 +80,7 @@ class OpenIncidentForm(FormAction):
             "email": self.from_entity(entity="email"),
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
-                self.from_text(intent=["password_reset","problem_email","inform"])
+                self.from_text(intent=["password_reset", "problem_email", "inform"])
             ],
             "incident_title": [
                 self.from_trigger_intent(
@@ -90,7 +89,7 @@ class OpenIncidentForm(FormAction):
                 self.from_trigger_intent(
                     intent="problem_email", value="Problem with email"
                 ),
-                self.from_text(intent=["password_reset","problem_email","inform"]),
+                self.from_text(intent=["password_reset", "problem_email", "inform"]),
             ],
         }
 
@@ -116,7 +115,7 @@ class OpenIncidentForm(FormAction):
             # validation succeeded, set the value of the "email" slot to value
             return {"email": value}
         else:
-            dispatcher.utter_message(template = "utter_no_email")
+            dispatcher.utter_message(template="utter_no_email")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -135,7 +134,7 @@ class OpenIncidentForm(FormAction):
             # set the value of the "priority" slot to value
             return {"priority": value}
         else:
-            dispatcher.utter_message(template = "utter_no_priority")
+            dispatcher.utter_message(template="utter_no_priority")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"priority": None}
@@ -164,7 +163,8 @@ class OpenIncidentForm(FormAction):
 
         if localmode:
             message = (
-                f"An incident with the following details would be opened if ServiceNow was connected:\n"
+                f"An incident with the following details would be opened \
+                if ServiceNow was connected:\n"
                 f"email: {email}\n"
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"
