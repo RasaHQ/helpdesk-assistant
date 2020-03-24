@@ -16,11 +16,17 @@ In a Python3 virtual environment run:
 pip install -r requirements.txt
 ```
 
-### Connect to a ServiceNow instance
+### Optional: Connect to a ServiceNow instance
 
-You can get your own free Service Now Developer instance to test this with [here](https://developer.servicenow.com/app.do#!/home)
+You can run this bot without connecting to a ServiceNow instance, in which case it will
+send responses without creating an incident. To run the bot  without connecting ServiceNow,
+you don't need to change anything in `snow_credentials.yml`; `localmode` should already be set
+to `true`
 
-To connect to your service now instance, configure the following in `snow_credentials.yml`:
+If you do want to connect to ServiceNow, you can get your own free Developer instance 
+to test this with [here](https://developer.servicenow.com/app.do#!/home)
+
+To connect to your ServiceNow instance, configure the following in `snow_credentials.yml`:
 
 - `snow_instance` - This is just the instance address, you don't need the leading https.
 
