@@ -8,15 +8,14 @@ import ruamel.yaml
 
 import requests
 import json
-import os
 
 logger = logging.getLogger(__name__)
 
-snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml","r"))
+snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
-localmode = snow_config.get("localmode", False)
+localmode = snow_config.get("localmode", True)
 logger.debug(f"Local mode: {localmode}")
 
 base_api_url = "https://{}/api/now".format(snow_instance)
@@ -68,7 +67,7 @@ class OpenIncidentForm(FormAction):
     def required_slots(tracker: Tracker) -> List[Text]:
         """A list of required slots that the form has to fill"""
 
-        return ["email", "problem_description", "incident_title", "priority"]
+        return ["email", "priority", "problem_description", "incident_title"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -79,19 +78,23 @@ class OpenIncidentForm(FormAction):
 
         return {
             "email": self.from_entity(entity="email"),
+            "priority": self.from_entity(entity="priority"),
             "problem_description": [
-                self.from_text(intent="inform"),
-                self.from_trigger_intent(
-                    intent="password_reset", value="password reset issue"
-                ),
+                self.from_text(
+                    intent=["password_reset", "problem_email", "inform"]
+                )
             ],
             "incident_title": [
-                self.from_text(intent="inform"),
                 self.from_trigger_intent(
-                    intent="password_reset", value="Password Reset"
+                    intent="password_reset", value="Problem resetting password"
+                ),
+                self.from_trigger_intent(
+                    intent="problem_email", value="Problem with email"
+                ),
+                self.from_text(
+                    intent=["password_reset", "problem_email", "inform"]
                 ),
             ],
-            "priority": self.from_entity(entity="priority"),
         }
 
     @staticmethod
@@ -116,7 +119,7 @@ class OpenIncidentForm(FormAction):
             # validation succeeded, set the value of the "email" slot to value
             return {"email": value}
         else:
-            dispatcher.utter_message("utter_no_email", tracker)
+            dispatcher.utter_message(template="utter_no_email")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -135,7 +138,7 @@ class OpenIncidentForm(FormAction):
             # set the value of the "priority" slot to value
             return {"priority": value}
         else:
-            dispatcher.utter_message("utter_no_priority", tracker)
+            dispatcher.utter_message(template="utter_no_priority")
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"priority": None}
@@ -154,9 +157,6 @@ class OpenIncidentForm(FormAction):
         problem_description = tracker.get_slot("problem_description")
         incident_title = tracker.get_slot("incident_title")
 
-        incident_number = ""
-        snow_priority = None
-
         # Check priority and set number value accordingly
         if priority == "low":
             snow_priority = "3"
@@ -167,7 +167,9 @@ class OpenIncidentForm(FormAction):
 
         if localmode:
             message = (
-                f"We would open a case with the following: email: {email}\n"
+                f"An incident with the following details would be opened \
+                if ServiceNow was connected:\n"
+                f"email: {email}\n"
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"
             )

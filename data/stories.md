@@ -2,6 +2,14 @@
 * out_of_scope
   - utter_out_of_scope
 
+## help
+* help
+  - utter_help
+
+## thank
+* thank
+  - utter_welcome
+
 ## happy path
 * greet
   - utter_greet
@@ -15,39 +23,27 @@
 * bot_challenge
   - utter_iamabot
 
-## greet and open incident
-* greet
-    - utter_greet
-    - utter_help
-* open_incident
+
+## incident form
+* open_incident OR password_reset OR problem_email
     - open_incident_form
     - form{"name": "open_incident_form"}
     - form{"name": null}
 
-## full help and open incident path
-* greet
-    - utter_greet
-    - utter_help
+## incident form interrupted
+* open_incident OR password_reset OR problem_email
+    - open_incident_form
+    - form{"name":"open_incident_form"}
 * help
     - utter_help
-* open_incident
     - open_incident_form
     - form{"name":null}
-    - slot{"requested_slot":null}
 
-## open incident
-* open_incident
+## incident form interrupted
+* open_incident OR password_reset OR problem_email
+    - open_incident_form
+    - form{"name":"open_incident_form"}
+* out_of_scope
+    - utter_out_of_scope
     - open_incident_form
     - form{"name":null}
-    - slot{"requested_slot":null}
-
-## full help reset password path
-* greet
-    - utter_greet
-    - utter_help
-* help
-    - utter_help
-* password_reset
-    - open_incident_form
-    - form{"name":null}
-    - slot{"requested_slot":null}
