@@ -111,7 +111,7 @@ Your input ->  thanks!
 
 
 ## Docker Deployment of Action Server
-You can also build and run a docker image for the action server instead of running it in a seperate terminal:
+A Dockerfile is provided, so you can build a docker image for the action server, to use in production deployments.  
 
 ```bash
 docker build . -t <name of your custom image>:<tag of your custom image>
