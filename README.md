@@ -117,7 +117,7 @@ A Dockerfile is provided, so you can build a docker image for the action server,
 docker build . -t <name of your custom image>:<tag of your custom image>
 ```
 
-You can then run the action server with:
+To test the container locally, you can then run the action server container with:
 
 ```bash
 docker run <name of your custom image>:<tag of your custom image>
