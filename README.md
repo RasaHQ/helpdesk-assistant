@@ -120,5 +120,5 @@ docker build . -t <name of your custom image>:<tag of your custom image>
 To test the container locally, you can then run the action server container with:
 
 ```bash
-docker run <name of your custom image>:<tag of your custom image>
+docker run -p 5055:5055 <name of your custom image>:<tag of your custom image>
 ```
