@@ -80,7 +80,9 @@ class OpenIncidentForm(FormAction):
             "email": self.from_entity(entity="email"),
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
-                self.from_text(intent=["password_reset", "problem_email", "inform"])
+                self.from_text(
+                    intent=["password_reset", "problem_email", "inform"]
+                )
             ],
             "incident_title": [
                 self.from_trigger_intent(
@@ -89,7 +91,9 @@ class OpenIncidentForm(FormAction):
                 self.from_trigger_intent(
                     intent="problem_email", value="Problem with email"
                 ),
-                self.from_text(intent=["password_reset", "problem_email", "inform"]),
+                self.from_text(
+                    intent=["password_reset", "problem_email", "inform"]
+                ),
             ],
         }
 
