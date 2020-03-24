@@ -56,7 +56,7 @@ under the hood. You can also add this flag to the action server command. To simp
 ## Things you can ask the bot
 
 The bot has one main skill, i.e. opening an incident in ServiceNow.
-For the purposes of illustration, the bot recognises the following as requests to open an incident:
+For the purposes of illustration, the bot recognizes the following as requests to open an incident:
 1. Asking to open an incident directly e.g. "I want to open an incident"
 2. Asking about a problem resetting their password e.g. "I can't reset my password"
 3. Asking about a problem with outlook/email e.g. "I can't log in to my outlook"
@@ -122,4 +122,3 @@ You can then run the action server with:
 ```bash
 docker run <name of your custom image>:<tag of your custom image>
 ```
-
