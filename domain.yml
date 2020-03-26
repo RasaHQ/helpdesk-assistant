@@ -63,6 +63,8 @@ responses:
       "I'm having a issue with my email."
   utter_welcome:
   - text: You're welcome!
+  utter_default:
+  - text: I didn't quite understand that. Could you rephrase?
 
 forms:
 - open_incident_form

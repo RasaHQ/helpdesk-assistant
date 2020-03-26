@@ -66,13 +66,16 @@
 - can you please help me
 
 ## intent:problem_email
-- Application won't install
 - my outlook application won't open
 - I'm having issues with outlook.
 - issues with outlook
-- Application will not open
+- outlook application will not open
 - there's a problem with my email
 - something is broken with outlook
+- I can't log in to my email
+- can't log in to outlook
+- my email won't let me log in
+- i have a problem with my email
 
 ## intent:inform
 - my email is test@example.com
