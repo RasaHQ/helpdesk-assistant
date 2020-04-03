@@ -10,7 +10,7 @@ import requests
 import json
 
 logger = logging.getLogger(__name__)
-vers = "vers: 0.1.0, date: Apr 2, 2020"
+vers = "vers: 0.1.0, date: Apr 3, 2020"
 logger.debug(vers)
 
 snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
@@ -289,7 +289,7 @@ class ActionVersion(Action):
             ">> rasa version response: {}".format(request["rasa"]["production"])
         )
         dispatcher.utter_message(
-            f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}"
+            f"Actions: {vers}\nRasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}"
         )
         return []
 
