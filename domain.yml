@@ -21,6 +21,12 @@ entities:
 slots:
   email:
     type: unfeaturized
+  profile_email:
+    type: unfeaturized
+  profile_name:
+    type: unfeaturized
+  profile_site:
+    type: unfeaturized
   incident_title:
     type: unfeaturized
   priority:
@@ -33,7 +39,7 @@ responses:
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
-  - text: Hello
+  - text: Hello, {profile_name}
   utter_goodbye:
   - text: Bye
   utter_iamabot:
@@ -68,3 +74,6 @@ responses:
 
 forms:
 - open_incident_form
+
+actions:
+- action_session_start

@@ -3,14 +3,14 @@ from typing import Dict, Text, Any, List, Union
 from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
-from rasa_sdk.events import AllSlotsReset
+from rasa_sdk.events import AllSlotsReset, SlotSet, SessionStarted, ActionExecuted, EventType
 import ruamel.yaml
 
 import requests
 import json
 
 logger = logging.getLogger(__name__)
-vers = 'vers: 0.1.0, date: Apr 2, 2020'
+vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
 snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
@@ -23,6 +23,79 @@ logger.debug(f"Local mode: {localmode}")
 base_api_url = "https://{}/api/now".format(snow_instance)
 
 
+class ActionSessionStart(Action):
+    def name(self) -> Text:
+        return "action_session_start"
+
+    def _get_profile(self):
+        import random
+
+        user = [
+            {"name": "Abel", "email": "abel.tuter@example.com"},
+            {"name": "Abraham", "email": "abraham.lincoln@example.com"},
+            {"name": "Adela", "email": "adela.cervantsz@example.com"},
+            {"name": "Aileen", "email": "aileen.mottern@example.com"},
+            {"name": "Allyson", "email": "allyson.gillispie@example.com"},
+            {"name": "Alva", "email": "alva.pennigton@example.com"},
+            {"name": "Amos", "email": "amos.linnan@example.com"},
+        ]
+        sites = [
+            "Berlin",
+            "San Francisco",
+            "Seattle",
+            "London",
+            "Austin",
+            "Dallas",
+            "Herrenberg",
+            "Zurich",
+        ]
+        n = len(user) - 1
+        mock_profile = {
+            "profile_name": user[n]["name"],
+            "profile_email": user[n]["email"],
+            "profile_site": sites[random.randint(0, len(sites) - 1)],
+        }
+        return mock_profile
+
+    @staticmethod
+    def _slot_set_events_from_tracker(
+        tracker: "DialogueStateTracker",
+    ) -> List["SlotSet"]:
+        """Fetch SlotSet events from tracker and carry over key, value and metadata."""
+
+        return [
+            SlotSet(key=event.key, value=event.value, metadata=event.metadata)
+            for event in tracker.applied_events()
+            if isinstance(event, SlotSet)
+        ]
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[EventType]:
+
+        # the session should begin with a `session_started` event
+        events = [SessionStarted()]
+
+        # any slots that should be carried over should come after the
+        # `session_started` event`
+        events.extend(self._slot_set_events_from_tracker(tracker))
+
+        # get mock user profile
+        user_profile = self._get_profile()
+        logger.debug(f"user_profile: {user_profile}")
+        for key, value in user_profile.items():
+            if value is not None:
+                events.append(SlotSet(key=key, value=value))
+
+        # an `action_listen` should be added at the end as a user message follows
+        events.append(ActionExecuted("action_listen"))
+
+        return events
+
+
 def email_to_sysid(email):
     lookup_url = f"{base_api_url}/table/sys_user?sysparm_limit=1&email={email}"
     user = snow_user
@@ -33,17 +106,17 @@ def email_to_sysid(email):
         "Accept": "application/json",
     }  # noqa: 501
     results = dict()
-    results['status'] = 200
+    results["status"] = 200
     # Do the HTTP request
     try:
         response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
         if response.status_code == 200:
-            results['value'] = response.json()["result"]
+            results["value"] = response.json()["result"]
         else:
-            results['status'] = response.status_code
-            results['msg'] = "ServiceNow error: " + response.json()["error"]["message"]
+            results["status"] = response.status_code
+            results["msg"] = "ServiceNow error: " + response.json()["error"]["message"]
     except requests.exceptions.Timeout:
-        results['msg'] = "Could not connect to ServiceNow (Timeout)"
+        results["msg"] = "Could not connect to ServiceNow (Timeout)"
     return results
 
 
@@ -91,9 +164,7 @@ class OpenIncidentForm(FormAction):
             "email": self.from_entity(entity="email"),
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
-                self.from_text(
-                    intent=["password_reset", "problem_email", "inform"]
-                )
+                self.from_text(intent=["password_reset", "problem_email", "inform"])
             ],
             "incident_title": [
                 self.from_trigger_intent(
@@ -102,9 +173,7 @@ class OpenIncidentForm(FormAction):
                 self.from_trigger_intent(
                     intent="problem_email", value="Problem with email"
                 ),
-                self.from_text(
-                    intent=["password_reset", "problem_email", "inform"]
-                ),
+                self.from_text(intent=["password_reset", "problem_email", "inform"]),
             ],
         }
 
@@ -126,14 +195,14 @@ class OpenIncidentForm(FormAction):
             return {"email": value}
         results = email_to_sysid(value)
 
-        if results['status'] == 200:
+        if results["status"] == 200:
             # validation succeeded, set the value of the "email" slot to value
-            if len(results['value']) == 1:
+            if len(results["value"]) == 1:
                 return {"email": value}
             else:
                 dispatcher.utter_message(template="utter_no_email")
         else:
-            dispatcher.utter_message(results['msg'])
+            dispatcher.utter_message(results["msg"])
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -189,7 +258,7 @@ class OpenIncidentForm(FormAction):
             )
         else:
             results = email_to_sysid(email)
-            sysid = results['value'][0]['sys_id']
+            sysid = results["value"][0]["sys_id"]
             response = create_incident(
                 description=problem_description,
                 short_description=incident_title,
@@ -205,16 +274,21 @@ class OpenIncidentForm(FormAction):
         dispatcher.utter_message(message)
         return [AllSlotsReset()]
 
+
 class ActionVersion(Action):
     def name(self):
         return "action_version"
 
     def run(self, dispatcher, tracker, domain):
         try:
-            request = json.loads(requests.get('http://rasa-x:5002/api/version').text)
+            request = json.loads(requests.get("http://rasa-x:5002/api/version").text)
         except:
-            request = { "rasa-x": "", "rasa": { "production": "" }}
-        logger.info(">> rasa x version response: {}".format(request['rasa-x']))
-        logger.info(">> rasa version response: {}".format(request['rasa']['production']))
-        dispatcher.utter_message(f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}")
+            request = {"rasa-x": "", "rasa": {"production": ""}}
+        logger.info(">> rasa x version response: {}".format(request["rasa-x"]))
+        logger.info(
+            ">> rasa version response: {}".format(request["rasa"]["production"])
+        )
+        dispatcher.utter_message(
+            f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}"
+        )
         return []
