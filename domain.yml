@@ -36,6 +36,8 @@ slots:
   requested_slot:
     type: unfeaturized
 responses:
+  utter_version:
+  - text: "Model 1.1.0 - Apr 3, 2020"
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
@@ -71,9 +73,13 @@ responses:
   - text: You're welcome!
   utter_default:
   - text: I didn't quite understand that. Could you rephrase?
+  utter_restart:
+  - text: Restarted
 
 forms:
 - open_incident_form
 
 actions:
 - action_session_start
+- action_version
+- action_restart

@@ -105,3 +105,21 @@
 - I want to order a pizza
 - what is the weather today
 - what is the weather
+
+## intent:version
+- version
+- show version
+- what version
+- what's your version
+- show build date
+- what is your build date
+- what's your build
+- show model version
+
+## intent:restart
+- restart
+- reset
+- start over
+- restart now
+- reset slots
+- reset entities

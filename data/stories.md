@@ -47,3 +47,12 @@
     - utter_out_of_scope
     - open_incident_form
     - form{"name":null}
+
+## story_version
+* version
+  - utter_version
+  - action_version
+
+## story restart
+* restart
+  - action_restart

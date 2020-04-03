@@ -292,3 +292,18 @@ class ActionVersion(Action):
             f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}"
         )
         return []
+
+class ActionRestart(Action):
+    """Resets the tracker to its initial state.
+    Utters the restart template if available."""
+
+    def name(self):
+        return "action_restart"
+
+    def run(self, dispatcher, tracker, domain):
+        from rasa.core.trackers import Restarted
+
+        # only utter the template if it is available
+        if domain.random_template_for("utter_restart") is not None:
+            dispatcher.utter_template("utter_restart")
+        return [Restarted()]
