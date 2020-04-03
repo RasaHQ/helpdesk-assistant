@@ -3,6 +3,7 @@ venv
 __pycache__/
 .DS_Store
 .vscode/
+.history
 
 # Rasa Ignores
 credentials.yml
