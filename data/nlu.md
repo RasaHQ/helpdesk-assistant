@@ -7,6 +7,8 @@
 - hey there
 - hi there
 - hello there
+- hi again
+- good afternoon
 
 ## intent:goodbye
 - bye
@@ -55,6 +57,8 @@
 - I'm having a problem
 - I'm having a issue I need to open a incident for.
 - I have a issue I need to open a case for.
+- open ticket
+- open new ticket
 
 ## intent:help
 - I need help
@@ -78,11 +82,11 @@
 - i have a problem with my email
 
 ## intent:inform
-- my email is test@example.com
-- my email is abraham.lincoln@example.com
-- abraham.licoln@example.com
-- it is abraham.licoln@example.com
-- abraham.lincolon@example.com
+- my email is [test@example.com](email)
+- my email is [abraham.lincoln@example.com](email)
+- [abraham.licoln@example.com](email)
+- it is [abraham.licoln@example.com](email)
+- [abraham.lincolon@example.com](email)
 - [low](priority)
 - [medium](priority)
 - [high](priority)
@@ -116,10 +120,73 @@
 - what's your build
 - show model version
 
+## intent:f1_score
+- show last intent
+- debug last intent
+- debug intent info
+- show f1 score
+- last f1 score
+- last intent f1 score
+- what did you say that
+- f1 score
+- f1
+- confidence scores
+- show confidence
+- intent confidence
+- nlu confidence
+
+## intent:show_slots
+- slots
+- show slots
+- view slots
+- let's see the slots
+
 ## intent:restart
 - restart
-- reset
 - start over
 - restart now
+
+## intent:reset_slots
 - reset slots
+- reset
 - reset entities
+
+## intent:site_hours
+- what are the site hours
+- when do the site doors open
+- when is the front gate open
+- site hours of operation
+- site doors locked
+- site gate closed
+- site gate open
+- front door open
+- frond doors closed
+
+## intent:site_cafeteria_menu
+- cafeteria menu
+- cafe menu
+- show the menu
+- where can i find the menu
+
+## intent:site_map
+- site map
+- where's the parking lot
+- find exit
+- where is exit 12
+- map of the site
+- is there a map for this site
+- campus map
+- location of rht front door
+- show site map
+- can i see the campus map
+
+## intent:site_emergency
+- emergency phone number
+- emergency site contact
+- emergency contact
+
+## intent:site_security
+- site security info
+- security contact
+- security guard
+- who is the site security contact

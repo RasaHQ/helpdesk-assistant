@@ -1,6 +1,7 @@
 language: en
 pipeline:
   - name: WhitespaceTokenizer
+    intent_split_symbol: "_"
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
