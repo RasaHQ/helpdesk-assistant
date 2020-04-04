@@ -39,7 +39,7 @@ slots:
     type: unfeaturized
 responses:
   utter_version:
-  - text: "Model 1.1.0 - Apr 3, 2020"
+  - text: "Model 1.1.1 - Apr 3, 2020"
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
