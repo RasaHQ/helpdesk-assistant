@@ -3,14 +3,14 @@ from typing import Dict, Text, Any, List, Union
 from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
-from rasa_sdk.events import AllSlotsReset, SlotSet, SessionStarted, ActionExecuted, EventType, Restarted
+from rasa_sdk.events import AllSlotsReset, SlotSet, SessionStarted, ActionExecuted, EventType, Restarted, AllSlotsReset
 import ruamel.yaml
 
 import requests
 import json
 
 logger = logging.getLogger(__name__)
-vers = "vers: 0.1.0, date: Apr 3, 2020"
+vers = "vers: 0.2.1, date: Apr 4, 2020"
 logger.debug(vers)
 
 snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
@@ -24,14 +24,10 @@ logger.debug(f"Local mode: {localmode}")
 base_api_url = "https://{}/api/now".format(snow_instance)
 
 
-class ActionSessionStart(Action):
-    def name(self) -> Text:
-        return "action_session_start"
+def generate_mock_profile():
+    import random
 
-    def _get_profile(self):
-        import random
-
-        user = [
+    user = [
             {"name": "Abel", "email": "abel.tuter@example.com"},
             {"name": "Abraham", "email": "abraham.lincoln@example.com"},
             {"name": "Adela", "email": "adela.cervantsz@example.com"},
@@ -40,7 +36,7 @@ class ActionSessionStart(Action):
             {"name": "Alva", "email": "alva.pennigton@example.com"},
             {"name": "Amos", "email": "amos.linnan@example.com"},
         ]
-        sites = [
+    sites = [
             "Berlin",
             "San Francisco",
             "Seattle",
@@ -50,13 +46,18 @@ class ActionSessionStart(Action):
             "Herrenberg",
             "Zurich",
         ]
-        n = random.randint(0, len(user) - 1)
-        mock_profile = {
+    n = random.randint(0, len(user) - 1)
+    mock_profile = {
             "profile_name": user[n]["name"],
             "profile_email": user[n]["email"],
             "profile_site": sites[random.randint(0, len(sites) - 1)],
         }
-        return mock_profile
+    return mock_profile
+
+
+class ActionSessionStart(Action):
+    def name(self) -> Text:
+        return "action_session_start"
 
     @staticmethod
     def _slot_set_events_from_tracker(
@@ -86,7 +87,7 @@ class ActionSessionStart(Action):
         events.extend(self._slot_set_events_from_tracker(tracker))
 
         # get mock user profile
-        user_profile = self._get_profile()
+        user_profile = generate_mock_profile()
         logger.debug(f"action_session_start, user_profile: {user_profile}")
         for key, value in user_profile.items():
             if value is not None:
@@ -313,6 +314,13 @@ class ActionResetSlots(Action):
         return "action_reset_slots"
 
     def run(self, dispatcher, tracker, domain):
-        from rasa.core.events import AllSlotsReset
+        events = [AllSlotsReset()]
 
-        return [AllSlotsReset()]
+        # generate mock profile
+        user_profile = generate_mock_profile()
+        logger.debug(f"action_reset_slots, user_profile: {user_profile}")
+        for key, value in user_profile.items():
+            if value is not None:
+                events.append(SlotSet(key=key, value=value))
+
+        return events

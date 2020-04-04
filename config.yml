@@ -19,11 +19,16 @@ pipeline:
   - name: EntitySynonymMapper
 policies:
   - name: AugmentedMemoizationPolicy
-    max_history: 4
-  - name: TEDPolicy
-    max_history: 4
+#    max_history: 4
+#  - name: TEDPolicy
+#    max_history: 4
+#    epochs: 100
+#  - name: MappingPolicy
+  - name: EmbeddingPolicy
+    max_history: 2
+    batch_strategy: sequence
     epochs: 100
-  - name: MappingPolicy
+    evaluate_on_num_examples: 0
   - name: FallbackPolicy
     nlu_threshold: 0.7
   - name: FormPolicy
