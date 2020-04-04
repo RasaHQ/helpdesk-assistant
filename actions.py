@@ -3,7 +3,7 @@ from typing import Dict, Text, Any, List, Union
 from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
-from rasa_sdk.events import AllSlotsReset, SlotSet, SessionStarted, ActionExecuted, EventType
+from rasa_sdk.events import AllSlotsReset, SlotSet, SessionStarted, ActionExecuted, EventType, Restarted
 import ruamel.yaml
 
 import requests
@@ -303,8 +303,6 @@ class ActionRestart(Action):
         return "action_restart"
 
     def run(self, dispatcher, tracker, domain):
-        from rasa.core.trackers import Restarted
-
         return [Restarted()]
 
 class ActionResetSlots(Action):
