@@ -42,9 +42,8 @@
 
 ## restart
 * restart
-  - action_restart
   - utter_restart
-  - action_session_start
+  - action_restart
 
 ## reset_slots
 * reset_slots
