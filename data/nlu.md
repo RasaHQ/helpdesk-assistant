@@ -7,6 +7,8 @@
 - hey there
 - hi there
 - hello there
+- hi again
+- good afternoon
 
 ## intent:goodbye
 - bye
