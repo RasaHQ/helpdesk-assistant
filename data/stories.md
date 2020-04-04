@@ -45,7 +45,6 @@
   - action_restart
   - utter_restart
   - action_session_start
-  - utter_greet
 
 ## reset_slots
 * reset_slots
