@@ -1,7 +1,3 @@
-## out of scope path
-* out_of_scope
-  - utter_out_of_scope
-
 ## help
 * help
   - utter_help
@@ -39,27 +35,38 @@
     - open_incident_form
     - form{"name":null}
 
-## incident form interrupted
-* open_incident OR password_reset OR problem_email
-    - open_incident_form
-    - form{"name":"open_incident_form"}
-* out_of_scope
-    - utter_out_of_scope
-    - open_incident_form
-    - form{"name":null}
-
 ## story_version
 * version
   - utter_version
   - action_version
 
-## story restart
+## restart
 * restart
   - action_restart
   - utter_restart
   - action_session_start
   - utter_greet
 
-## site faq
-* site_faq
-  - respond_site_faq
+## reset_slots
+* reset_slots
+  - action_reset_slots
+
+## site hours
+* site_hours
+  - utter_site_hours
+
+## site cafeteria 
+* site_cafeteria_menu
+  - utter_site_cafeteria_menu
+
+## site map
+* site_map
+  - utter_site_map
+
+## site emergency
+* site_emergency
+  - utter_site_emergency
+
+## site security
+* site_security
+  - utter_site_security

@@ -14,7 +14,12 @@ intents:
     use_entities: []
 - out_of_scope
 - restart
-- site_faq
+- reset_slots
+- site_hours
+- site_cafeteria_menu
+- site_map
+- site_emergency
+- site_security
 - version
 
 entities:
@@ -37,17 +42,26 @@ slots:
     type: unfeaturized
   requested_slot:
     type: unfeaturized
+
 responses:
   utter_version:
   - text: "Model 1.1.1 - Apr 3, 2020"
-  utter_out_of_scope:
-  - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
   - text: Hello, {profile_name}
   utter_goodbye:
   - text: Bye
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
+  utter_help:
+  - text: I can help you open a service request ticket.
+      You can ask me things like "Open an incident", "Help me reset my password", or 
+      "I'm having a issue with my email."
+  utter_welcome:
+  - text: You're welcome!
+  utter_default:
+  - text: I didn't quite understand that. Could you rephrase?
+  utter_restart:
+  - text: Restarting...
   utter_ask_email:
   - text: What is your email address to lookup for creating the incident?
   utter_ask_incident_title:
@@ -67,16 +81,16 @@ responses:
   - text: Sorry "{priority}" is not a valid priority. Please try again.
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
-  utter_help:
-  - text: I can help you open a service request ticket.
-      You can ask me things like "Open an incident", "Help me reset my password", or 
-      "I'm having a issue with my email."
-  utter_welcome:
-  - text: You're welcome!
-  utter_default:
-  - text: I didn't quite understand that. Could you rephrase?
-  utter_restart:
-  - text: Restarted
+  utter_site_hours:
+  - text: The {profile_site} hours are 7am to 8pm
+  utter_site_cafeteria_menu:
+  - text: The {profile_site} cafeteria menu can be viewed [here](http://jacksbbq.com/menu/)
+  utter_site_map:
+  - text: The {profile_site} campus map is [here](https://www.northernvermont.edu/about/location-and-directions/our-campuses/johnson-campus/johnson-campus-map) 
+  utter_site_emergency:
+  - text: "{profile_site} site emergency number is x111 or 555-555-55555"
+  utter_site_security:
+  - text: The {profile_site} security number is x222, the office is on the fourth floor, room 412 or see the front security desk
 
 forms:
 - open_incident_form
@@ -85,4 +99,4 @@ actions:
 - action_session_start
 - action_version
 - action_restart
-- respond_site_faq
+- action_reset_slots

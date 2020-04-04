@@ -304,3 +304,15 @@ class ActionRestart(Action):
         from rasa.core.trackers import Restarted
 
         return [Restarted()]
+
+class ActionResetSlots(Action):
+    """Resets the tracker to its initial state.
+    Utters the restart template if available."""
+
+    def name(self):
+        return "action_reset_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        from rasa.core.events import AllSlotsReset
+
+        return [AllSlotsReset()]

@@ -20,8 +20,6 @@ pipeline:
     dimensions:
     - email
   - name: EntitySynonymMapper
-  - name: "ResponseSelector"
-    retrieval_intent: site_faq
 policies:
   - name: AugmentedMemoizationPolicy
     max_history: 4
