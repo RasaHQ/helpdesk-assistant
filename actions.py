@@ -18,6 +18,7 @@ snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
 localmode = snow_config.get("localmode", True)
+reset_user = snow_config.get("reset_user", True)
 logger.debug(f"Local mode: {localmode}")
 
 base_api_url = "https://{}/api/now".format(snow_instance)
@@ -49,7 +50,7 @@ class ActionSessionStart(Action):
             "Herrenberg",
             "Zurich",
         ]
-        n = len(user) - 1
+        n = random.randint(0, len(user) - 1)
         mock_profile = {
             "profile_name": user[n]["name"],
             "profile_email": user[n]["email"],
@@ -76,7 +77,8 @@ class ActionSessionStart(Action):
         domain: Dict[Text, Any],
     ) -> List[EventType]:
 
-        # the session should begin with a `session_started` event
+        sender_id = tracker.sender_id
+        logger.debug(f"action_session_start, run, sender_id: {sender_id}")        # the session should begin with a `session_started` event
         events = [SessionStarted()]
 
         # any slots that should be carried over should come after the
@@ -85,7 +87,7 @@ class ActionSessionStart(Action):
 
         # get mock user profile
         user_profile = self._get_profile()
-        logger.debug(f"user_profile: {user_profile}")
+        logger.debug(f"action_session_start, user_profile: {user_profile}")
         for key, value in user_profile.items():
             if value is not None:
                 events.append(SlotSet(key=key, value=value))

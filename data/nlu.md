@@ -152,6 +152,8 @@
 - is there a map for this site
 - campus map
 - location of rht front door
+- show site map
+- can i see the campus map
 
 ## intent:site_emergency
 - emergency phone number
@@ -162,3 +164,4 @@
 - site security info
 - security contact
 - security guard
+- who is the site security contact
