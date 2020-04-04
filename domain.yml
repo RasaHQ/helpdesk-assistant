@@ -45,7 +45,7 @@ slots:
 
 responses:
   utter_version:
-  - text: "Model 1.1.1 - Apr 3, 2020"
+  - text: "Model 1.1.2 - Apr 4, 2020"
   utter_greet:
   - text: Hello, {profile_name}
   utter_goodbye:
@@ -85,6 +85,8 @@ responses:
   - text: The {profile_site} hours are 7am to 8pm
   utter_site_cafeteria_menu:
   - text: The {profile_site} cafeteria menu can be viewed [here](http://jacksbbq.com/menu/)
+  - channel: twilio
+    text: The {profile_site} cafeteria menu can be viewed at http://jacksbbq.com/menu/
   utter_site_map:
   - text: Here is the {profile_site} campus map
     image: "https://johnsonu.edu/wp-content/uploads/2019/06/TN-campus-map.jpg"
