@@ -86,7 +86,7 @@ responses:
   utter_site_cafeteria_menu:
   - text: The {profile_site} cafeteria menu can be viewed [here](http://jacksbbq.com/menu/)
   utter_site_map:
-  - text: Here is {profile_site} campus map
+  - text: Here is the {profile_site} campus map
     image: "https://johnsonu.edu/wp-content/uploads/2019/06/TN-campus-map.jpg"
   utter_site_emergency:
   - text: "{profile_site} site emergency number is x111 or 555-555-55555"

@@ -55,6 +55,8 @@
 - I'm having a problem
 - I'm having a issue I need to open a incident for.
 - I have a issue I need to open a case for.
+- open ticket
+- open new ticket
 
 ## intent:help
 - I need help

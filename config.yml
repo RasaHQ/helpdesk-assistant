@@ -23,7 +23,7 @@ policies:
 #  - name: TEDPolicy
 #    max_history: 4
 #    epochs: 100
-#  - name: MappingPolicy
+  - name: MappingPolicy
   - name: EmbeddingPolicy
     max_history: 2
     batch_strategy: sequence
