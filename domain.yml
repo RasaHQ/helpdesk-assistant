@@ -86,7 +86,8 @@ responses:
   utter_site_cafeteria_menu:
   - text: The {profile_site} cafeteria menu can be viewed [here](http://jacksbbq.com/menu/)
   utter_site_map:
-  - text: The {profile_site} campus map is [here](https://www.northernvermont.edu/about/location-and-directions/our-campuses/johnson-campus/johnson-campus-map) 
+  - text: Here is {profile_site} campus map
+    image: "https://johnsonu.edu/wp-content/uploads/2019/06/TN-campus-map.jpg"
   utter_site_emergency:
   - text: "{profile_site} site emergency number is x111 or 555-555-55555"
   utter_site_security:
