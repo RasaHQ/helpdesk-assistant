@@ -56,3 +56,10 @@
 ## story restart
 * restart
   - action_restart
+  - utter_restart
+  - action_session_start
+  - utter_greet
+
+## site faq
+* site_faq
+  - respond_site_faq

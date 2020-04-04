@@ -289,7 +289,7 @@ class ActionVersion(Action):
             ">> rasa version response: {}".format(request["rasa"]["production"])
         )
         dispatcher.utter_message(
-            f"Actions: {vers}\nRasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}"
+            f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}\nActions: {vers}"
         )
         return []
 
@@ -303,7 +303,4 @@ class ActionRestart(Action):
     def run(self, dispatcher, tracker, domain):
         from rasa.core.trackers import Restarted
 
-        # only utter the template if it is available
-        if domain.random_template_for("utter_restart") is not None:
-            dispatcher.utter_template("utter_restart")
         return [Restarted()]

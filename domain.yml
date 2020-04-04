@@ -14,6 +14,8 @@ intents:
     use_entities: []
 - out_of_scope
 - restart
+- site_faq
+- version
 
 entities:
 - email
@@ -83,3 +85,4 @@ actions:
 - action_session_start
 - action_version
 - action_restart
+- respond_site_faq

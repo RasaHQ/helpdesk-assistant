@@ -4,6 +4,7 @@ session_config:
 language: en
 pipeline:
   - name: WhitespaceTokenizer
+    intent_split_symbol: "_"
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
@@ -19,6 +20,8 @@ pipeline:
     dimensions:
     - email
   - name: EntitySynonymMapper
+  - name: "ResponseSelector"
+    retrieval_intent: site_faq
 policies:
   - name: AugmentedMemoizationPolicy
     max_history: 4
