@@ -82,7 +82,7 @@ responses:
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_site_hours:
-  - text: The {profile_site} hours are 7am to 8pm
+  - text: The {profile_site} site hours are 7am to 8pm
   utter_site_cafeteria_menu:
   - text: The {profile_site} cafeteria menu can be viewed [here](http://jacksbbq.com/menu/)
   - channel: twilio

@@ -84,7 +84,10 @@ class ActionSessionStart(Action):
 
         # any slots that should be carried over should come after the
         # `session_started` event`
-        events.extend(self._slot_set_events_from_tracker(tracker))
+        if 'carry_over_slots' in domain.get('session_config', {}):
+            events.extend(self._slot_set_events_from_tracker(tracker))
+        #if 'session_config' in domain:
+        #    if domain.session_config.carry_over_slots:
 
         # get mock user profile
         user_profile = generate_mock_profile()

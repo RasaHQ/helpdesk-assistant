@@ -82,11 +82,11 @@
 - i have a problem with my email
 
 ## intent:inform
-- my email is test@example.com
-- my email is abraham.lincoln@example.com
-- abraham.licoln@example.com
-- it is abraham.licoln@example.com
-- abraham.lincolon@example.com
+- my email is [test@example.com](email)
+- my email is [abraham.lincoln@example.com](email)
+- [abraham.licoln@example.com](email)
+- it is [abraham.licoln@example.com](email)
+- [abraham.lincolon@example.com](email)
 - [low](priority)
 - [medium](priority)
 - [high](priority)
