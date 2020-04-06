@@ -120,6 +120,27 @@
 - what's your build
 - show model version
 
+## intent:f1_score
+- show last intent
+- debug last intent
+- debug intent info
+- show f1 score
+- last f1 score
+- last intent f1 score
+- what did you say that
+- f1 score
+- f1
+- confidence scores
+- show confidence
+- intent confidence
+- nlu confidence
+
+## intent:show_slots
+- slots
+- show slots
+- view slots
+- let's see the slots
+
 ## intent:restart
 - restart
 - start over

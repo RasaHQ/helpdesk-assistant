@@ -40,6 +40,14 @@
   - utter_version
   - action_version
 
+## f1_score
+* f1_score
+  - action_f1_score
+
+## show_slots
+* show_slots
+  - action_show_slots
+
 ## restart
 * restart
   - utter_restart

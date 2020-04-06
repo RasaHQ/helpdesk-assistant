@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Text, Any, List, Union
+from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
@@ -18,7 +18,7 @@ snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")
 localmode = snow_config.get("localmode", True)
-reset_user = snow_config.get("reset_user", True)
+use_profile_email = snow_config.get("use_profile_email", True)
 logger.debug(f"Local mode: {localmode}")
 
 base_api_url = "https://{}/api/now".format(snow_instance)
@@ -35,6 +35,12 @@ def generate_mock_profile():
             {"name": "Allyson", "email": "allyson.gillispie@example.com"},
             {"name": "Alva", "email": "alva.pennigton@example.com"},
             {"name": "Amos", "email": "amos.linnan@example.com"},
+            {"name": "Gloria", "email": "gramos@its.jnj.com"},
+            {"name": "Ping", "email": "pchao2@its.jnj.com"},
+            {"name": "Amanda", "email": "aciocci@its.jnj.com"},
+            {"name": "Izabela", "email": "iserowik@its.jnj.com"},
+            {"name": "Raj", "email": "rtiwari5@its.jnj.com"},
+            {"name": "Jessica", "email": "jfremed@its.jnj.com"},
         ]
     sites = [
             "Berlin",
@@ -43,13 +49,13 @@ def generate_mock_profile():
             "London",
             "Austin",
             "Dallas",
-            "Herrenberg",
+            "New York",
             "Zurich",
         ]
     n = random.randint(0, len(user) - 1)
     mock_profile = {
             "profile_name": user[n]["name"],
-            "profile_email": user[n]["email"],
+            "profile_email": user[n]["email"] if use_profile_email else None,
             "profile_site": sites[random.randint(0, len(sites) - 1)],
         }
     return mock_profile
@@ -165,7 +171,10 @@ class OpenIncidentForm(FormAction):
             or a list of them, where a first match will be picked"""
 
         return {
-            "email": self.from_entity(entity="email"),
+            "email": [
+                self.from_entity(entity="email"),
+                self.from_entity(entity="profile-email"),
+            ],
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
                 self.from_text(intent=["password_reset", "problem_email", "inform"])
@@ -297,6 +306,7 @@ class ActionVersion(Action):
         )
         return []
 
+
 class ActionRestart(Action):
     """Resets the tracker to its initial state.
     Utters the restart template if available."""
@@ -306,6 +316,7 @@ class ActionRestart(Action):
 
     def run(self, dispatcher, tracker, domain):
         return [Restarted()]
+
 
 class ActionResetSlots(Action):
     """Resets the tracker to its initial state.
@@ -325,3 +336,56 @@ class ActionResetSlots(Action):
                 events.append(SlotSet(key=key, value=value))
 
         return events
+
+
+class ActionShowSlots(Action):
+    def name(self):
+        logger.info("ActionVersion self called")
+        # define the name of the action which can then be included in training stories
+        return "action_show_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        msg = "Slots:\n"
+        for k, v in tracker.slots.items():
+            msg += f" {k} | {v}\n"
+        dispatcher.utter_message(msg)
+        return []
+
+
+def get_last_event_for(tracker, event_type: Text, action_names_to_exclude: List[Text] = None, skip: int = 0) -> Optional[Any]:
+
+    def filter_function(e):
+        has_instance = e
+        if e["event"] == event_type:
+            has_instance = e
+        excluded = (e["event"] != event_type or ((e["event"] == event_type and ((e["parse_data"]["intent"]["name"] == "domicile") or (e["parse_data"]["intent"]["name"] == "customertype")))))
+        return has_instance and not excluded
+
+    filtered = filter(filter_function, reversed(tracker.events))
+    for i in range(skip):
+        next(filtered, None)
+
+    return next(filtered, None)
+
+
+def intentHistoryStr(tracker, skip, past):
+    msg = ""
+    prev_user_event = get_last_event_for(tracker, 'user', skip=skip)
+    logger.info("event.text: {}, intent: {}, confidence: {}".format(prev_user_event["text"], prev_user_event["parse_data"]["intent"]["name"], prev_user_event["parse_data"]["intent"]["confidence"]))
+    msg = "Ranked F1 scores:\n"
+    msg += "* " + prev_user_event["parse_data"]["intent"]["name"] + " (" + "{:.4f}".format(prev_user_event["parse_data"]["intent"]["confidence"]) + ")\n"
+    for i in range(past - 1):
+        msg += "* " + prev_user_event["parse_data"]["intent_ranking"][i+1]["name"] + " (" + "{:.4f}".format(prev_user_event["parse_data"]["intent_ranking"][i+1]["confidence"]) + ")\n"
+    return msg
+
+class ActionLastIntent(Action):
+    def name(self):
+        print("ActionLastIntent self called")
+        # define the name of the action which can then be included in training stories
+        return "action_f1_score"
+
+    def run(self, dispatcher, tracker, domain):
+        # what your action should do
+        msg = intentHistoryStr(tracker, 1, 4)
+        dispatcher.utter_message(msg) #send the message back to the user
+        return []

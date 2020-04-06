@@ -21,6 +21,8 @@ intents:
 - site_emergency
 - site_security
 - version
+- f1_score
+- show_slots
 
 entities:
 - email
@@ -103,3 +105,5 @@ actions:
 - action_version
 - action_restart
 - action_reset_slots
+- action_show_slots
+- action_f1_score
