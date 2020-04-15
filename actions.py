@@ -1,6 +1,6 @@
 import logging
 from typing import Dict, Text, Any, List, Union
-from rasa_sdk import Tracker, Action
+from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction
 from rasa_sdk.events import AllSlotsReset
@@ -10,7 +10,7 @@ import requests
 import json
 
 logger = logging.getLogger(__name__)
-vers = 'vers: 0.1.0, date: Apr 2, 2020'
+vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
 snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
@@ -33,17 +33,19 @@ def email_to_sysid(email):
         "Accept": "application/json",
     }  # noqa: 501
     results = dict()
-    results['status'] = 200
+    results["status"] = 200
     # Do the HTTP request
     try:
         response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
         if response.status_code == 200:
-            results['value'] = response.json()["result"]
+            results["value"] = response.json()["result"]
         else:
-            results['status'] = response.status_code
-            results['msg'] = "ServiceNow error: " + response.json()["error"]["message"]
+            results["status"] = response.status_code
+            results["msg"] = (
+                "ServiceNow error: " + response.json()["error"]["message"]
+            )
     except requests.exceptions.Timeout:
-        results['msg'] = "Could not connect to ServiceNow (Timeout)"
+        results["msg"] = "Could not connect to ServiceNow (Timeout)"
     return results
 
 
@@ -126,14 +128,15 @@ class OpenIncidentForm(FormAction):
             return {"email": value}
         results = email_to_sysid(value)
 
-        if results['status'] == 200:
+        if results["status"] == 200:
             # validation succeeded, set the value of the "email" slot to value
-            if len(results['value']) == 1:
+            if len(results["value"]) == 1:
                 return {"email": value}
             else:
                 dispatcher.utter_message(template="utter_no_email")
+                return {"email": None}
         else:
-            dispatcher.utter_message(results['msg'])
+            dispatcher.utter_message(results["msg"])
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -189,7 +192,7 @@ class OpenIncidentForm(FormAction):
             )
         else:
             results = email_to_sysid(email)
-            sysid = results['value'][0]['sys_id']
+            sysid = results["value"][0]["sys_id"]
             response = create_incident(
                 description=problem_description,
                 short_description=incident_title,
@@ -204,17 +207,3 @@ class OpenIncidentForm(FormAction):
             # utter submit template
         dispatcher.utter_message(message)
         return [AllSlotsReset()]
-
-class ActionVersion(Action):
-    def name(self):
-        return "action_version"
-
-    def run(self, dispatcher, tracker, domain):
-        try:
-            request = json.loads(requests.get('http://rasa-x:5002/api/version').text)
-        except:
-            request = { "rasa-x": "", "rasa": { "production": "" }}
-        logger.info(">> rasa x version response: {}".format(request['rasa-x']))
-        logger.info(">> rasa version response: {}".format(request['rasa']['production']))
-        dispatcher.utter_message(f"Rasa X: {request['rasa-x']}\nRasa:  {request['rasa']['production']}")
-        return []
