@@ -39,7 +39,7 @@
     - open_incident_form
     - form{"name":null}
 
-# incident form interrupted
+## incident form interrupted
 * open_incident OR password_reset OR problem_email
     - open_incident_form
     - form{"name":"open_incident_form"}
