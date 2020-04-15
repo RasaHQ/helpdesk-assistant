@@ -10,6 +10,8 @@ import requests
 import json
 
 logger = logging.getLogger(__name__)
+vers = "vers: 0.1.0, date: Apr 2, 2020"
+logger.debug(vers)
 
 snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
 snow_user = snow_config.get("snow_user")
@@ -30,9 +32,20 @@ def email_to_sysid(email):
         "Content-Type": "application/json",
         "Accept": "application/json",
     }  # noqa: 501
+    results = dict()
+    results["status"] = 200
     # Do the HTTP request
-    response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
-    results = response.json()["result"]
+    try:
+        response = requests.get(lookup_url, auth=(user, pwd), headers=headers)
+        if response.status_code == 200:
+            results["value"] = response.json()["result"]
+        else:
+            results["status"] = response.status_code
+            results["msg"] = (
+                "ServiceNow error: " + response.json()["error"]["message"]
+            )
+    except requests.exceptions.Timeout:
+        results["msg"] = "Could not connect to ServiceNow (Timeout)"
     return results
 
 
@@ -113,13 +126,17 @@ class OpenIncidentForm(FormAction):
         """Validate email is in ticket system."""
         if localmode:
             return {"email": value}
-        caller = email_to_sysid(value)
+        results = email_to_sysid(value)
 
-        if len(caller) == 1:
+        if results["status"] == 200:
             # validation succeeded, set the value of the "email" slot to value
-            return {"email": value}
+            if len(results["value"]) == 1:
+                return {"email": value}
+            else:
+                dispatcher.utter_message(template="utter_no_email")
+                return {"email": None}
         else:
-            dispatcher.utter_message(template="utter_no_email")
+            dispatcher.utter_message(results["msg"])
             # validation failed, set this slot to None, meaning the
             # user will be asked for the slot again
             return {"email": None}
@@ -174,12 +191,13 @@ class OpenIncidentForm(FormAction):
                 f"title: {incident_title}\npriority: {priority}"
             )
         else:
-            caller = email_to_sysid(email)
+            results = email_to_sysid(email)
+            sysid = results["value"][0]["sys_id"]
             response = create_incident(
                 description=problem_description,
                 short_description=incident_title,
                 priority=snow_priority,
-                caller=caller[0]["sys_id"],
+                caller=sysid,
             )
             incident_number = response.json()["result"]["number"]
             message = (
