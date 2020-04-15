@@ -42,12 +42,6 @@ def generate_mock_profile():
         {"name": "Allyson", "email": "allyson.gillispie@example.com"},
         {"name": "Alva", "email": "alva.pennigton@example.com"},
         {"name": "Amos", "email": "amos.linnan@example.com"},
-        {"name": "Gloria", "email": "gramos@its.jnj.com"},
-        {"name": "Ping", "email": "pchao2@its.jnj.com"},
-        {"name": "Amanda", "email": "aciocci@its.jnj.com"},
-        {"name": "Izabela", "email": "iserowik@its.jnj.com"},
-        {"name": "Raj", "email": "rtiwari5@its.jnj.com"},
-        {"name": "Jessica", "email": "jfremed@its.jnj.com"},
     ]
     sites = [
         "Berlin",
@@ -57,7 +51,7 @@ def generate_mock_profile():
         "Austin",
         "Dallas",
         "New York",
-        "Zurich",
+        "Zürich",
     ]
     n = random.randint(0, len(user) - 1)
     mock_profile = {
