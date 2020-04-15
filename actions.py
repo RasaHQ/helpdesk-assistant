@@ -55,7 +55,7 @@ def generate_mock_profile():
     n = random.randint(0, len(user) - 1)
     mock_profile = {
             "profile_name": user[n]["name"],
-            "profile_email": user[n]["email"] if use_profile_email else None,
+            "email": user[n]["email"] if use_profile_email else None,
             "profile_site": sites[random.randint(0, len(sites) - 1)],
         }
     return mock_profile
@@ -173,7 +173,6 @@ class OpenIncidentForm(FormAction):
         return {
             "email": [
                 self.from_entity(entity="email"),
-                self.from_entity(entity="profile-email"),
             ],
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
