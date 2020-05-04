@@ -64,6 +64,7 @@
 - I need some help
 - help me
 - can you please help me
+- [i want to phone helpdesk](priority)
 
 ## intent:problem_email
 - my outlook application won't open
@@ -105,3 +106,12 @@
 - I want to order a pizza
 - what is the weather today
 - what is the weather
+
+## intent:live_agent
+- How can I contact the helpdesk?
+- I want to phone the helpdesk please
+- phone number for helpdesk
+
+## synonym:high
+- escalated
+- escalate
