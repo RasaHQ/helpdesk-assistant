@@ -3,6 +3,9 @@ on:
   push:
     branches:
     - master
+    paths:
+    - 'actions/**'
+    - 'Dockerfile'
 
 jobs:
   docker:
@@ -22,9 +25,11 @@ jobs:
       - name: Pull latest${{ matrix.image.tag_ext }} Docker image for caching
         run: docker pull rasa/helpdesk-assistant:latest || true
 
+      - name: Set Build ID from run ID and number
+        run: echo ::set-env name=BUILD_NUMBER::$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID
+
       - name: Build latest${{ matrix.image.tag_ext }} Docker image
-        run: docker build . --tag rasa/helpdesk-assistant:latest --cache-from rasa/helpdesk-assistant:latest
+        run: docker build . --tag rasa/helpdesk-assistant:latest --tag rasa/helpdesk-assistant:run$BUILD_NUMBER --cache-from rasa/helpdesk-assistant:latest
 
       - name: Push image with latest tag 📦
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: docker push rasa/helpdesk-assistant:latest 
+        run: docker push rasa/helpdesk-assistant
