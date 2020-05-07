@@ -43,7 +43,7 @@ validate:
 
 test:
 	rasa train
-	rasa test --stories tests/e2e-stories.md --fail-on-prediction-errors --e2e
+	rasa test --fail-on-prediction-errors
 
 crossval:
 	rasa test nlu -f 5 --cross-validation
