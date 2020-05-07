@@ -8,12 +8,16 @@ import ruamel.yaml
 
 import requests
 import json
+import pathlib
 
 logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
-snow_config = ruamel.yaml.safe_load(open("snow_credentials.yml", "r")) or {}
+here = pathlib.Path(__file__).parent.absolute()
+snow_config = (
+    ruamel.yaml.safe_load(open(f"{here}/snow_credentials.yml", "r")) or {}
+)
 snow_user = snow_config.get("snow_user")
 snow_pw = snow_config.get("snow_pw")
 snow_instance = snow_config.get("snow_instance")

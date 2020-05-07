@@ -20,13 +20,13 @@ pip install -r requirements.txt
 
 You can run this bot without connecting to a ServiceNow instance, in which case it will
 send responses without creating an incident. To run the bot  without connecting ServiceNow,
-you don't need to change anything in `snow_credentials.yml`; `localmode` should already be set
+you don't need to change anything in `actions/snow_credentials.yml`; `localmode` should already be set
 to `true`
 
 If you do want to connect to ServiceNow, you can get your own free Developer instance 
 to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
-To connect to your ServiceNow instance, configure the following in `snow_credentials.yml`:
+To connect to your ServiceNow instance, configure the following in `actions/snow_credentials.yml`:
 
 - `snow_instance` - This is just the instance address, you don't need the leading https.
 
@@ -34,7 +34,7 @@ To connect to your ServiceNow instance, configure the following in `snow_credent
 
 - `snow_pw` - The password of the service account this action code will use to open a incident.
 
-- `localmode` -  Whether the action server should **not** try to reach out to a `snow_instance` based on the credentials in `snow_credentials.yml`. When set to `True` (default in the code), it will just take all the data in and message out the information that would normally be sent.
+- `localmode` -  Whether the action server should **not** try to reach out to a `snow_instance` based on the credentials in `actions/snow_credentials.yml`. When set to `True` (default in the code), it will just take all the data in and message out the information that would normally be sent.
 
 ## Running the bot
 

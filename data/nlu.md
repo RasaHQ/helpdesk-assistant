@@ -88,8 +88,8 @@
 - [high](priority)
 - it should be a [low](priority) priority
 - it should be [medium](priority)
-- [escalated](priority:high)
-- [escalate](priority:high)
+- [escalated]{"entity": "priority", "value": "high"}
+- [escalate]{"entity": "priority", "value": "high"}
 - [super high](priority)
 
 ## intent:out_of_scope
