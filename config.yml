@@ -1,28 +1,28 @@
 language: en
 pipeline:
-  - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
-  - name: LexicalSyntacticFeaturizer
-  - name: CountVectorsFeaturizer
-  - name: CountVectorsFeaturizer
-    analyzer: "char_wb"
-    min_ngram: 1
-    max_ngram: 4
-  - name: DIETClassifier
-    epochs: 150
-    random_seed: 1
-  - name: DucklingHTTPExtractor
-    url: http://localhost:8000
-    dimensions:
-    - email
-  - name: EntitySynonymMapper
+- name: WhitespaceTokenizer
+- name: RegexFeaturizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: char_wb
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier
+  epochs: 150
+  random_seed: 1
+- name: DucklingHTTPExtractor
+  url: http://duckling:8000
+  dimensions:
+  - email
+- name: EntitySynonymMapper
 policies:
-  - name: AugmentedMemoizationPolicy
-    max_history: 4
-  - name: TEDPolicy
-    max_history: 4
-    epochs: 100
-  - name: MappingPolicy
-  - name: FallbackPolicy
-    nlu_threshold: 0.7
-  - name: FormPolicy
+- name: AugmentedMemoizationPolicy
+  max_history: 4
+- name: TEDPolicy
+  max_history: 4
+  epochs: 100
+- name: MappingPolicy
+- name: FallbackPolicy
+  nlu_threshold: 0.7
+- name: FormPolicy
