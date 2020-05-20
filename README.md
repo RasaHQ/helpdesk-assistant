@@ -117,6 +117,11 @@ Your input ->  thanks!
     You're welcome!
 ```
 
+## Testing the bot
+
+You can test the bot on the test conversations by running  `rasa test`. 
+This will run [end-to-end testing](https://rasa.com/docs/rasa/user-guide/testing-your-assistant/#end-to-end-testing) on the conversations in `tests/conversation_tests.md`. 
+
 ## Rasa X Deployment
 
 To [deploy helpdesk-assistant](https://rasa.com/docs/rasa/user-guide/how-to-deploy/), it is highly recommended to make use of the 
