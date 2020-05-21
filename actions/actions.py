@@ -16,8 +16,6 @@ localmode = snow.localmode
 logger.debug(f"Local mode: {snow.localmode}")
 
 
-
-
 def custom_request_next_slot(
     form,
     dispatcher: "CollectingDispatcher",
@@ -33,7 +31,7 @@ def custom_request_next_slot(
             if slot == "email" and tracker.get_slot("previous_email"):
                 dispatcher.utter_message(
                     template=f"utter_ask_use_previous_email", **tracker.slots
-                    )
+                )
             else:
                 dispatcher.utter_message(
                     template=f"utter_ask_{slot}", **tracker.slots
@@ -41,6 +39,7 @@ def custom_request_next_slot(
             return [SlotSet(REQUESTED_SLOT, slot)]
 
     return None
+
 
 def _validate_email(
     value: Text,
@@ -69,6 +68,7 @@ def _validate_email(
         dispatcher.utter_message(results.get("error"))
         return {"email": None}
 
+
 class OpenIncidentForm(FormAction):
     def name(self) -> Text:
         return "open_incident_form"
@@ -86,7 +86,13 @@ class OpenIncidentForm(FormAction):
     def required_slots(tracker: Tracker) -> List[Text]:
         """A list of required slots that the form has to fill"""
 
-        return ["email", "priority", "problem_description", "incident_title", "confirm"]
+        return [
+            "email",
+            "priority",
+            "problem_description",
+            "incident_title",
+            "confirm",
+        ]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -104,7 +110,14 @@ class OpenIncidentForm(FormAction):
             "priority": self.from_entity(entity="priority"),
             "problem_description": [
                 self.from_text(
-                    not_intent = ["incident_status", "bot_challenge", "help", "out_of_scope", "affirm", "deny"]
+                    not_intent=[
+                        "incident_status",
+                        "bot_challenge",
+                        "help",
+                        "out_of_scope",
+                        "affirm",
+                        "deny",
+                    ]
                 )
             ],
             "incident_title": [
@@ -115,7 +128,14 @@ class OpenIncidentForm(FormAction):
                     intent="problem_email", value="Problem with email"
                 ),
                 self.from_text(
-                    not_intent = ["incident_status", "bot_challenge", "help", "out_of_scope", "affirm", "deny"]
+                    not_intent=[
+                        "incident_status",
+                        "bot_challenge",
+                        "help",
+                        "out_of_scope",
+                        "affirm",
+                        "deny",
+                    ]
                 ),
             ],
             "confirm": [
@@ -166,7 +186,9 @@ class OpenIncidentForm(FormAction):
         incident_title = tracker.get_slot("incident_title")
         confirm = tracker.get_slot("confirm")
         if not confirm:
-            dispatcher.utter_message(template="utter_incident_creation_canceled")
+            dispatcher.utter_message(
+                template="utter_incident_creation_canceled"
+            )
             return [AllSlotsReset(), SlotSet("previous_email", email)]
 
         if localmode:
@@ -185,7 +207,9 @@ class OpenIncidentForm(FormAction):
                 priority=snow_priority,
                 email=email,
             )
-            incident_number = response.get("content", {}).get("result", {}).get("number")
+            incident_number = (
+                response.get("content", {}).get("result", {}).get("number")
+            )
             if incident_number:
                 message = (
                     f"Successfully opened up incident {incident_number} for you.  "
@@ -259,7 +283,7 @@ class IncidentStatusForm(FormAction):
             "New": "is currently awaiting triage",
             "In Progress": "is currently in progress",
             "On Hold": "has been put on hold",
-            "Closed": "has been closed"
+            "Closed": "has been closed",
         }
         if localmode:
             status = random.choice(list(incident_states.values()))
@@ -271,17 +295,16 @@ class IncidentStatusForm(FormAction):
             incidents_result = snow.retrieve_incidents(email)
             incidents = incidents_result.get("incidents")
             if incidents:
-                message = "\n".join([
-                    f'Incident {incident.get("number")}: "{incident.get("short_description")}", '
-                    f'opened on {incident.get("opened_at")} {incident_states.get(incident.get("incident_state"))}'
-                    for incident in incidents
-                ])
+                message = "\n".join(
+                    [
+                        f'Incident {incident.get("number")}: "{incident.get("short_description")}", '
+                        f'opened on {incident.get("opened_at")} {incident_states.get(incident.get("incident_state"))}'
+                        for incident in incidents
+                    ]
+                )
 
             else:
-                message = (
-                    f"{incidents_result.get('error')}"
-                )
+                message = f"{incidents_result.get('error')}"
 
         dispatcher.utter_message(message)
         return [AllSlotsReset(), SlotSet("previous_email", email)]
-
