@@ -42,9 +42,9 @@ responses:
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
-  - text: Hello
+  - text: Hello!
   utter_goodbye:
-  - text: Bye
+  - text: Goodbye!
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_ask_email:
@@ -67,9 +67,12 @@ responses:
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_help:
-  - text: I can help you open a service request ticket.
-      You can ask me things like "Open an incident", "Help me reset my password", or 
-      "I'm having a issue with my email."
+  - text: "I can help you open a service request ticket, or check the status of your open incidents.
+      \nYou can ask me things like:
+      \n- Open an incident
+      \n- Help me reset my password
+      \n- I'm having a issue with my email
+      \n- What's the status of the ticket I opened?"
   utter_welcome:
   - text: You're welcome!
   utter_default:
@@ -77,11 +80,11 @@ responses:
   utter_ask_use_previous_email:
   - text: Would you like to use the last email address you used, {previous_email}?
   utter_ask_confirm:
-  - text: "Should I open an incident with the following details?\n
-          email: {email}\n
-          problem description: {problem_description}\n
-          title: {incident_title}\n
-          priority: {priority}"
+  - text: "Should I open an incident with the following details?
+          \n    email: {email}
+          \n    problem description: {problem_description}
+          \n    title: {incident_title}
+          \n    priority: {priority}"
     buttons:
     - title: Yes
       payload: /affirm
