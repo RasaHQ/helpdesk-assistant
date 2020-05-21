@@ -56,6 +56,9 @@
 - I'm having a issue I need to open a incident for.
 - I have a issue I need to open a case for.
 - open an incident for aileen.mottern@example.com
+- open an [urgent]{"entity": "priority", "value": "high"} issue
+- I want to open an incident, but it's [low](priority) priority
+- I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
 
 ## intent:help
 - I need help
@@ -132,6 +135,9 @@
 - that's right
 - indeed
 - Yes, please
+- yeah
+- sure
+- yes thanks
 
 ## intent:deny
 - no

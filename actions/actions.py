@@ -171,8 +171,8 @@ class OpenIncidentForm(FormAction):
 
         if localmode:
             message = (
-                f"An incident with the following details would be opened \
-                if ServiceNow was connected:\n"
+                f"An incident with the following details would be opened "
+                f"if ServiceNow was connected:\n"
                 f"email: {email}\n"
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"
@@ -262,9 +262,9 @@ class IncidentStatusForm(FormAction):
             "Closed": "has been closed"
         }
         if localmode:
-            status = random.choice(incident_states.values())
+            status = random.choice(list(incident_states.values()))
             message = (
-                f"Since ServiceNow isn't connected, I'm making this up!"
+                f"Since ServiceNow isn't connected, I'm making this up!\n"
                 f"The most recent incident for {email} {status}"
             )
         else:
