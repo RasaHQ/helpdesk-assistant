@@ -1,6 +1,6 @@
-# Rasa Helpdesk Assistant Demo
+# Rasa Helpdesk Assistant Example
 
-This is a basic demo bot showing Rasa with Service Now API calls to open incidents.
+This is a Rasa chatbot example demonstrating how to build an AI assistant for an IT Helpdesk. It includes an integration with the Service Now API to open incident reports. Below is an example conversation, showing the bot helping a user open a support ticket. You can use this chatbot as a starting point for building customer service assistants or as a template for collecting required pieces of information from a user before making an API call. 
 
 Here is an example of a conversation you can have with this bot:
 
@@ -103,7 +103,7 @@ With `localmode=False`:
 
 With a Service Now instance connected, it will check if the email address is in the instance database and provide an incident number for the final response:
 
-```sh
+```
 Your input ->  help me reset my password
     What is your email address to lookup for creating the incident?
 Your input ->  idontexist@example.com
@@ -117,9 +117,24 @@ Your input ->  thanks!
     You're welcome!
 ```
 
-## Docker Deployment of Action Server
+## Testing the bot
 
-A Dockerfile is provided, so you can build a docker image for the action server, to use in production deployments.
+You can test the bot on the test conversations by running  `rasa test`. 
+This will run [end-to-end testing](https://rasa.com/docs/rasa/user-guide/testing-your-assistant/#end-to-end-testing) on the conversations in `tests/conversation_tests.md`. 
+
+## Rasa X Deployment
+
+To [deploy helpdesk-assistant](https://rasa.com/docs/rasa/user-guide/how-to-deploy/), it is highly recommended to make use of the 
+[one line deploy script](https://rasa.com/docs/rasa-x/installation-and-setup/one-line-deploy-script/) for Rasa X. As part of the deployment, you'll need to set up [git integration](https://rasa.com/docs/rasa-x/installation-and-setup/integrated-version-control/#connect-your-rasa-x-server-to-a-git-repository) to pull in your data and 
+configurations, and build or pull an action server image.
+
+### Action Server Image
+
+You will need to have docker installed in order to build the action server image. If you haven't made any changes to the action code, you can also use
+the [public image on Dockerhub](https://hub.docker.com/r/rasa/helpdesk-assistant) instead of building it yourself. 
+
+
+See the Dockerfile for what is included in the action server image,
 
 To build the image:
 
