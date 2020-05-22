@@ -212,8 +212,8 @@ class OpenIncidentForm(FormAction):
             )
             if incident_number:
                 message = (
-                    f"Successfully opened up incident {incident_number} for you.  "
-                    f"Someone will reach out soon."
+                    f"Successfully opened up incident {incident_number} "
+                    f"for you. Someone will reach out soon."
                 )
             else:
                 message = (
@@ -297,8 +297,10 @@ class IncidentStatusForm(FormAction):
             if incidents:
                 message = "\n".join(
                     [
-                        f'Incident {incident.get("number")}: "{incident.get("short_description")}", '
-                        f'opened on {incident.get("opened_at")} {incident_states.get(incident.get("incident_state"))}'
+                        f'Incident {incident.get("number")}: '
+                        f'"{incident.get("short_description")}", '
+                        f'opened on {incident.get("opened_at")} '
+                        f'{incident_states.get(incident.get("incident_state"))}'
                         for incident in incidents
                     ]
                 )

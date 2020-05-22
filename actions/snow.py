@@ -3,7 +3,7 @@ import requests
 import json
 import pathlib
 import ruamel.yaml
-from typing import Dict, Text, Any, List, Union
+from typing import Dict, Text, Any
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,10 @@ class SnowAPI(object):
         return result
 
     def email_to_sysid(self, email) -> Dict[Text, Any]:
-        lookup_url = f"{self.base_api_url}/table/sys_user?sysparm_query=email={email}&sysparm_display_value=true"
+        lookup_url = (
+            f"{self.base_api_url}/table/sys_user?"
+            f"sysparm_query=email={email}&sysparm_display_value=true"
+        )
         request_args = {
             "url": lookup_url,
             "auth": (self.snow_user, self.snow_pw),
@@ -75,21 +78,27 @@ class SnowAPI(object):
         result = self.email_to_sysid(email)
         caller_id = result.get("caller_id")
         if caller_id:
-            incident_url = f"{self.base_api_url}/table/incident?sysparm_query=caller_id={caller_id}&sysparm_display_value=true"
+            incident_url = (
+                f"{self.base_api_url}/table/incident?"
+                f"sysparm_query=caller_id={caller_id}"
+                f"&sysparm_display_value=true"
+            )
             request_args = {
                 "url": incident_url,
                 "auth": (self.snow_user, self.snow_pw),
                 "headers": json_headers,
             }
             result = self.handle_request(requests.get, request_args)
-            incidents = result.get("content", {}).get("result")
+            incidents = result.get("content", {}).get("result") # pytype: disable=attribute-error
             if incidents:
                 result["incidents"] = incidents
             elif isinstance(incidents, list):
                 result["error"] = f"No incidents on record for {email}"
         return result
 
-    def create_incident(self, description, short_description, priority, email) -> Dict[Text, Any]:
+    def create_incident(
+        self, description, short_description, priority, email
+    ) -> Dict[Text, Any]:
         result = self.email_to_sysid(email)
         caller_id = result.get("caller_id")
         if caller_id:
