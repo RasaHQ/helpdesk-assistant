@@ -1,3 +1,7 @@
+## out of scope path
+* out_of_scope
+  - utter_out_of_scope
+
 ## help
 * help
   - utter_help
@@ -32,6 +36,15 @@
     - form{"name":"open_incident_form"}
 * help
     - utter_help
+    - open_incident_form
+    - form{"name":null}
+
+## incident form interrupted
+* open_incident OR password_reset OR problem_email
+    - open_incident_form
+    - form{"name":"open_incident_form"}
+* out_of_scope
+    - utter_out_of_scope
     - open_incident_form
     - form{"name":null}
 
