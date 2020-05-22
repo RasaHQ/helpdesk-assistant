@@ -9,7 +9,6 @@ from rasa_sdk.events import (
     SessionStarted,
     ActionExecuted,
     EventType,
-    Restarted,
 )
 import ruamel.yaml
 
@@ -312,17 +311,6 @@ class ActionVersion(Action):
         except (ConnectionError, TimeoutError):
             dispatcher.utter_message(f"Can't connect to Rasa X")
         return []
-
-
-class ActionRestart(Action):
-    """Resets the tracker to its initial state.
-    Utters the restart template if available."""
-
-    def name(self):
-        return "action_restart"
-
-    def run(self, dispatcher, tracker, domain):
-        return [Restarted()]
 
 
 class ActionResetSlots(Action):

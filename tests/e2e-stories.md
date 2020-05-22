@@ -39,3 +39,21 @@
     - utter_help
     - open_incident_form
     - form{"name": null}
+
+## site FAQs
+* site_hours: what are the site hours
+  - utter_site_hours
+* site_cafeteria_menu: what is the menu
+  - utter_site_cafeteria_menu
+* site_map: is there a site map
+  - utter_site_map
+* site_emergency: where is the site emergency contact
+  - utter_site_emergency
+* site_security: how do I reach site security
+  - utter_site_security
+
+## admin stories
+* f1_score: show confidence scores
+  - action_f1_score
+* show_slots: show me the current slot values
+  - action_show_slots
