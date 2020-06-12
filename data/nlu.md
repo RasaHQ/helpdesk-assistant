@@ -105,3 +105,8 @@
 - I want to order a pizza
 - what is the weather today
 - what is the weather
+- Hdjejene
+
+## synonym:high
+- escalated
+- escalate
