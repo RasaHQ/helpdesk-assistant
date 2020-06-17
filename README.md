@@ -90,7 +90,7 @@ under the hood. You can also add this flag to the action server command. To simp
 
 The bot has two main skills:
 1. Opening an incident in ServiceNow.
-2. Checking the status of incidents in ServiceNow by email address of the caller
+2. Checking the status of incidents in ServiceNow by email address of the caller. It will prompt the user to re-use previously provided (during the chat session) email addresses, if any exist.
 For the purposes of illustration, the bot recognizes the following as requests to open an incident:
 
 1. Asking to open an incident directly e.g. "I want to open an incident"
