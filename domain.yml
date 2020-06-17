@@ -90,6 +90,8 @@ responses:
       payload: /affirm
     - title: No, cancel the incident
       payload: /deny
+  utter_incident_creation_canceled:
+  - text: Alright, I have cancelled the incident.
 
 forms:
 - open_incident_form
