@@ -89,7 +89,9 @@ class SnowAPI(object):
                 "headers": json_headers,
             }
             result = self.handle_request(requests.get, request_args)
-            incidents = result.get("content", {}).get("result") # pytype: disable=attribute-error
+            incidents = result.get("content", {}).get(
+                "result"
+            )  # pytype: disable=attribute-error
             if incidents:
                 result["incidents"] = incidents
             elif isinstance(incidents, list):

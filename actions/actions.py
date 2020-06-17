@@ -114,7 +114,6 @@ class OpenIncidentForm(FormAction):
                         "incident_status",
                         "bot_challenge",
                         "help",
-                        "out_of_scope",
                         "affirm",
                         "deny",
                     ]
@@ -132,7 +131,6 @@ class OpenIncidentForm(FormAction):
                         "incident_status",
                         "bot_challenge",
                         "help",
-                        "out_of_scope",
                         "affirm",
                         "deny",
                     ]
