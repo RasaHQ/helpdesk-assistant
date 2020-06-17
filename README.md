@@ -6,6 +6,23 @@ Here is an example of a conversation you can have with this bot:
 
 ![Screenshot](./screenshots/demo_ss.png?raw=true)
 
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents** 
+
+- [Setup](#setup)
+  - [Install the dependencies](#install-the-dependencies)
+  - [Optional: Connect to a ServiceNow instance](#optional-connect-to-a-servicenow-instance)
+- [Running the bot](#running-the-bot)
+- [Things you can ask the bot](#things-you-can-ask-the-bot)
+- [Example conversations](#example-conversations)
+- [Testing the bot](#testing-the-bot)
+- [Rasa X Deployment](#rasa-x-deployment)
+  - [Action Server Image](#action-server-image)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Setup
 
 ### Install the dependencies
@@ -14,6 +31,13 @@ In a Python3 virtual environment run:
 
 ```bash
 pip install -r requirements.txt
+```
+
+To install development dependencies, run:
+
+```bash
+pip install -r requirements-dev.txt
+pre-commit install
 ```
 
 ### Optional: Connect to a ServiceNow instance
