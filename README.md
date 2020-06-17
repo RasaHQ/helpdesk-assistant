@@ -40,6 +40,9 @@ pip install -r requirements-dev.txt
 pre-commit install
 ```
 
+> With pre-commit installed, the `black` and `doctoc` hooks will run on every `git commit`. 
+> If any changes are made by the hooks, you will need to re-add changed files and re-commit your changes.
+
 ### Optional: Connect to a ServiceNow instance
 
 You can run this bot without connecting to a ServiceNow instance, in which case it will
