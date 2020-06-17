@@ -89,8 +89,8 @@ class SnowAPI(object):
                 "headers": json_headers,
             }
             result = self.handle_request(requests.get, request_args)
-            incidents = result.get(
-                "content", {}
+            incidents = result.get(  # pytype: disable=attribute-error
+                "content", {}  # pytype: disable=attribute-error
             ).get(  # pytype: disable=attribute-error
                 "result"  # pytype: disable=attribute-error
             )  # pytype: disable=attribute-error
