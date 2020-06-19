@@ -55,6 +55,10 @@
 - I'm having a problem
 - I'm having a issue I need to open a incident for.
 - I have a issue I need to open a case for.
+- open an incident for aileen.mottern@example.com
+- open an [urgent]{"entity": "priority", "value": "high"} issue
+- I want to open an incident, but it's [low](priority) priority
+- I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
 
 ## intent:help
 - I need help
@@ -80,9 +84,9 @@
 ## intent:inform
 - my email is test@example.com
 - my email is abraham.lincoln@example.com
-- abraham.licoln@example.com
-- it is abraham.licoln@example.com
-- abraham.lincolon@example.com
+- abel.tuter@example.com
+- it is admin@example.com
+- aileen.mottern@example.com
 - [low](priority)
 - [medium](priority)
 - [high](priority)
@@ -105,3 +109,42 @@
 - I want to order a pizza
 - what is the weather today
 - what is the weather
+
+## intent:incident_status
+- I want to check if my ticket has been closed
+- what's the status of my incident?
+- Has the incident been closed yet?
+- Is my ticket in progress?
+- What has happened with my open ticket?
+- what's going on with the incident I opened?
+- Do I have any open incidents at the moment?
+- Can I check the status of my open tickets?
+- Can I see the status of the ticket I opened?
+- Check ticket status
+- check incident status
+- ok, try looking it up for abraham.lincoln@example.com 
+- look up ticket status for abel.tuter@example.com
+
+## intent:affirm
+- yes
+- yes please
+- yes I would 
+- please do
+- yup
+- yep
+- that's right
+- indeed
+- Yes, please
+- yeah
+- sure
+- yes thanks
+
+## intent:deny
+- no
+- nope
+- no thanks
+- not that one
+- don't use that
+- please no
+- no don't do that
+- no, use abraham.lincoln@example.com

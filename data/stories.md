@@ -47,3 +47,47 @@
     - utter_out_of_scope
     - open_incident_form
     - form{"name":null}
+
+## incident status form
+* incident_status
+    - incident_status_form
+    - form{"name": "incident_status_form"}
+    - form{"name": null}
+
+## incident status form interrupted
+* incident_status
+    - incident_status_form
+    - form{"name":"incident_status_form"}
+* help
+    - utter_help
+    - incident_status_form
+    - form{"name":null}
+
+## incident status form interrupted
+* incident_status
+    - incident_status_form
+    - form{"name":"incident_status_form"}
+* out_of_scope
+    - utter_out_of_scope
+    - incident_status_form
+    - form{"name":null}
+
+
+## incident status form switch to open incident
+* incident_status
+    - incident_status_form
+    - form{"name":"incident_status_form"}
+* open_incident OR password_reset OR problem_email
+    - open_incident_form
+    - form{"name":"open_incident_form"}
+    - form{"name":null}
+
+## open incident form switch to incident status form
+* open_incident OR password_reset OR problem_email
+    - open_incident_form
+    - form{"name":"open_incident_form"}
+* incident_status
+    - incident_status_form
+    - form{"name":"incident_status_form"}
+    - form{"name":null}
+
