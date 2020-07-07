@@ -17,6 +17,10 @@ intents:
 - restart
 - affirm
 - deny
+- trigger_handoff:
+    triggers: action_handoff
+- handoff:
+    triggers: utter_whoami
 
 entities:
 - email
@@ -92,7 +96,14 @@ responses:
       payload: /deny
   utter_incident_creation_canceled:
   - text: Alright, I have cancelled the incident.
+  utter_whoami:
+  - text: Hallo! I'm your IT Helpdesk Assistant.
+  utter_handoff:
+  - text: Alright, I am transferring you to an agent!
 
 forms:
 - open_incident_form
 - incident_status_form
+
+actions:
+- action_handoff

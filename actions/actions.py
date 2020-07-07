@@ -1,9 +1,9 @@
 import logging
 from typing import Dict, Text, Any, List, Union, Optional
-from rasa_sdk import Tracker
+from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction, REQUESTED_SLOT
-from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
+from rasa_sdk.events import AllSlotsReset, SlotSet, EventType, UserUttered
 from actions.snow import SnowAPI
 import random
 
@@ -308,3 +308,20 @@ class IncidentStatusForm(FormAction):
 
         dispatcher.utter_message(message)
         return [AllSlotsReset(), SlotSet("previous_email", email)]
+
+
+class ActionHandoff(Action):
+    def name(self) -> Text:
+        return "action_handoff"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[EventType]:
+
+        dispatcher.utter_message(template="utter_handoff")
+        dispatcher.utter_message(text="/handoff")
+
+        return []
