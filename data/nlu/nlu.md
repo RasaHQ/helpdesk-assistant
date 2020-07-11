@@ -149,7 +149,7 @@
 - no don't do that
 - no, use abraham.lincoln@example.com
 
-## intent:trigger_handoff
+## intent:human_handoff
 - I want a human 
 - can I speak to an agent
 - real agent please

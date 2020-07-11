@@ -7,6 +7,7 @@ from rasa_sdk.events import AllSlotsReset, SlotSet, EventType, UserUttered
 from actions.snow import SnowAPI
 import random
 
+
 logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
@@ -308,20 +309,3 @@ class IncidentStatusForm(FormAction):
 
         dispatcher.utter_message(message)
         return [AllSlotsReset(), SlotSet("previous_email", email)]
-
-
-class ActionHandoff(Action):
-    def name(self) -> Text:
-        return "action_handoff"
-
-    async def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[EventType]:
-
-        dispatcher.utter_message(template="utter_handoff")
-        dispatcher.utter_message(text="/handoff")
-
-        return []

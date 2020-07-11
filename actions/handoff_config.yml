@@ -1,0 +1,7 @@
+handoff_hosts:
+    financial_demo:
+      title: "Financial Assistant"
+      url: "http://localhost:5006"
+    moodbot:
+      title: "MoodBot"
+      url: "http://localhost:5007"

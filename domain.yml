@@ -17,14 +17,15 @@ intents:
 - restart
 - affirm
 - deny
-- trigger_handoff:
-    triggers: action_handoff
+- trigger_handoff
+- human_handoff
 - handoff:
     triggers: utter_whoami
 
 entities:
 - email
 - priority
+- handoff_to
 slots:
   confirm:
     type: unfeaturized
@@ -41,6 +42,8 @@ slots:
   problem_description:
     type: unfeaturized
   requested_slot:
+    type: unfeaturized
+  handoff_to:
     type: unfeaturized
 responses:
   utter_out_of_scope:
@@ -96,10 +99,18 @@ responses:
       payload: /deny
   utter_incident_creation_canceled:
   - text: Alright, I have cancelled the incident.
+  utter_ask_whatelse:
+    - text: What else can I help you with?
   utter_whoami:
   - text: Hallo! I'm your IT Helpdesk Assistant.
+  utter_ask_handoff:
+  - text: It looks like you want to be transferred to a human agent.
   utter_handoff:
-  - text: Alright, I am transferring you to an agent!
+  - text: Alright, I'll try to transfer you.
+  utter_wouldve_handed_off:
+  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}. 
+  utter_no_handoff:
+  - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
 
 forms:
 - open_incident_form
@@ -107,3 +118,4 @@ forms:
 
 actions:
 - action_handoff
+- action_handoff_options
