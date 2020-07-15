@@ -20,7 +20,7 @@ intents:
 - trigger_handoff
 - human_handoff
 - handoff:
-    triggers: utter_whoami
+    triggers: utter_greet
 
 entities:
 - email
@@ -49,7 +49,7 @@ responses:
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_greet:
-  - text: Hello!
+  - text: Hallo! I'm your IT Helpdesk Assistant.
   utter_goodbye:
   - text: Goodbye!
   utter_iamabot:
@@ -101,8 +101,6 @@ responses:
   - text: Alright, I have cancelled the incident.
   utter_ask_whatelse:
     - text: What else can I help you with?
-  utter_whoami:
-  - text: Hallo! I'm your IT Helpdesk Assistant.
   utter_ask_handoff:
   - text: It looks like you want to be transferred to a human agent.
   utter_handoff:

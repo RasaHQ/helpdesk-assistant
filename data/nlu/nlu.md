@@ -156,3 +156,4 @@
 - real human 
 - chat with a live agent
 - give me a person please
+- i want to talk to a human
