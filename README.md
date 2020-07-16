@@ -208,16 +208,7 @@ yarn build
 yarn serve
 ```
 4. In the Financial-Demo repo, install the dependencies and train a model (see the Financial-Demo README)
-5. In the Financial-Demo repo, run the rasa server and action server at **the non-default ports shown below** 
-   In one terminal window:
-    ```bash
-    rasa run --enable-api --cors "*" --port 5006 --debug
-    ```
-    In another terminal window:
-    ```bash
-    rasa run actions --port 5056 --debug
-    ```
-6. In this repo, run the rasa server and action server at the default ports (shown here for clarity)
+5. In the Helpdesk-Assistant repo (i.e. this repo), run the rasa server and action server at the default ports (shown here for clarity)
    In one terminal window:
     ```bash
     rasa run --enable-api --cors "*" --port 5005 --debug
@@ -225,6 +216,15 @@ yarn serve
     In another terminal window:
     ```bash
     rasa run actions --port 5055 --debug
+    ```
+6. In the Financial-Demo repo, run the rasa server and action server at **the non-default ports shown below**
+   In one terminal window:
+    ```bash
+    rasa run --enable-api --cors "*" --port 5006 --debug
+    ```
+    In another terminal window:
+    ```bash
+    rasa run actions --port 5056 --debug
     ```
 7. Open `chatroom_handoff.html` in a browser to see handoff in action
 
