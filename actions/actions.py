@@ -3,7 +3,7 @@ from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction, REQUESTED_SLOT
-from rasa_sdk.events import AllSlotsReset, SlotSet, EventType, UserUttered
+from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
 from actions.snow import SnowAPI
 import random
 
@@ -31,7 +31,8 @@ def custom_request_next_slot(
             logger.debug(f"Request next slot '{slot}'")
             if slot == "email" and tracker.get_slot("previous_email"):
                 dispatcher.utter_message(
-                    template=f"utter_ask_use_previous_email", **tracker.slots
+                    template=f"utter_ask_use_previous_email_{slot}",
+                    **tracker.slots,
                 )
             else:
                 dispatcher.utter_message(
