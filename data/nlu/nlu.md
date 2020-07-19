@@ -148,3 +148,12 @@
 - please no
 - no don't do that
 - no, use abraham.lincoln@example.com
+
+## intent:human_handoff
+- I want a human 
+- can I speak to an agent
+- real agent please
+- real human 
+- chat with a live agent
+- give me a person please
+- i want to talk to a human

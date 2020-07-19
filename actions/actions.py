@@ -1,11 +1,12 @@
 import logging
 from typing import Dict, Text, Any, List, Union, Optional
-from rasa_sdk import Tracker
+from rasa_sdk import Tracker, Action
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormAction, REQUESTED_SLOT
-from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
+from rasa_sdk.events import AllSlotsReset, SlotSet, EventType, UserUttered
 from actions.snow import SnowAPI
 import random
+
 
 logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"

@@ -1,0 +1,8 @@
+handoff_hosts:
+    financial_demo:
+      title: "Financial Assistant"
+      url: "http://localhost:5006"
+    ## you can add more handoff hosts to this list e.g.
+    # moodbot:
+    #   title: "MoodBot"
+    #   url: "http://localhost:5007"
