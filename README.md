@@ -321,7 +321,7 @@ It is recommended to use an[automated CI/CD process](https://rasa.com/docs/rasa/
 
 ## Notes on Chatroom
 
-If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not included this feature so you will need to build from a branch. The following docker commands will build an image from the new Chatroom and run it.
+If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not included this feature so you will need to build from a fork. The following docker commands will build an image from the adapted Chatroom and run it.
 
 ```
 docker build -t chatroom -f Dockerfile.chatroom .
