@@ -191,7 +191,7 @@ more details on channel-side configuration.
 
 Using the default set up, the handoff skill enables this kind of conversation with two bots:
 
-![handoff gif](handoff.gif)
+<img src="./handoff.gif" width="200">
 
 ### Try it out
 
