@@ -330,7 +330,7 @@ docker run --name chatroom -p 8080:8080 -d chatroom
 
 From the `docker-compose.yml` below, you can start chatroom with `docker-compose up -d`
 
-Here's an example docker-compose.yml for this image. Note that the initial Rasa endpoint URL is hard coded in `chatroom_handoff.html`.
+Here's an example docker-compose.yml for this image. Note that the initial Rasa endpoint URL is hard coded in `chatroom_handoff.html`; to use your locally running bot, point it to `http://localhost:5005`.
 
 ```
 version: "3.4"
