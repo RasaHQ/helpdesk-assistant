@@ -321,27 +321,27 @@ It is recommended to use an[automated CI/CD process](https://rasa.com/docs/rasa/
 
 ## Notes on Chatroom
 
-If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not done a PR with this new feature.
+If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not included this feature so you will need to build from a branch. The following docker commands will build an image from the new Chatroom and run it.
 
 ```
-docker build -t chatroom -f Dockerfile.chatroom
-docker run --name chatroom -p 8080:3000 -d chatroom
+docker build -t chatroom -f Dockerfile.chatroom .
+docker run --name chatroom -p 8080:8080 -d chatroom
 ```
 
-Here's an example docker-compose.yml for this image. Note that the `INITIAL_RASA_ENDPOINT` environment variable is not yet implemented. This is currently hard coded in `chatroom_handoff.html`.
+The the `docker-compose.yml` below, you can start chatroom with `docker-compose up -d`
+
+Here's an example docker-compose.yml for this image. Note that the initial Rasa endpoint URL is hard coded in `chatroom_handoff.html`.
 
 ```
 version: "3.4"
 
 services:
-  rasa-x:
+  chatroom:
     image: chatroom
     build:
       context: ./
       dockerfile: Dockerfile.chatroom
-    environment:
-      - INITIAL_RASA_ENDPOINT=http://helpdesk-assistant.rasa.com:5005
-    expose:
+    ports:
       - "8080:8080"
-    command: [ "npm", "run-script", "serve" ]
+    command: [ "yarn", "serve" ]
 ```
