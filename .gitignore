@@ -14,3 +14,4 @@ rasa.db*
 results/
 models/
 snow_connector.py
+chatroom/

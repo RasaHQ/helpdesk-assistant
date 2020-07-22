@@ -25,6 +25,7 @@ Here is an example of a conversation you can have with this bot:
   - [Testing the bot](#testing-the-bot)
   - [Rasa X Deployment](#rasa-x-deployment)
     - [Action Server Image](#action-server-image)
+  - [Notes on Chatroom](#notes-on-chatroom)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -317,3 +318,30 @@ docker run -p 5055:5055 <name of your custom image>:<tag of your custom image>
 Once you have confirmed that the container works as it should, you can push the container image to a registry with `docker push`
 
 It is recommended to use an[automated CI/CD process](https://rasa.com/docs/rasa/user-guide/setting-up-ci-cd) to keep your action server up to date in a production environment.
+
+## Notes on Chatroom
+
+If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not included this feature so you will need to build from a fork. The following docker commands will build an image from the adapted Chatroom and run it.
+
+```
+docker build -t chatroom -f Dockerfile.chatroom .
+docker run --name chatroom -p 8080:8080 -d chatroom
+```
+
+From the `docker-compose.yml` below, you can start chatroom with `docker-compose up -d`
+
+Here's an example docker-compose.yml for this image. Note that the initial Rasa endpoint URL is hard coded in `chatroom_handoff.html`; to use your locally running bot, point it to `http://localhost:5005`.
+
+```
+version: "3.4"
+
+services:
+  chatroom:
+    image: chatroom
+    build:
+      context: ./
+      dockerfile: Dockerfile.chatroom
+    ports:
+      - "8080:8080"
+    command: [ "yarn", "serve" ]
+```
