@@ -122,7 +122,8 @@ class OpenIncidentForm(FormAction):
             ],
             "incident_title": [
                 self.from_trigger_intent(
-                    intent="password_reset", value="Problem resetting password"
+                    intent="password_reset",
+                    value="Problem resetting password",
                 ),
                 self.from_trigger_intent(
                     intent="problem_email", value="Problem with email"
