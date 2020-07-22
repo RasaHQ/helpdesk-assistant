@@ -31,8 +31,8 @@ formatter:
 	black actions --line-length 79
 
 lint:
-	flake8 actions.py
-	black --check actions --line-length 79
+	flake8 actions
+	black --check actions
 
 types:
 	pytype --keep-going actions
