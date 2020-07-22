@@ -25,6 +25,7 @@ Here is an example of a conversation you can have with this bot:
   - [Testing the bot](#testing-the-bot)
   - [Rasa X Deployment](#rasa-x-deployment)
     - [Action Server Image](#action-server-image)
+  - [Notes on Chatroom](#notes-on-chatroom)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -317,3 +318,27 @@ docker run -p 5055:5055 <name of your custom image>:<tag of your custom image>
 Once you have confirmed that the container works as it should, you can push the container image to a registry with `docker push`
 
 It is recommended to use an[automated CI/CD process](https://rasa.com/docs/rasa/user-guide/setting-up-ci-cd) to keep your action server up to date in a production environment.
+
+## Notes on Chatroom
+
+If you want to try the transfer to another bot feature, you'll need to use Chatroom.  As of this writing, the main Scalable Minds chatroom [project](https://github.com/scalableminds/chatroom) has not done a PR with this new feature. Here are the steps to use the enhanced version with yarn:
+
+```
+git clone https://github.com/RasaHQ/chatroom.git
+cp chatroom_handoff.html chatroom/index.html
+cd chatroom
+yarn
+yarn build
+yarn serve
+```
+
+or with npm:
+
+```
+git clone https://github.com/RasaHQ/chatroom.git
+cp chatroom_handoff.html chatroom/index.html
+cd chatroom
+npm install
+npm build
+yarn serve
+```
