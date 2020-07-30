@@ -95,6 +95,7 @@
 - [escalated]{"entity": "priority", "value": "high"}
 - [escalate]{"entity": "priority", "value": "high"}
 - [super high](priority)
+- g.stephens@rasa.com
 
 ## intent:out_of_scope
 - what is the square root of 5
@@ -122,13 +123,13 @@
 - Can I see the status of the ticket I opened?
 - Check ticket status
 - check incident status
-- ok, try looking it up for abraham.lincoln@example.com 
+- ok, try looking it up for abraham.lincoln@example.com
 - look up ticket status for abel.tuter@example.com
 
 ## intent:affirm
 - yes
 - yes please
-- yes I would 
+- yes I would
 - please do
 - yup
 - yep
@@ -150,10 +151,16 @@
 - no, use abraham.lincoln@example.com
 
 ## intent:human_handoff
-- I want a human 
+- I want a human
 - can I speak to an agent
 - real agent please
-- real human 
+- real human
 - chat with a live agent
 - give me a person please
 - i want to talk to a human
+
+## synonym:high
+- urgent
+- really important
+- escalated
+- escalate
