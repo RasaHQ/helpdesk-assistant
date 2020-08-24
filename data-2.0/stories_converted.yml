@@ -1,0 +1,108 @@
+version: "2.0"
+stories:
+- story: out of scope path
+  steps:
+  - checkpoint: STORY_START
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+- story: help
+  steps:
+  - checkpoint: STORY_START
+  - intent: help
+  - action: utter_help
+- story: thank
+  steps:
+  - checkpoint: STORY_START
+  - intent: thank
+  - action: utter_welcome
+- story: happy path
+  steps:
+  - checkpoint: STORY_START
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+- story: say goodbye
+  steps:
+  - checkpoint: STORY_START
+  - intent: goodbye
+  - action: utter_goodbye
+- story: bot challenge
+  steps:
+  - checkpoint: STORY_START
+  - intent: bot_challenge
+  - action: utter_iamabot
+- story: incident form
+  steps:
+  - checkpoint: STORY_START
+  - intent: open_incident
+  - checkpoint: GENR_OR_5ebd3
+- story: incident form
+  steps:
+  - checkpoint: STORY_START
+  - intent: password_reset
+  - checkpoint: GENR_OR_5ebd3
+- story: incident form
+  steps:
+  - checkpoint: STORY_START
+  - intent: problem_email
+  - checkpoint: GENR_OR_5ebd3
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: open_incident
+  - checkpoint: GENR_OR_2de89
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: password_reset
+  - checkpoint: GENR_OR_2de89
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: problem_email
+  - checkpoint: GENR_OR_2de89
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: open_incident
+  - checkpoint: GENR_OR_9a8c4
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: password_reset
+  - checkpoint: GENR_OR_9a8c4
+- story: incident form interrupted
+  steps:
+  - checkpoint: STORY_START
+  - intent: problem_email
+  - checkpoint: GENR_OR_9a8c4
+- story: open incident form switch to incident status form
+  steps:
+  - checkpoint: STORY_START
+  - intent: open_incident
+  - checkpoint: GENR_OR_435e1
+- story: open incident form switch to incident status form
+  steps:
+  - checkpoint: STORY_START
+  - intent: password_reset
+  - checkpoint: GENR_OR_435e1
+- story: open incident form switch to incident status form
+  steps:
+  - checkpoint: STORY_START
+  - intent: problem_email
+  - checkpoint: GENR_OR_435e1
+
+
+# non-converted stories:
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "incident form" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "incident form interrupted" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "incident status form" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "incident status form interrupted" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "incident status form switch to open incident" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
+#/Users/ella/miniconda3/envs/new/lib/python3.7/site-packages/rasa/utils/common.py:384: UserWarning: File "data-2.0/stories_converted.yml" contains a story "open incident form switch to incident status form" that has form(s) in it. This story cannot be converted automatically because of the new Rules system in Rasa Open Source version 2.0. Please convert this story manually, it will be skipped now.
+#  More info at https://rasa.com/docs/rasa/core/stories/
