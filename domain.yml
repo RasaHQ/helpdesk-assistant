@@ -1,5 +1,5 @@
 session_config:
-  session_expiration_time: 0.0
+  session_expiration_time: 0
   carry_over_slots_to_new_session: true
 intents:
 - greet
@@ -21,29 +21,28 @@ intents:
 - human_handoff
 - handoff:
     triggers: utter_greet
-
 entities:
 - email
 - priority
 - handoff_to
 slots:
-  confirm:
-    type: unfeaturized
-  previous_email:
-    type: unfeaturized
   caller_id:
+    type: unfeaturized
+  confirm:
     type: unfeaturized
   email:
     type: unfeaturized
+  handoff_to:
+    type: unfeaturized
   incident_title:
+    type: unfeaturized
+  previous_email:
     type: unfeaturized
   priority:
     type: unfeaturized
   problem_description:
     type: unfeaturized
   requested_slot:
-    type: unfeaturized
-  handoff_to:
     type: unfeaturized
 responses:
   utter_out_of_scope:
@@ -61,25 +60,23 @@ responses:
   utter_ask_problem_description:
   - text: What is the problem description for the issue?
   utter_ask_priority:
-  - text: What is the priority of this issue?
-    buttons:
-      - payload: /inform{"priority":"low"}
-        title: low
-      - payload: /inform{"priority":"medium"}
-        title: medium
-      - payload: /inform{"priority":"high"}
-        title: high
+  - buttons:
+    - payload: /inform{"priority":"low"}
+      title: low
+    - payload: /inform{"priority":"medium"}
+      title: medium
+    - payload: /inform{"priority":"high"}
+      title: high
+    text: What is the priority of this issue?
   utter_no_priority:
   - text: Sorry "{priority}" is not a valid priority. Please try again.
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_help:
-  - text: "I can help you open a service request ticket, or check the status of your open incidents.
-      \nYou can ask me things like:
-      \n- Open an incident
-      \n- Help me reset my password
-      \n- I'm having a issue with my email
-      \n- What's the status of the ticket I opened?"
+  - text: "I can help you open a service request ticket, or check the status of your\
+      \ open incidents. \nYou can ask me things like: \n- Open an incident \n- Help\
+      \ me reset my password \n- I'm having a issue with my email \n- What's the status\
+      \ of the ticket I opened?"
   utter_welcome:
   - text: You're welcome!
   utter_default:
@@ -87,33 +84,30 @@ responses:
   utter_ask_use_previous_email:
   - text: Would you like to use the last email address you used, {previous_email}?
   utter_ask_confirm:
-  - text: "Should I open an incident with the following details?
-          \n    email: {email}
-          \n    problem description: {problem_description}
-          \n    title: {incident_title}
-          \n    priority: {priority}"
-    buttons:
-    - title: Yes
-      payload: /affirm
-    - title: No, cancel the incident
-      payload: /deny
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the incident
+    text: "Should I open an incident with the following details? \n    email: {email}\
+      \ \n    problem description: {problem_description} \n    title: {incident_title}\
+      \ \n    priority: {priority}"
   utter_incident_creation_canceled:
   - text: Alright, I have cancelled the incident.
   utter_ask_whatelse:
-    - text: What else can I help you with?
+  - text: What else can I help you with?
   utter_ask_handoff:
   - text: It looks like you want to be transferred to a human agent.
   utter_handoff:
   - text: Alright, I'll try to transfer you.
   utter_wouldve_handed_off:
-  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}. 
+  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}.
   utter_no_handoff:
   - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
-
-forms:
-- open_incident_form
-- incident_status_form
-
 actions:
 - action_handoff
 - action_handoff_options
+- utter_greet
+forms:
+- open_incident_form
+- incident_status_form
