@@ -1,6 +1,6 @@
 # Rasa Helpdesk Assistant Example
 
-This is a Rasa chatbot example demonstrating how to build an AI assistant for an IT Helpdesk. It includes an integration with the Service Now API to open incident reports and check on incident report statuses. Below is an example conversation, showing the bot helping a user open a support ticket and query its status. You can use this chatbot as a starting point for building customer service assistants or as a template for collecting required pieces of information from a user before making an API call. 
+This is a Rasa chatbot example demonstrating how to build an AI assistant for an IT Helpdesk. It includes an integration with the Service Now API to open incident reports and check on incident report statuses. Below is an example conversation, showing the bot helping a user open a support ticket and query its status. You can use this chatbot as a starting point for building customer service assistants or as a template for collecting required pieces of information from a user before making an API call.
 
 Here is an example of a conversation you can have with this bot:
 
@@ -9,7 +9,7 @@ Here is an example of a conversation you can have with this bot:
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents** 
+**Table of Contents**
 
 - [Rasa Helpdesk Assistant Example](#rasa-helpdesk-assistant-example)
   - [Setup](#setup)
@@ -46,7 +46,7 @@ pip install -r requirements-dev.txt
 pre-commit install
 ```
 
-> With pre-commit installed, the `black` and `doctoc` hooks will run on every `git commit`. 
+> With pre-commit installed, the `black` and `doctoc` hooks will run on every `git commit`.
 > If any changes are made by the hooks, you will need to re-add changed files and re-commit your changes.
 
 ### Optional: Connect to a ServiceNow instance
@@ -57,7 +57,7 @@ To run the bot  without connecting ServiceNow,
 you don't need to change anything in `actions/snow_credentials.yml`; `localmode` should already be set
 to `true`
 
-If you do want to connect to ServiceNow, you can get your own free Developer instance 
+If you do want to connect to ServiceNow, you can get your own free Developer instance
 to test this with [here](https://developer.servicenow.com/app.do#!/home)
 
 To connect to your ServiceNow developer instance, configure the following in `actions/snow_credentials.yml`:
@@ -95,6 +95,14 @@ rasa shell --debug
 Note that `--debug` mode will produce a lot of output meant to help you understand how the bot is working
 under the hood. You can also add this flag to the action server command. To simply talk to the bot, you can remove this flag.
 
+You can also try out the bot locally using Rasa X by running
+
+```bash
+rasa x
+```
+
+Refer to our guided workflow in the [Wiki page](https://github.com/RasaHQ/helpdesk-assistant/wiki/Using-Rasa-X-with-the-Helpdesk-Assistant) for how to get started with Rasa X in local mode.
+
 ## Things you can ask the bot
 
 The bot has two main skills:
@@ -118,34 +126,34 @@ With `localmode=true`:
 
 ```
 Bot loaded. Type a message and press enter (use '/stop' to exit):
-Your input ->  hi                                                          
+Your input ->  hi
     Hello!
-    I can help you open a service request ticket, or check the status of your open incidents. 
-    You can ask me things like: 
-    - Open an incident 
-    - Help me reset my password 
-    - I'm having a issue with my email 
+    I can help you open a service request ticket, or check the status of your open incidents.
+    You can ask me things like:
+    - Open an incident
+    - Help me reset my password
+    - I'm having a issue with my email
     - What's the status of the ticket I opened?
-Your input ->  i have a problem with my email                              
+Your input ->  i have a problem with my email
     What is your email address?
-Your input ->  anything@example.com                                        
-    ? What is the priority of this issue?  
-Your input -> 1: low (/inform{"priority":"low"})  
+Your input ->  anything@example.com
+    ? What is the priority of this issue?
+Your input -> 1: low (/inform{"priority":"low"})
     What is the problem description for the issue?
-Your input ->  Can't log in to my email                                    
-    ? Should I open an incident with the following details? 
-    email: anything@example.com 
-    problem description: Can't log in to my email 
-    title: Problem with email                                              
-Your input -> priority: low  1: Yes (/affirm)                                        
+Your input ->  Can't log in to my email
+    ? Should I open an incident with the following details?
+    email: anything@example.com
+    problem description: Can't log in to my email
+    title: Problem with email
+Your input -> priority: low  1: Yes (/affirm)
     An incident with the following details would be opened if ServiceNow was connected:
     email: anything@example.com
     problem description: Can't log in to my email
     title: Problem with email
     priority: low
-Your input ->  thanks. Can i check the status of my other tickets?         
+Your input ->  thanks. Can i check the status of my other tickets?
     Would you like to use the last email address you used, anything@example.com?
-Your input ->  Yes please                                                  
+Your input ->  Yes please
     Since ServiceNow isn't connected, I'm making this up!
     The most recent incident for anything@example.com is currently awaiting triage
 ```
@@ -155,36 +163,36 @@ With `localmode=false`:
 With a Service Now instance connected, it will check if the email address is in the instance database and provide an incident number for the final response:
 
 ```
-Your input ->  help me reset my password                                   
+Your input ->  help me reset my password
     What is your email address?
-Your input ->  idontexist@example.com                                      
+Your input ->  idontexist@example.com
     Sorry, "idontexist@example.com" isn't in our incident management system. Please try again.
     What is your email address?
-Your input ->  abraham.lincoln@example.com                                 
-    ? What is the priority of this issue?  
-Your input -> 3: high (/inform{"priority":"high"})                                                                        
+Your input ->  abraham.lincoln@example.com
+    ? What is the priority of this issue?
+Your input -> 3: high (/inform{"priority":"high"})
     What is the problem description for the issue?
-Your input ->  Password stuck in a loop                                    
-    ? Should I open an incident with the following details? 
-    email: abraham.lincoln@example.com 
-    problem description: Password stuck in a loop 
-    title: Problem resetting password                                      
-    priority: high  
-Your input ->  1: Yes (/affirm)                                       
+Your input ->  Password stuck in a loop
+    ? Should I open an incident with the following details?
+    email: abraham.lincoln@example.com
+    problem description: Password stuck in a loop
+    title: Problem resetting password
+    priority: high
+Your input ->  1: Yes (/affirm)
     Successfully opened up incident INC0010008 for you.  Someone will reach out soon.
-Your input ->  Can I check the status of my tickets?                       
+Your input ->  Can I check the status of my tickets?
     Would you like to use the last email address you used, abraham.lincoln@example.com?
-Your input ->  Yes please                                                  
+Your input ->  Yes please
     Incident INC0010002: "Email Log in problem", opened on 2020-05-21 09:57:06 is currently in progress
     Incident INC0010008: "Problem resetting password", opened on 2020-05-21 12:12:49 is currently awaiting triage
-Your input ->  thanks                                                      
+Your input ->  thanks
     You're welcome!
 ```
 
 
 ## Handoff
 
-This bot includes a simple skill for handing off the conversation to another bot or a human. 
+This bot includes a simple skill for handing off the conversation to another bot or a human.
 This demo relies on [this fork of chatroom](https://github.com/RasaHQ/chatroom) to work, however you
 could implement similar behaviour in another channel and then use that instead. See the chatroom README for
 more details on channel-side configuration.
@@ -234,8 +242,8 @@ yarn serve
 
 Using chatroom, the general approach is as follows:
 
-1. User asks original bot for a handoff. 
-2. The original bot handles the request and eventually 
+1. User asks original bot for a handoff.
+2. The original bot handles the request and eventually
    sends a message with the following custom json payload:
     ```
         {
@@ -245,7 +253,7 @@ Using chatroom, the general approach is as follows:
     ```
     This message is not displayed in the Chatroom window.
 3. Chatroom switches the host to the specified `handoff_host`
-4. The original bot no longer receives any messages. 
+4. The original bot no longer receives any messages.
 5. The handoff host receives the message `/handoff{"from_host":"<original bot url">}`
 6. The handoff host should be configured to respond to this message with something like,
    "Hi, I'm <so and so>, how can I help you??"
@@ -258,7 +266,7 @@ Using chatroom, the general approach is as follows:
 The "try it out" section doesn't require any further configuration; this section is for those
 who want to change or further understand the set up.
 
-For this demo, the user can ask for a human, but they'll be offered a bot (or bots) instead, 
+For this demo, the user can ask for a human, but they'll be offered a bot (or bots) instead,
 so that the conversation looks like this:
 
 
@@ -274,31 +282,31 @@ handoff_hosts:
     #   url: "http://localhost:5007"
 ```
 
-Handoff hosts can be other locally running rasa bots, or anything that serves responses in the format that chatroom 
-accepts. If a handoff host is not a rasa bot, you will of course want to update the response text to tell the user 
+Handoff hosts can be other locally running rasa bots, or anything that serves responses in the format that chatroom
+accepts. If a handoff host is not a rasa bot, you will of course want to update the response text to tell the user
 who/what they are being handed off to.
 
-The [Financial-Demo](https://github.com/RasaHQ/Financial-Demo) bot has been set up to handle handoff in exactly the same way as Helpdesk-Assistant, 
+The [Financial-Demo](https://github.com/RasaHQ/Financial-Demo) bot has been set up to handle handoff in exactly the same way as Helpdesk-Assistant,
 so the simplest way to see handoff in action is to clone Financial-Demo alongside this repo.
 
-If you list other locally running bots as handoff hosts, make sure the ports on which the various rasa servers & action servers are running do not conflict with each other. 
+If you list other locally running bots as handoff hosts, make sure the ports on which the various rasa servers & action servers are running do not conflict with each other.
 
 
 ## Testing the bot
 
-You can test the bot on the test conversations by running  `rasa test`. 
-This will run [end-to-end testing](https://rasa.com/docs/rasa/user-guide/testing-your-assistant/#end-to-end-testing) on the conversations in `tests/conversation_tests.md`. 
+You can test the bot on the test conversations by running  `rasa test`.
+This will run [end-to-end testing](https://rasa.com/docs/rasa/user-guide/testing-your-assistant/#end-to-end-testing) on the conversations in `tests/conversation_tests.md`.
 
 ## Rasa X Deployment
 
-To [deploy helpdesk-assistant](https://rasa.com/docs/rasa/user-guide/how-to-deploy/), it is highly recommended to make use of the 
-[one line deploy script](https://rasa.com/docs/rasa-x/installation-and-setup/one-line-deploy-script/) for Rasa X. As part of the deployment, you'll need to set up [git integration](https://rasa.com/docs/rasa-x/installation-and-setup/integrated-version-control/#connect-your-rasa-x-server-to-a-git-repository) to pull in your data and 
+To [deploy helpdesk-assistant](https://rasa.com/docs/rasa/user-guide/how-to-deploy/), it is highly recommended to make use of the
+[one line deploy script](https://rasa.com/docs/rasa-x/installation-and-setup/one-line-deploy-script/) for Rasa X. As part of the deployment, you'll need to set up [git integration](https://rasa.com/docs/rasa-x/installation-and-setup/integrated-version-control/#connect-your-rasa-x-server-to-a-git-repository) to pull in your data and
 configurations, and build or pull an action server image.
 
 ### Action Server Image
 
 You will need to have docker installed in order to build the action server image. If you haven't made any changes to the action code, you can also use
-the [public image on Dockerhub](https://hub.docker.com/r/rasa/helpdesk-assistant) instead of building it yourself. 
+the [public image on Dockerhub](https://hub.docker.com/r/rasa/helpdesk-assistant) instead of building it yourself.
 
 
 See the Dockerfile for what is included in the action server image,

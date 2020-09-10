@@ -106,7 +106,7 @@ responses:
   utter_handoff:
   - text: Alright, I'll try to transfer you.
   utter_wouldve_handed_off:
-  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}. 
+  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}.
   utter_no_handoff:
   - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
 
@@ -117,3 +117,4 @@ forms:
 actions:
 - action_handoff
 - action_handoff_options
+- utter_greet
