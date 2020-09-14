@@ -42,6 +42,7 @@
 - reset my password
 - password reset
 - forgot my password and can't reset it
+- I forgot it again
 
 ## intent:open_incident
 - I need to open an incident
@@ -59,6 +60,8 @@
 - open an [urgent]{"entity": "priority", "value": "high"} issue
 - I want to open an incident, but it's [low](priority) priority
 - I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
+- I can't log in to my email
+- pc fan noisy
 
 ## intent:help
 - I need help
@@ -76,7 +79,6 @@
 - outlook application will not open
 - there's a problem with my email
 - something is broken with outlook
-- I can't log in to my email
 - can't log in to outlook
 - my email won't let me log in
 - i have a problem with my email
@@ -109,6 +111,7 @@
 - I want to order a pizza
 - what is the weather today
 - what is the weather
+- add two plus two
 
 ## intent:incident_status
 - I want to check if my ticket has been closed
@@ -122,13 +125,13 @@
 - Can I see the status of the ticket I opened?
 - Check ticket status
 - check incident status
-- ok, try looking it up for abraham.lincoln@example.com 
+- ok, try looking it up for abraham.lincoln@example.com
 - look up ticket status for abel.tuter@example.com
 
 ## intent:affirm
 - yes
 - yes please
-- yes I would 
+- yes I would
 - please do
 - yup
 - yep
@@ -150,10 +153,16 @@
 - no, use abraham.lincoln@example.com
 
 ## intent:human_handoff
-- I want a human 
+- I want a human
 - can I speak to an agent
 - real agent please
-- real human 
+- real human
 - chat with a live agent
 - give me a person please
 - i want to talk to a human
+
+## synonym:high
+- urgent
+- really important
+- escalated
+- escalate
