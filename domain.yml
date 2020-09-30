@@ -1,3 +1,4 @@
+version: "2.0"
 session_config:
   session_expiration_time: 0.0
   carry_over_slots_to_new_session: true
@@ -19,8 +20,7 @@ intents:
 - deny
 - trigger_handoff
 - human_handoff
-- handoff:
-    triggers: utter_greet
+- handoff
 
 entities:
 - email
