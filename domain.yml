@@ -28,23 +28,32 @@ entities:
 - handoff_to
 slots:
   confirm:
-    type: unfeaturized
+    type: bool
+    influence_conversation: false
   previous_email:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   caller_id:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   email:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   incident_title:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   priority:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   problem_description:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   requested_slot:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
   handoff_to:
-    type: unfeaturized
+    type: text
+    influence_conversation: false
 responses:
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
