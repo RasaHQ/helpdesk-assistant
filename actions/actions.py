@@ -1,9 +1,9 @@
 import logging
-from typing import Dict, Text, Any, List, Optional
+from typing import Dict, Text, Any, List
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher, Action
-from rasa_sdk.forms import REQUESTED_SLOT, FormValidationAction
-from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
+from rasa_sdk.forms import FormValidationAction
+from rasa_sdk.events import AllSlotsReset, SlotSet
 from actions.snow import SnowAPI
 import random
 
@@ -17,30 +17,26 @@ localmode = snow.localmode
 logger.debug(f"Local mode: {snow.localmode}")
 
 
-def custom_request_next_slot(
-    form,
-    dispatcher: "CollectingDispatcher",
-    tracker: "Tracker",
-    domain: Dict[Text, Any],
-) -> Optional[List[EventType]]:
-    """Request the next slot and utter template if needed,
-        else return None"""
+class ActionAskEmail(Action):
+    def name(self) -> Text:
+        return "action_ask_email"
 
-    for slot in form.required_slots(tracker):
-        if form._should_request_slot(tracker, slot):
-            logger.debug(f"Request next slot '{slot}'")
-            if slot == "email" and tracker.get_slot("previous_email"):
-                dispatcher.utter_message(
-                    template=f"utter_ask_use_previous_email_{slot}",
-                    **tracker.slots,
-                )
-            else:
-                dispatcher.utter_message(
-                    template=f"utter_ask_{slot}", **tracker.slots
-                )
-            return [SlotSet(REQUESTED_SLOT, slot)]
-
-    return None
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        if tracker.get_slot("previous_email"):
+            dispatcher.utter_message(
+                template=f"utter_ask_use_previous_email",
+                previous_email=tracker.get_slot("previous_email"),
+            )
+        else:
+            dispatcher.utter_message(
+                template=f"utter_ask_email", **tracker.slots
+            )
+        return []
 
 
 def _validate_email(
@@ -74,15 +70,6 @@ def _validate_email(
 class ValidateOpenIncidentForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_open_incident_form"
-
-    # def request_next_slot(
-    #     self,
-    #     dispatcher: "CollectingDispatcher",
-    #     tracker: "Tracker",
-    #     domain: Dict[Text, Any],
-    # ) -> Optional[List[EventType]]:
-    #
-    #     return custom_request_next_slot(self, dispatcher, tracker, domain)
 
     def validate_email(
         self,
@@ -172,15 +159,6 @@ class ActionOpenIncident(Action):
 class IncidentStatusForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_incident_status_form"
-
-    # def request_next_slot(
-    #     self,
-    #     dispatcher: "CollectingDispatcher",
-    #     tracker: "Tracker",
-    #     domain: Dict[Text, Any],
-    # ) -> Optional[List[EventType]]:
-    #
-    #     return custom_request_next_slot(self, dispatcher, tracker, domain)
 
     def validate_email(
         self,
