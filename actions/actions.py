@@ -30,11 +30,10 @@ class ActionAskEmail(Action):
         if tracker.get_slot("previous_email"):
             dispatcher.utter_message(
                 template=f"utter_ask_use_previous_email",
-                previous_email=tracker.get_slot("previous_email"),
             )
         else:
             dispatcher.utter_message(
-                template=f"utter_ask_email", **tracker.slots
+                template=f"utter_ask_email"
             )
         return []
 
