@@ -7,6 +7,7 @@ stories:
   - action: action_handoff_options
   - intent: trigger_handoff
   - action: action_handoff
+
 - story: handoff
   steps:
   - intent: human_handoff
@@ -16,6 +17,7 @@ stories:
     entities:
     - handoff_to: financial_demo
   - action: action_handoff
+
 - story: handoff deny
   steps:
   - intent: human_handoff

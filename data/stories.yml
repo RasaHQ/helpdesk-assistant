@@ -4,27 +4,33 @@ stories:
   steps:
   - intent: out_of_scope
   - action: utter_out_of_scope
+
 - story: help
   steps:
   - intent: help
   - action: utter_help
+
 - story: thank
   steps:
   - intent: thank
   - action: utter_welcome
+
 - story: happy path
   steps:
   - intent: greet
   - action: utter_greet
   - action: utter_help
+
 - story: say goodbye
   steps:
   - intent: goodbye
   - action: utter_goodbye
+
 - story: bot challenge
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
 - story: incident form
   steps:
   - or:
@@ -34,6 +40,8 @@ stories:
   - action: open_incident_form
   - active_loop: open_incident_form
   - active_loop: null
+  - action: action_open_incident
+
 - story: incident form interrupted
   steps:
   - or:
@@ -46,6 +54,8 @@ stories:
   - action: utter_help
   - action: open_incident_form
   - active_loop: null
+  - action: action_open_incident
+
 - story: incident form interrupted
   steps:
   - or:
@@ -58,12 +68,15 @@ stories:
   - action: utter_out_of_scope
   - action: open_incident_form
   - active_loop: null
+  - action: action_open_incident
+
 - story: incident status form
   steps:
   - intent: incident_status
   - action: incident_status_form
   - active_loop: incident_status_form
   - active_loop: null
+
 - story: incident status form interrupted
   steps:
   - intent: incident_status
@@ -73,6 +86,7 @@ stories:
   - action: utter_help
   - action: incident_status_form
   - active_loop: null
+
 - story: incident status form interrupted
   steps:
   - intent: incident_status
@@ -82,6 +96,7 @@ stories:
   - action: utter_out_of_scope
   - action: incident_status_form
   - active_loop: null
+
 - story: incident status form switch to open incident
   steps:
   - intent: incident_status
@@ -94,6 +109,8 @@ stories:
   - action: open_incident_form
   - active_loop: open_incident_form
   - active_loop: null
+  - action: action_open_incident
+
 - story: open incident form switch to incident status form
   steps:
   - or:

@@ -1,8 +1,8 @@
 import logging
 from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Tracker
-from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.forms import FormAction, REQUESTED_SLOT
+from rasa_sdk.executor import CollectingDispatcher, Action
+from rasa_sdk.forms import FormAction, REQUESTED_SLOT, FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
 from actions.snow import SnowAPI
 import random
@@ -71,79 +71,18 @@ def _validate_email(
         return {"email": None}
 
 
-class OpenIncidentForm(FormAction):
+class ValidateOpenIncidentForm(FormValidationAction):
     def name(self) -> Text:
-        return "open_incident_form"
+        return "validate_open_incident_form"
 
-    def request_next_slot(
-        self,
-        dispatcher: "CollectingDispatcher",
-        tracker: "Tracker",
-        domain: Dict[Text, Any],
-    ) -> Optional[List[EventType]]:
-
-        return custom_request_next_slot(self, dispatcher, tracker, domain)
-
-    @staticmethod
-    def required_slots(tracker: Tracker) -> List[Text]:
-        """A list of required slots that the form has to fill"""
-
-        return [
-            "email",
-            "priority",
-            "problem_description",
-            "incident_title",
-            "confirm",
-        ]
-
-    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        """A dictionary to map required slots to
-            - an extracted entity
-            - intent: value pairs
-            - a whole message
-            or a list of them, where a first match will be picked"""
-
-        return {
-            "email": [
-                self.from_entity(entity="email"),
-                self.from_intent(value=True, intent="affirm"),
-                self.from_intent(value=False, intent="deny"),
-            ],
-            "priority": self.from_entity(entity="priority"),
-            "problem_description": [
-                self.from_text(
-                    not_intent=[
-                        "incident_status",
-                        "bot_challenge",
-                        "help",
-                        "affirm",
-                        "deny",
-                    ]
-                )
-            ],
-            "incident_title": [
-                self.from_trigger_intent(
-                    intent="password_reset",
-                    value="Problem resetting password",
-                ),
-                self.from_trigger_intent(
-                    intent="problem_email", value="Problem with email"
-                ),
-                self.from_text(
-                    not_intent=[
-                        "incident_status",
-                        "bot_challenge",
-                        "help",
-                        "affirm",
-                        "deny",
-                    ]
-                ),
-            ],
-            "confirm": [
-                self.from_intent(value=True, intent="affirm"),
-                self.from_intent(value=False, intent="deny"),
-            ],
-        }
+    # def request_next_slot(
+    #     self,
+    #     dispatcher: "CollectingDispatcher",
+    #     tracker: "Tracker",
+    #     domain: Dict[Text, Any],
+    # ) -> Optional[List[EventType]]:
+    #
+    #     return custom_request_next_slot(self, dispatcher, tracker, domain)
 
     def validate_email(
         self,
@@ -170,7 +109,12 @@ class OpenIncidentForm(FormAction):
             dispatcher.utter_message(template="utter_no_priority")
             return {"priority": None}
 
-    def submit(
+
+class ActionOpenIncident(Action):
+    def name(self) -> Text:
+        return "action_open_incident"
+
+    def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
