@@ -162,11 +162,21 @@ forms:
       - type: from_intent
         intent: deny
         value: false
-
-- incident_status_form
+  incident_status_form:
+    email:
+      - type: from_entity
+        entity: email
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
 
 actions:
+- action_check_incident_status
 - action_handoff
 - action_handoff_options
 - action_open_incident
 - validate_open_incident_form
+- validate_incident_status_form

@@ -31,7 +31,7 @@ stories:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- story: incident form
+- story: open incident form
   steps:
   - or:
     - intent: open_incident
@@ -42,7 +42,7 @@ stories:
   - active_loop: null
   - action: action_open_incident
 
-- story: incident form interrupted
+- story: open incident form interrupted
   steps:
   - or:
     - intent: open_incident
@@ -56,7 +56,7 @@ stories:
   - active_loop: null
   - action: action_open_incident
 
-- story: incident form interrupted
+- story: open incident form interrupted
   steps:
   - or:
     - intent: open_incident
@@ -76,6 +76,7 @@ stories:
   - action: incident_status_form
   - active_loop: incident_status_form
   - active_loop: null
+  - action: action_check_incident_status
 
 - story: incident status form interrupted
   steps:
@@ -86,6 +87,7 @@ stories:
   - action: utter_help
   - action: incident_status_form
   - active_loop: null
+  - action: action_check_incident_status
 
 - story: incident status form interrupted
   steps:
@@ -96,6 +98,7 @@ stories:
   - action: utter_out_of_scope
   - action: incident_status_form
   - active_loop: null
+  - action: action_check_incident_status
 
 - story: incident status form switch to open incident
   steps:
@@ -123,3 +126,4 @@ stories:
   - action: incident_status_form
   - active_loop: incident_status_form
   - active_loop: null
+  - action: action_check_incident_status

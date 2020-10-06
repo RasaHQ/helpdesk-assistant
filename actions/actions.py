@@ -1,8 +1,8 @@
 import logging
-from typing import Dict, Text, Any, List, Union, Optional
+from typing import Dict, Text, Any, List, Optional
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher, Action
-from rasa_sdk.forms import FormAction, REQUESTED_SLOT, FormValidationAction
+from rasa_sdk.forms import REQUESTED_SLOT, FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet, EventType
 from actions.snow import SnowAPI
 import random
@@ -169,39 +169,18 @@ class ActionOpenIncident(Action):
         return [AllSlotsReset(), SlotSet("previous_email", email)]
 
 
-class IncidentStatusForm(FormAction):
+class IncidentStatusForm(FormValidationAction):
     def name(self) -> Text:
-        return "incident_status_form"
+        return "validate_incident_status_form"
 
-    def request_next_slot(
-        self,
-        dispatcher: "CollectingDispatcher",
-        tracker: "Tracker",
-        domain: Dict[Text, Any],
-    ) -> Optional[List[EventType]]:
-
-        return custom_request_next_slot(self, dispatcher, tracker, domain)
-
-    @staticmethod
-    def required_slots(tracker: Tracker) -> List[Text]:
-        """A list of required slots that the form has to fill"""
-
-        return ["email"]
-
-    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        """A dictionary to map required slots to
-            - an extracted entity
-            - intent: value pairs
-            - a whole message
-            or a list of them, where a first match will be picked"""
-
-        return {
-            "email": [
-                self.from_entity(entity="email"),
-                self.from_intent(value=True, intent="affirm"),
-                self.from_intent(value=False, intent="deny"),
-            ]
-        }
+    # def request_next_slot(
+    #     self,
+    #     dispatcher: "CollectingDispatcher",
+    #     tracker: "Tracker",
+    #     domain: Dict[Text, Any],
+    # ) -> Optional[List[EventType]]:
+    #
+    #     return custom_request_next_slot(self, dispatcher, tracker, domain)
 
     def validate_email(
         self,
@@ -213,7 +192,12 @@ class IncidentStatusForm(FormAction):
         """Validate email is in ticket system."""
         return _validate_email(value, dispatcher, tracker, domain)
 
-    def submit(
+
+class ActionCheckIncidentStatus(Action):
+    def name(self) -> Text:
+        return "action_check_incident_status"
+
+    def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
