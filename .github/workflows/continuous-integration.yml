@@ -26,7 +26,7 @@ jobs:
         run: docker pull rasa/helpdesk-assistant:latest || true
 
       - name: Set Build ID from run ID and number
-        run: echo ::set-env name=BUILD_NUMBER::$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID
+        run: echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID" >> $GITHUB_ENV
 
       - name: Build latest${{ matrix.image.tag_ext }} Docker image
         run: docker build . --tag rasa/helpdesk-assistant:latest --tag rasa/helpdesk-assistant:run$BUILD_NUMBER --cache-from rasa/helpdesk-assistant:latest
