@@ -1,0 +1,68 @@
+version: "2.0"
+stories:
+- story: bot challenge
+  steps:
+  - intent: bot_challenge
+    user: |-
+      Are you a bot?
+  - action: utter_iamabot
+
+- story: out of scope
+  steps:
+  - intent: out_of_scope
+    user: |-
+      I want a pizza
+  - action: utter_out_of_scope
+
+- story: open incident
+  steps:
+  - intent: greet
+    user: |-
+      hello
+  - action: utter_greet
+  - action: utter_help
+  - intent: open_incident
+    user: |-
+      I need to open an incident
+  - action: open_incident_form
+  - active_loop: open_incident_form
+  - active_loop: null
+  - action: action_open_incident
+
+- story: open password reset incident
+  steps:
+  - intent: password_reset
+    user: |-
+      I'm having issues with my password
+  - action: open_incident_form
+  - active_loop: open_incident_form
+  - active_loop: null
+  - action: action_open_incident
+
+- story: email incident
+  steps:
+  - intent: greet
+    user: |-
+      hello
+  - action: utter_greet
+  - action: utter_help
+  - intent: problem_email
+    user: |-
+      I have a problem with my email
+  - action: open_incident_form
+  - active_loop: open_incident_form
+  - active_loop: null
+  - action: action_open_incident
+
+- story: interrupted
+  steps:
+  - intent: problem_email
+    user: |-
+      I have a problem with my email
+  - action: open_incident_form
+  - active_loop: open_incident_form
+  - intent: help
+  - action: utter_help
+  - action: open_incident_form
+  - active_loop: null
+  - action: action_open_incident
