@@ -28,13 +28,9 @@ class ActionAskEmail(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         if tracker.get_slot("previous_email"):
-            dispatcher.utter_message(
-                template=f"utter_ask_use_previous_email",
-            )
+            dispatcher.utter_message(template=f"utter_ask_use_previous_email",)
         else:
-            dispatcher.utter_message(
-                template=f"utter_ask_email"
-            )
+            dispatcher.utter_message(template=f"utter_ask_email")
         return []
 
 
