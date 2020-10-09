@@ -37,6 +37,7 @@ rules:
   - rule: submit open incident form
     condition:
       - active_loop: open_incident_form
+    steps:
     - action: open_incident_form
     - active_loop: null
     - action: action_open_incident
@@ -50,6 +51,7 @@ rules:
   - rule: submit incident status form
     condition:
       - active_loop: incident_status_form
+    steps:
     - action: incident_status_form
     - active_loop: null
     - action: action_check_incident_status
