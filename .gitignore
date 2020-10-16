@@ -15,3 +15,4 @@ results/
 models/
 snow_connector.py
 chatroom/
+.idea/

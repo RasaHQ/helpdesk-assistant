@@ -11,7 +11,9 @@ pipeline:
   - name: DIETClassifier
     epochs: 150
     random_seed: 1
-  - name: DucklingHTTPExtractor
+  - name: FallbackClassifier
+    confidence_threshold: 0.7
+  - name: DucklingEntityExtractor
     url: http://localhost:8000
     dimensions:
     - email
@@ -22,7 +24,8 @@ policies:
   - name: TEDPolicy
     max_history: 4
     epochs: 100
-  - name: MappingPolicy
-  - name: FallbackPolicy
-    nlu_threshold: 0.7
-  - name: FormPolicy
+  - name: RulePolicy
+    core_fallback_threshold: 0.4
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: True
+
