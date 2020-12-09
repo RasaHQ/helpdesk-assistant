@@ -59,6 +59,9 @@ jobs:
       run: |
         make validate
   training-testing:
+    name: Testing Stories
+    runs-on: ubuntu-latest
+    needs: [data-validation]
     steps:
       - name: Rasa Train and Test GitHub Action
         uses: RasaHQ/rasa-train-test-gha@master
