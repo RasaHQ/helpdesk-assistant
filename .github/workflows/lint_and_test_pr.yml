@@ -73,7 +73,7 @@ jobs:
           python -m pip install -U 'pip<20'
           pip install -r requirements-dev.txt
       - name: Rasa Train and Test GitHub Action
-        uses: RasaHQ/rasa-train-test-gha@master
+        uses: RasaHQ/rasa-train-test-gha@init
         with:
           test_type: all
           cross_validation: true

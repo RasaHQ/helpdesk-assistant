@@ -46,7 +46,7 @@ jobs:
   my_first_job:
     steps:
       - name: Rasa Train and Test GitHub Action
-        uses: RasaHQ/rasa-train-test-gha@master
+        uses: RasaHQ/rasa-train-test-gha@init
         with:
           test_type: nlu
   # data-validation:
