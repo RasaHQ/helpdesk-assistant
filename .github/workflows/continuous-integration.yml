@@ -27,4 +27,4 @@ jobs:
           docker_registry_password: ${{ secrets.DOCKERHUB_PASSWORD }}
           docker_image_name: 'rasa/helpdesk-assistant'
           docker_image_tag: 'test'
-          rasa_sdk_version: '2.0'
+          rasa_sdk_version: '2.0.0'
