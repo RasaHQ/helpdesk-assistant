@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
-print("TEST-CHANGE")
-
 snow = SnowAPI()
 localmode = snow.localmode
 logger.debug(f"Local mode: {snow.localmode}")

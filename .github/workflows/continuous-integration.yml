@@ -1,11 +1,13 @@
 name: Continuous Integration
 on:
-  push:
-    branches:
-    - master
-    paths:
-    - 'actions/**'
-    - 'Dockerfile'
+  pull_request:
+# on:
+#   push:
+#     branches:
+#     - master
+#     paths:
+#     - 'actions/**'
+#     - 'Dockerfile'
 
 jobs:
   docker:
@@ -24,5 +26,5 @@ jobs:
           docker_registry_login: ${{ env.DOCKERHUB_USERNAME }}
           docker_registry_password: ${{ secrets.DOCKERHUB_PASSWORD }}
           docker_image_name: 'rasa/helpdesk-assistant'
-          docker_image_tag: 'latest'
+          docker_image_tag: 'test'
           rasa_sdk_version: '2.0'
