@@ -44,7 +44,7 @@ jobs:
   training-testing:
     name: Training and Testing
     runs-on: ubuntu-latest
-    needs: [data-validation]
+    needs: [lint-testing, type-testing]
     steps:
       - uses: actions/checkout@v1
       - name: Rasa Train and Test GitHub Action
