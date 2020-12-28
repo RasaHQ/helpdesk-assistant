@@ -16,6 +16,7 @@ snow = SnowAPI()
 localmode = snow.localmode
 logger.debug(f"Local mode: {snow.localmode}")
 
+logger.debug("Test Change")
 
 class ActionAskEmail(Action):
     def name(self) -> Text:
