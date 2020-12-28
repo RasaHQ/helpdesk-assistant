@@ -1,11 +1,14 @@
 version: "2.0"
 stories:
-- story: thank + greet
+
+- story: answer out of scope
   steps:
-  - intent: thank
-  - action: utter_welcome
-  - intent: greet
-  - action: utter_greet
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+
+- story: give help
+  steps:
+  - intent: help
   - action: utter_help
 
 - story: thank
