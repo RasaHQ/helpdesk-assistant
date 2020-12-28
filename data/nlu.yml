@@ -10,7 +10,7 @@ nlu:
     - hey there
     - hi there
     - hello there
-    - hola
+    - greetings
 - intent: goodbye
   examples: |
     - bye
