@@ -41,25 +41,44 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: |
         make types
-  training-testing:
-    name: Training and Testing
+  training:
+    name: Training Model
     runs-on: ubuntu-latest
     needs: [lint-testing, type-testing]
+    env:
+      RASA_VERSION: 2.1.3
     steps:
       - uses: actions/checkout@v1
       - id: files
         uses: jitterbit/get-changed-files@v1
-      - name: set_training
+      - name: Did Training Data Change
         if: |
             contains(  steps.files.outputs.all, 'data/' )
             || contains(  steps.files.outputs.all, 'config.yml' )
             || contains(  steps.files.outputs.all, 'domain.yml' )
+            || contains(  steps.files.outputs.all, '.github/workflows/build-model.yml' )
         run: echo "RUN_TRAINING=true" >> $GITHUB_ENV
-      - name: Rasa Train and Test GitHub Action
+      - name: Rasa Train
         if: env.RUN_TRAINING == 'true'
         uses: RasaHQ/rasa-train-test-gha@main
         with:
-          rasa_version: '2.1.3'
+          rasa_version: ${{ env.RASA_VERSION }}
+          rasa_test: false
+          data_validate: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  test-model:
+    name: Test Model
+    runs-on: ubuntu-latest
+    needs: [training]
+    env:
+      RASA_VERSION: 2.1.3
+    steps:
+      - uses: actions/checkout@v1
+      - name: Rasa Train and Test GitHub Action
+        uses: RasaHQ/rasa-train-test-gha@main
+        with:
+          rasa_version: ${{ env.RASA_VERSION }}
+          rasa_train: false
           test_type: all
           data_validate: true
           cross_validation: true

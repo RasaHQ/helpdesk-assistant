@@ -5,13 +5,18 @@ on:
     - master
     paths:
     - 'actions/**'
+    - '.github/workflows/continuous-integration.yml'
 
 jobs:
   docker:
     name: Build Action Server Docker Image
     runs-on: ubuntu-latest
     env:
+      RASA_SDK_VERS: 2.1.2
+      DOCKER_IMAGE_TAG: latest
       DOCKERHUB_USERNAME: oakela
+      DOCKER_IMAGE_NAME: rasa/helpdesk-assistant
+      REQUIREMENTS_FILE: 'actions/requirements.txt'
     steps:
       - name: Checkout git repository 🕝
         uses: actions/checkout@v2
@@ -19,9 +24,9 @@ jobs:
         uses: RasaHQ/rasa-action-server-gha@master
         with:
           actions_directory: 'actions'
-          requirements_file: 'actions/requirements-actions.txt'
+          requirements_file: ${{ env.REQUIREMENTS_FILE }}
           docker_registry_login: ${{ env.DOCKERHUB_USERNAME }}
           docker_registry_password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          docker_image_name: 'rasa/helpdesk-assistant'
-          docker_image_tag: 'latest'
-          rasa_sdk_version: '2.1.2'
+          docker_image_name: ${{ env.DOCKER_IMAGE_NAME }}
+          docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
+          rasa_sdk_version: ${{ env.RASA_SDK_VERS }}
