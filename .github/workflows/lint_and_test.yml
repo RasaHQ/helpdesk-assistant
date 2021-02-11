@@ -2,7 +2,7 @@ name: Lint and Test
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
     - "README.md"
     - "Makefile"
@@ -68,8 +68,8 @@ jobs:
           publish_summary: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload model
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@master
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@main
         with:
           name: model
           path: models
