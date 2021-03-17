@@ -11,6 +11,8 @@ nlu:
     - hi there
     - hello there
     - greetings
+    - Hi
+    - helo
 - intent: goodbye
   examples: |
     - bye
@@ -35,6 +37,8 @@ nlu:
     - am I talking to a human?
     - you are a bot right
     - aren't you a bot
+    - Are you a bot?
+    - are you bot
 - intent: password_reset
   examples: |
     - need to reset my password
@@ -63,6 +67,11 @@ nlu:
     - open an [urgent]{"entity": "priority", "value": "high"} issue
     - I want to open an incident, but it's [low](priority) priority
     - I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
+    - open an incident
+    - open an incedent
+    - i want to open an incident
+    - i wanna open a incident
+    - I want to open a ticket
 - intent: help
   examples: |
     - I need help
@@ -72,6 +81,8 @@ nlu:
     - I need some help
     - help me
     - can you please help me
+    - problem
+    - big problem
 - intent: problem_email
   examples: |
     - my outlook application won't open
@@ -84,6 +95,9 @@ nlu:
     - can't log in to outlook
     - my email won't let me log in
     - i have a problem with my email
+    - can't get to slack
+    - i cant open my email
+    - i can't able to login
 - intent: inform
   examples: |
     - my email is test@example.com
@@ -99,6 +113,19 @@ nlu:
     - [escalated]{"entity": "priority", "value": "high"}
     - [escalate]{"entity": "priority", "value": "high"}
     - [super high](priority)
+    - anna.steinberg@tech4germany.org
+    - john
+    - gb@geoff.io
+    - Trevor.hawkes@sc.com
+    - naazsaba19@gmail.com
+    - aba@gmail.com
+    - ravi@gmail.com
+    - ella@rasa.com
+    - the priority is [high](priority)
+    - huss@gmail.com
+    - xyz@example.com
+    - my email is ella@rasa.com
+    - abraham.lincoln@example.com
 - intent: out_of_scope
   examples: |
     - what is the square root of 5
@@ -113,6 +140,14 @@ nlu:
     - I want to order a pizza
     - what is the weather today
     - what is the weather
+    - how old are you?
+    - add two plus two
+    - Hdjejene
+    - asd
+    - title
+    - how about the forecast
+    - foolish
+    - joke
 - intent: incident_status
   examples: |
     - I want to check if my ticket has been closed
@@ -128,6 +163,9 @@ nlu:
     - check incident status
     - ok, try looking it up for abraham.lincoln@example.com
     - look up ticket status for abel.tuter@example.com
+    - my ticket status
+    - What's the status of the ticket I opened?
+    - what's my ticket status
 - intent: affirm
   examples: |
     - yes
@@ -161,6 +199,17 @@ nlu:
     - chat with a live agent
     - give me a person please
     - i want to talk to a human
+    - can you transfer me to a human?
+    - handoff
+    - talk to a human
+    - i need to talk to a human
+    - human please
+    - i need help from a human
+    - i need help from a real human
+    - give me a human
+    - i want to talk to human
+    - i want a representative
+    - i want to talk to a person
 - synonym: high
   examples: |
     - urgent
