@@ -66,3 +66,65 @@ stories:
   - action: open_incident_form
   - active_loop: null
   - action: action_open_incident
+
+- story: greet + thank
+  steps:
+  - intent: greet
+    user: |-
+      Hey there
+  - action: utter_greet
+  - action: utter_help
+  - intent: thank
+    user: |-
+      Awesome, thanks!
+  - action: utter_welcome
+
+- story: user requests a human handoff
+  steps:
+  - intent: human_handoff
+    user: |-
+      I want to talk to a person now
+  - action: utter_ask_handoff
+  - action: action_handoff_options
+  - intent: deny
+    user: |-
+      uh no
+  - action: utter_ask_whatelse
+
+- story: User says something out of scope
+  steps:
+  - intent: out_of_scope
+    user: |-
+      Can you get me a pizza
+  - action: utter_out_of_scope
+
+- story: trigger handoff
+  steps:
+  - intent: human_handoff
+    user: |-
+      give me a human
+  - action: utter_ask_handoff
+  - action: action_handoff_options
+  - intent: trigger_handoff
+  - action: action_handoff
+
+- story: Test fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- story: incident status happy path 
+  steps:
+  - intent: greet
+    user: |-
+      Hey there
+  - action: utter_greet
+  - action: utter_help
+  - intent: incident_status
+    user: |-
+      Can you check the status of my incident
+  - action: incident_status_form
+  - active_loop: incident_status_form
+  - active_loop: null
+  - action: action_check_incident_status
+
