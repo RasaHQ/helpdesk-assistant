@@ -113,7 +113,6 @@ nlu:
     - [escalated]{"entity": "priority", "value": "high"}
     - [escalate]{"entity": "priority", "value": "high"}
     - [super high](priority)
-    - anna.steinberg@tech4germany.org
     - john
     - gb@geoff.io
     - Trevor.hawkes@sc.com
