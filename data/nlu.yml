@@ -102,7 +102,7 @@ nlu:
   examples: |
     - my email is test@example.com
     - my email is abraham.lincoln@example.com
-    - abel.tuter@example.com
+    - name.name@example.com
     - it is admin@example.com
     - aileen.mottern@example.com
     - [low](priority)
@@ -114,14 +114,8 @@ nlu:
     - [escalate]{"entity": "priority", "value": "high"}
     - [super high](priority)
     - john
-    - gb@geoff.io
-    - Trevor.hawkes@sc.com
-    - naazsaba19@gmail.com
-    - aba@gmail.com
-    - ravi@gmail.com
-    - ella@rasa.com
     - the priority is [high](priority)
-    - huss@gmail.com
+    - test@gmail.com
     - xyz@example.com
     - my email is ella@rasa.com
     - abraham.lincoln@example.com
