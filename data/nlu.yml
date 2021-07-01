@@ -57,7 +57,6 @@ nlu:
     - good bye
     - good bye rasa bot!
     - good night
-    - goodbye
     - goodbye.
     - goodnight
     - gotta go
@@ -66,7 +65,6 @@ nlu:
     - ok, bye
     - ok.bye
     - see u later
-    - see ya
     - see you
     - see you . bye
     - take care
@@ -93,20 +91,15 @@ nlu:
     - cool thank you
     - cool, thanks
     - danke
-    - great thanks
-    - ok thanks
     - ok thanks
     - ok thanks!
     - perfect thank you
     - thank u
-    - thank you
     - thank you anyways
     - thanks
     - thanks a bunch for everything
-    - thanks a lot
     - thanks for the help
     - thanks you
-    - thanks!
     - thankyou
     - thnks
     - thx
@@ -123,7 +116,6 @@ nlu:
     - aren't you a bot
     - Are you a bot?
     - are you a BOT
-    - are you a bot?
     - are you a chatbot
     - are you a rasa bot?
     - are you a real bot?
@@ -170,7 +162,7 @@ nlu:
     - How can I reconfigure my pass word
     - pass word reset?
     - forgot my pass word again what now
-    - password help fix 
+    - password help fix
     - show me how to set password again
     - can you tell me how to change my password
     - change pass word
@@ -214,7 +206,6 @@ nlu:
     - big problem
     - How can you help me
     - How you help me?
-    - I need some help
     - What are my options
     - What are you able to do?
     - What can I ask you?
@@ -233,7 +224,6 @@ nlu:
     - cool! can I do something else here?
     - hello what can you do for me
     - help
-    - help me
     - help please
     - help pls
     - help?
@@ -267,8 +257,8 @@ nlu:
     - my email is test@example.com
     - my email is abraham.lincoln@example.com
     - name.name@example.com
-    - it is admin@example.com
-    - aileen.mottern@example.com
+    - it is [admin@example.com](email)
+    - [aileen.mottern@example.com](email)
     - [low](priority)
     - [medium](priority)
     - [high](priority)
@@ -279,14 +269,15 @@ nlu:
     - [super high](priority)
     - john
     - the priority is [high](priority)
-    - test@gmail.com
-    - xyz@example.com
-    - my email is ella@rasa.com
-    - abraham.lincoln@example.com
+    - [test@gmail.com](email)
+    - [xyz@example.com](email)
+    - my email is [ella@rasa.com](email)
+    - [abraham.lincoln@example.com](email)
     - steve
-    - sara@rasa.com
+    - [sara@rasa.com](email)
     - [urgent]{"entity": "priority", "value": "high"}
     - [critical]{"entity": "priority", "value": "high"}
+    - [l.young@rasa.com](email)
 - intent: out_of_scope
   examples: |
     - what is the square root of 5
@@ -432,9 +423,6 @@ nlu:
     - i dont wanna talk to a bot
     - i want to speak to a real person
     - i want to speak to customer service
-    - i want to talk to a human
-    - i want to talk to a person
-    - i want to talk to human
     - i want to talk to someone at rasa
     - i want to talk to someone else
     - i want to talk to someone who is smarter than you
@@ -471,7 +459,6 @@ nlu:
     - talk to human
     - i want human :(
     - can i talk to human
-    - i want to talk to a human
     - i want to speak to human
     - can i talk to a real person?
     - connect me to a real person
@@ -486,3 +473,4 @@ nlu:
     - really important
     - escalated
     - escalate
+    - critical
