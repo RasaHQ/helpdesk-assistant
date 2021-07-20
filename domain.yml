@@ -121,57 +121,59 @@ responses:
 
 forms:
   open_incident_form:
-    email:
-      - type: from_entity
-        entity: email
-      - type: from_intent
-        intent: affirm
-        value: true
-      - type: from_intent
-        intent: deny
-        value: false
-    priority:
-      - type: from_entity
-        entity: priority
-    problem_description:
-      - type: from_text
-        not_intent:
-          - incident_status
-          - bot_challenge
-          - help
-          - affirm
-          - deny
-    incident_title:
-      - type: from_trigger_intent
-        intent: password_reset
-        value: "Problem resetting password"
-      - type: from_trigger_intent
-        intent: problem_email
-        value: "Problem with email"
-      - type: from_text
-        not_intent:
-          - incident_status
-          - bot_challenge
-          - help
-          - affirm
-          - deny
-    confirm:
-      - type: from_intent
-        intent: affirm
-        value: true
-      - type: from_intent
-        intent: deny
-        value: false
+    required_slots:
+      email:
+        - type: from_entity
+          entity: email
+        - type: from_intent
+          intent: affirm
+          value: true
+        - type: from_intent
+          intent: deny
+          value: false
+      priority:
+        - type: from_entity
+          entity: priority
+      problem_description:
+        - type: from_text
+          not_intent:
+            - incident_status
+            - bot_challenge
+            - help
+            - affirm
+            - deny
+      incident_title:
+        - type: from_trigger_intent
+          intent: password_reset
+          value: "Problem resetting password"
+        - type: from_trigger_intent
+          intent: problem_email
+          value: "Problem with email"
+        - type: from_text
+          not_intent:
+            - incident_status
+            - bot_challenge
+            - help
+            - affirm
+            - deny
+      confirm:
+        - type: from_intent
+          intent: affirm
+          value: true
+        - type: from_intent
+          intent: deny
+          value: false
   incident_status_form:
-    email:
-      - type: from_entity
-        entity: email
-      - type: from_intent
-        intent: affirm
-        value: true
-      - type: from_intent
-        intent: deny
-        value: false
+    required_slots:
+      email:
+        - type: from_entity
+          entity: email
+        - type: from_intent
+          intent: affirm
+          value: true
+        - type: from_intent
+          intent: deny
+          value: false
 
 actions:
 - action_ask_email
