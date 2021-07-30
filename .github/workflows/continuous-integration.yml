@@ -5,6 +5,7 @@ on:
     - main
     paths:
     - 'actions/**'
+    - '.github/workflows/continuous-integration.yml'
 
 jobs:
   docker:
