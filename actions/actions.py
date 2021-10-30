@@ -12,8 +12,11 @@ logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
-snow = SnowAPI()
+# TODO read helpdesk service from endpoints.yml
 localmode = snow.localmode
+# TODO instantiante either snow or jira or nothing for local
+snow = SnowAPI()
+
 logger.debug(f"Local mode: {snow.localmode}")
 
 
@@ -28,7 +31,9 @@ class ActionAskEmail(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         if tracker.get_slot("previous_email"):
-            dispatcher.utter_message(template=f"utter_ask_use_previous_email",)
+            dispatcher.utter_message(
+                template=f"utter_ask_use_previous_email",
+            )
         else:
             dispatcher.utter_message(template=f"utter_ask_email")
         return []
@@ -177,7 +182,7 @@ class ActionCheckIncidentStatus(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         """Look up all incidents associated with email address
-           and return status of each"""
+        and return status of each"""
 
         email = tracker.get_slot("email")
 
