@@ -1,4 +1,4 @@
-version: "2.0"
+version: '2.0'
 session_config:
   session_expiration_time: 0.0
   carry_over_slots_to_new_session: true
@@ -21,7 +21,6 @@ intents:
 - trigger_handoff
 - human_handoff
 - handoff
-
 entities:
 - email
 - priority
@@ -30,30 +29,119 @@ slots:
   confirm:
     type: bool
     influence_conversation: false
+    mappings:
+    - type: from_intent
+      intent: affirm
+      value: true
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: confirm
+    - type: from_intent
+      intent: deny
+      value: false
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: confirm
   previous_email:
     type: text
     influence_conversation: false
+    mappings:
+    - type: custom
   caller_id:
     type: text
     influence_conversation: false
+    mappings:
+    - type: custom
   email:
     type: text
     influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: email
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: email
+      - active_loop: incident_status_form
+        requested_slot: email
+    - type: from_intent
+      intent: affirm
+      value: true
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: email
+      - active_loop: incident_status_form
+        requested_slot: email
+    - type: from_intent
+      intent: deny
+      value: false
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: email
+      - active_loop: incident_status_form
+        requested_slot: email
+    - type: from_entity
+      entity: email
   incident_title:
     type: text
     influence_conversation: false
+    mappings:
+    - type: from_trigger_intent
+      intent: password_reset
+      value: Problem resetting password
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: incident_title
+    - type: from_trigger_intent
+      intent: problem_email
+      value: Problem with email
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: incident_title
+    - type: from_text
+      not_intent:
+      - incident_status
+      - bot_challenge
+      - help
+      - affirm
+      - deny
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: incident_title
   priority:
     type: text
     influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: priority
+      conditions:
+      - active_loop: open_incident_form
+    - type: from_entity
+      entity: priority
   problem_description:
     type: text
     influence_conversation: false
+    mappings:
+    - type: from_text
+      not_intent:
+      - incident_status
+      - bot_challenge
+      - help
+      - affirm
+      - deny
+      conditions:
+      - active_loop: open_incident_form
+        requested_slot: problem_description
   requested_slot:
     type: text
     influence_conversation: false
+    mappings:
+    - type: custom
   handoff_to:
     type: text
     influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: handoff_to
 responses:
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
@@ -72,23 +160,18 @@ responses:
   utter_ask_priority:
   - text: What is the priority of this issue?
     buttons:
-      - payload: /inform{"priority":"low"}
-        title: low
-      - payload: /inform{"priority":"medium"}
-        title: medium
-      - payload: /inform{"priority":"high"}
-        title: high
+    - payload: /inform{"priority":"low"}
+      title: low
+    - payload: /inform{"priority":"medium"}
+      title: medium
+    - payload: /inform{"priority":"high"}
+      title: high
   utter_no_priority:
   - text: Sorry "{priority}" is not a valid priority. Please try again.
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_help:
-  - text: "I can help you open a service request ticket, or check the status of your open incidents.
-      \nYou can ask me things like:
-      \n- Open an incident
-      \n- Help me reset my password
-      \n- I'm having a issue with my email
-      \n- What's the status of the ticket I opened?"
+  - text: "I can help you open a service request ticket, or check the status of your open incidents. \nYou can ask me things like: \n- Open an incident \n- Help me reset my password \n- I'm having a issue with my email \n- What's the status of the ticket I opened?"
   utter_welcome:
   - text: You're welcome!
   utter_default:
@@ -96,11 +179,7 @@ responses:
   utter_ask_use_previous_email:
   - text: Would you like to use the last email address you used, {previous_email}?
   utter_ask_confirm:
-  - text: "Should I open an incident with the following details?
-          \n    email: {email}
-          \n    problem description: {problem_description}
-          \n    title: {incident_title}
-          \n    priority: {priority}"
+  - text: "Should I open an incident with the following details? \n    email: {email} \n    problem description: {problem_description} \n    title: {incident_title} \n    priority: {priority}"
     buttons:
     - title: Yes
       payload: /affirm
@@ -109,7 +188,7 @@ responses:
   utter_incident_creation_canceled:
   - text: Alright, I have cancelled the incident.
   utter_ask_whatelse:
-    - text: What else can I help you with?
+  - text: What else can I help you with?
   utter_ask_handoff:
   - text: It looks like you want to be transferred to a human agent.
   utter_handoff:
@@ -118,63 +197,19 @@ responses:
   - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}.
   utter_no_handoff:
   - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
-
 forms:
   open_incident_form:
+    ignored_intents: []
     required_slots:
-      email:
-        - type: from_entity
-          entity: email
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-      priority:
-        - type: from_entity
-          entity: priority
-      problem_description:
-        - type: from_text
-          not_intent:
-            - incident_status
-            - bot_challenge
-            - help
-            - affirm
-            - deny
-      incident_title:
-        - type: from_trigger_intent
-          intent: password_reset
-          value: "Problem resetting password"
-        - type: from_trigger_intent
-          intent: problem_email
-          value: "Problem with email"
-        - type: from_text
-          not_intent:
-            - incident_status
-            - bot_challenge
-            - help
-            - affirm
-            - deny
-      confirm:
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
+    - email
+    - priority
+    - problem_description
+    - incident_title
+    - confirm
   incident_status_form:
+    ignored_intents: []
     required_slots:
-      email:
-        - type: from_entity
-          entity: email
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-
+    - email
 actions:
 - action_ask_email
 - action_check_incident_status
