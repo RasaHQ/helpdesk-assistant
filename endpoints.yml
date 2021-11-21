@@ -40,3 +40,5 @@ action_endpoint:
 #  username: username
 #  password: password
 #  queue: queue
+helpdeask_service:
+  service: localmode #snow, jira

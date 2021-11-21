@@ -15,6 +15,7 @@ logger.debug(vers)
 # TODO read helpdesk service from endpoints.yml
 localmode = snow.localmode
 # TODO instantiante either snow or jira or nothing for local
+# TODO
 snow = SnowAPI()
 
 logger.debug(f"Local mode: {snow.localmode}")

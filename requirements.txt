@@ -1,3 +1,4 @@
-rasa~=2.8.0
-rasa-sdk~=2.8.0  # if you change this, make sure to change the Dockerfile to match
+rasa~=2.8.12
+rasa-sdk~=2.8.2  # if you change this, make sure to change the Dockerfile to match
 -r actions/requirements-actions.txt
+jira~=3.1.0rc1
