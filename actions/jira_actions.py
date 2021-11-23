@@ -27,10 +27,6 @@ class JiraPy(object):
             self.jira_url, basic_auth=(self.jira_user, self.jira_token)
         )
 
-    def handle_request(self):
-        # TODO This might not be needed. In the service now version it isn't called directly by actions
-        True
-
     def email_to_sysid(self, email) -> Dict[Text, Any]:
         result = {}
         email_result = self.jira_obj.search_users(

@@ -6,17 +6,28 @@ from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet
 from actions.snow import SnowAPI
 import random
-
+import ruamel.yaml
+import pathlib
 
 logger = logging.getLogger(__name__)
 vers = "vers: 0.1.0, date: Apr 2, 2020"
 logger.debug(vers)
 
+here = pathlib.Path(__file__).parent.absolute()
+endpoint_config = (
+    ruamel.yaml.safe_load(open(f"{here}/endpoints.yml", "r")) or {}
+)
+mode = endpoint_config.get("mode")
+print(mode)
+
 # TODO read helpdesk service from endpoints.yml
-localmode = snow.localmode
 # TODO instantiante either snow or jira or nothing for local
 # TODO
+
 snow = SnowAPI()
+# TODO Change to handle mode set to local, snow or jira
+localmode = snow.localmode
+
 
 logger.debug(f"Local mode: {snow.localmode}")
 
@@ -51,7 +62,7 @@ def _validate_email(
         return {"email": None, "previous_email": None}
     elif isinstance(value, bool):
         value = tracker.get_slot("previous_email")
-
+    # TODO Change to handle mode set to local, snow or jira
     if localmode:
         return {"email": value}
 
@@ -123,7 +134,7 @@ class ActionOpenIncident(Action):
                 template="utter_incident_creation_canceled"
             )
             return [AllSlotsReset(), SlotSet("previous_email", email)]
-
+        # TODO Change to handle mode set to local, snow or jira
         if localmode:
             message = (
                 f"An incident with the following details would be opened "
@@ -193,7 +204,7 @@ class ActionCheckIncidentStatus(Action):
             "On Hold": "has been put on hold",
             "Closed": "has been closed",
         }
-        if localmode:
+        if localmode:  # TODO Change to handle mode set to local, snow or jira
             status = random.choice(list(incident_states.values()))
             message = (
                 f"Since ServiceNow isn't connected, I'm making this up!\n"
