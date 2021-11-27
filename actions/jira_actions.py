@@ -9,13 +9,15 @@ from jira.resources import Customer, Priority, User
 
 logger = logging.getLogger(__name__)
 
-here = pathlib.Path(__file__).parent.absolute()
+cred_path = str(pathlib.Path(__file__).parent.parents[0]) + "/.vscode"
 
 
 class JiraPy(object):
     def __init__(self):
         jira_config = (
-            ruamel.yaml.safe_load(open(f"{here}/jira_credentials.yml", "r"))
+            ruamel.yaml.safe_load(
+                open(f"{cred_path}/jira_credentials.yml", "r")
+            )
             or {}
         )
 
@@ -32,13 +34,14 @@ class JiraPy(object):
         email_result = self.jira_obj.search_users(
             None, 0, 10, True, False, email
         )
-        if len(email_result) == 1:
+        num_records = len(email_result)
+        if num_records == 1:
             result["account_id"] = vars(email_result[0]).get("accountId")
         else:
             result["account_id"] = []
             result["error"] = (
                 f"Could not retreive account id;  "
-                f"Multiple records found for email {email}"
+                f"{num_records} records found for email {email}"
             )
 
         return result
@@ -53,7 +56,11 @@ class JiraPy(object):
         )
         if account_id:
             for issue in issues:
-                incidents[issue.key] = issue.fields.summary
+                incidents[issue.key] = {
+                    "summary": issue.fields.summary,
+                    "created_on": issue.fields.created,
+                    "status": issue.fields.status.name,
+                }
         elif isinstance(issues, list):
             result["error"] = f"No incidents on record for {email}"
 
@@ -65,17 +72,21 @@ class JiraPy(object):
         self, description, short_description, priority, email
     ) -> Dict[Text, Any]:
         project = self.project
-        account_id = self.email_to_sysid(email).get("account_id")
-        print(account_id)
-        issue = self.jira_obj.create_issue(
-            project=project,
-            summary=short_description,
-            description=description,
-            issuetype={"id": "10002"},
-            priority={"id": priority},
-            reporter={"accountId": account_id},
-        )
-        return issue
+        email_result = self.email_to_sysid(email)
+        account_id = email_result.get("account_id")
+        if account_id:
+            result = self.jira_obj.create_issue(
+                project=project,
+                summary=short_description,
+                description=description,
+                issuetype={"id": "10002"},
+                priority={"id": priority},
+                reporter={"accountId": account_id},
+            )
+        else:
+            result = email_result.get("error")
+
+        return result
 
     # TODO need to use this for setting priority
     @staticmethod
@@ -83,23 +94,3 @@ class JiraPy(object):
         """Database of supported priorities"""
         priorities = {"low": 4, "medium": 3, "high": 2}
         return priorities
-
-
-jira = JiraPy()
-
-id = jira.email_to_sysid("abelincoln@example.com")
-print((id))
-
-new_issue = jira.create_incident(
-    "function call with email", "test out eamil", "3", "abelincoln@example.com"
-)
-
-print(new_issue.fields.project.key)
-print(new_issue)
-print(new_issue.fields.issuetype.name)
-print(new_issue.fields.reporter)
-print(new_issue.fields.summary)
-print(new_issue.fields.comment.comments)
-
-issues = jira.retrieve_incidents("abelincoln@example.com")
-print(issues)

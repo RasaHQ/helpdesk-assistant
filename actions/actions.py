@@ -4,7 +4,8 @@ from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher, Action
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet
-from actions.snow import SnowAPI
+from snow import SnowAPI
+from jira_actions import JiraPy
 import random
 import ruamel.yaml
 import pathlib
@@ -15,21 +16,18 @@ logger.debug(vers)
 
 here = pathlib.Path(__file__).parent.absolute()
 endpoint_config = (
-    ruamel.yaml.safe_load(open(f"{here}/endpoints.yml", "r")) or {}
+    ruamel.yaml.safe_load(open(f"{here.parent}/endpoints.yml", "r")) or {}
 )
-mode = endpoint_config.get("mode")
-print(mode)
+mode = endpoint_config.get("helpdesk").get("mode")
+if mode == "jira":
+    jira = JiraPy()
+    print(mode)
 
-# TODO read helpdesk service from endpoints.yml
-# TODO instantiante either snow or jira or nothing for local
-# TODO
+if mode == "snow":
+    snow = SnowAPI()
+    print(mode)
 
-snow = SnowAPI()
-# TODO Change to handle mode set to local, snow or jira
-localmode = snow.localmode
-
-
-logger.debug(f"Local mode: {snow.localmode}")
+logger.debug(f"mode: {mode}")
 
 
 class ActionAskEmail(Action):
@@ -62,12 +60,17 @@ def _validate_email(
         return {"email": None, "previous_email": None}
     elif isinstance(value, bool):
         value = tracker.get_slot("previous_email")
-    # TODO Change to handle mode set to local, snow or jira
-    if localmode:
-        return {"email": value}
 
-    results = snow.email_to_sysid(value)
-    caller_id = results.get("caller_id")
+    if mode == "snow":
+        results = snow.email_to_sysid(value)
+        caller_id = results.get("caller_id")
+
+    elif mode == "jira":
+        results = jira.email_to_sysid(value)
+        caller_id = results.get("account_id")
+
+    else:  # localmode
+        return {"email": value}
 
     if caller_id:
         return {"email": value, "caller_id": caller_id}
@@ -102,11 +105,19 @@ class ValidateOpenIncidentForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Validate priority is a valid value."""
 
-        if value.lower() in snow.priority_db():
-            return {"priority": value}
-        else:
-            dispatcher.utter_message(template="utter_no_priority")
-            return {"priority": None}
+        if mode == "jira":
+            if value.lower() in jira.priority_db():
+                return {"priority": value}
+            else:
+                dispatcher.utter_message(template="utter_no_priority")
+                return {"priority": None}
+
+        else:  # handles local mode and snow
+            if value.lower() in snow.priority_db():
+                return {"priority": value}
+            else:
+                dispatcher.utter_message(template="utter_no_priority")
+                return {"priority": None}
 
 
 class ActionOpenIncident(Action):
@@ -134,8 +145,8 @@ class ActionOpenIncident(Action):
                 template="utter_incident_creation_canceled"
             )
             return [AllSlotsReset(), SlotSet("previous_email", email)]
-        # TODO Change to handle mode set to local, snow or jira
-        if localmode:
+
+        if mode == "local":
             message = (
                 f"An incident with the following details would be opened "
                 f"if ServiceNow was connected:\n"
@@ -143,7 +154,7 @@ class ActionOpenIncident(Action):
                 f"problem description: {problem_description}\n"
                 f"title: {incident_title}\npriority: {priority}"
             )
-        else:
+        elif mode == "snow":
             snow_priority = snow.priority_db().get(priority)
             response = snow.create_incident(
                 description=problem_description,
@@ -164,6 +175,27 @@ class ActionOpenIncident(Action):
                     f"Something went wrong while opening an incident for you. "
                     f"{response.get('error')}"
                 )
+        elif mode == "jira":
+            jira_priority = jira.priority_db().get(priority)
+            response = jira.create_incident(
+                description=problem_description,
+                short_description=incident_title,
+                priority=jira_priority,
+                email=email,
+            )
+            # TODO Need to test. Might need a try catch around this. If the email returns an error, the response won't be an object with id function.
+            incident_number = response.id
+            if incident_number:
+                message = (
+                    f"Successfully opened up incident {incident_number} "
+                    f"for you. Someone will reach out soon."
+                )
+            else:
+                message = (
+                    f"Something went wrong while opening an incident for you. "
+                    f"{response.get('error')}"
+                )
+
         dispatcher.utter_message(message)
         return [AllSlotsReset(), SlotSet("previous_email", email)]
 
@@ -204,13 +236,13 @@ class ActionCheckIncidentStatus(Action):
             "On Hold": "has been put on hold",
             "Closed": "has been closed",
         }
-        if localmode:  # TODO Change to handle mode set to local, snow or jira
+        if mode == "local":
             status = random.choice(list(incident_states.values()))
             message = (
                 f"Since ServiceNow isn't connected, I'm making this up!\n"
                 f"The most recent incident for {email} {status}"
             )
-        else:
+        elif mode == "snow":
             incidents_result = snow.retrieve_incidents(email)
             incidents = incidents_result.get("incidents")
             if incidents:
@@ -226,6 +258,19 @@ class ActionCheckIncidentStatus(Action):
 
             else:
                 message = f"{incidents_result.get('error')}"
+        elif mode == "jira":
+            incidents_result = jira.retrieve_incidents(email)
+            incidents = incidents_result.get("incidents")
+            if incidents:
+                message = "\n".join(
+                    [
+                        f"Incident {i}: "
+                        f'{issues["incidents"][i]["summary"]} '
+                        f'opened on {issues["incidents"][i]["created_on"]} '
+                        f'Status: {issues["incidents"][i]["status"]} '
+                        for i in issues["incidents"]
+                    ]
+                )
 
         dispatcher.utter_message(message)
         return [AllSlotsReset(), SlotSet("previous_email", email)]

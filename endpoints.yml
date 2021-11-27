@@ -41,4 +41,4 @@ action_endpoint:
 #  password: password
 #  queue: queue
 helpdesk:
-  mode: localmode #snow, jira
+  mode: jira #local, snow, jira
