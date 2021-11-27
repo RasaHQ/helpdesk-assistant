@@ -260,15 +260,14 @@ class ActionCheckIncidentStatus(Action):
                 message = f"{incidents_result.get('error')}"
         elif mode == "jira":
             incidents_result = jira.retrieve_incidents(email)
-            incidents = incidents_result.get("incidents")
-            if incidents:
+            if incidents_result:
                 message = "\n".join(
                     [
                         f"Incident {i}: "
-                        f'{issues["incidents"][i]["summary"]} '
-                        f'opened on {issues["incidents"][i]["created_on"]} '
-                        f'Status: {issues["incidents"][i]["status"]} '
-                        for i in issues["incidents"]
+                        f'{incidents_result["incidents"][i]["summary"]} '
+                        f'opened on {incidents_result["incidents"][i]["created_on"]} '
+                        f'Status: {incidents_result["incidents"][i]["status"]} '
+                        for i in incidents_result["incidents"]
                     ]
                 )
 
