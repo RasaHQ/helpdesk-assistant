@@ -4,8 +4,8 @@ from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher, Action
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet
-from snow import SnowAPI
-from jira_actions import JiraPy
+from actions.snow import SnowAPI
+from actions.jira_actions import JiraPy
 import random
 import ruamel.yaml
 import pathlib
@@ -185,6 +185,7 @@ class ActionOpenIncident(Action):
             )
             # TODO Need to test. Might need a try catch around this. If the email returns an error, the response won't be an object with id function.
             incident_number = response.id
+            print(incident_number)
             if incident_number:
                 message = (
                     f"Successfully opened up incident {incident_number} "

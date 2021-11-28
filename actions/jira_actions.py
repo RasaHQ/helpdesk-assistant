@@ -92,5 +92,5 @@ class JiraPy(object):
     @staticmethod
     def priority_db() -> Dict[str, int]:
         """Database of supported priorities"""
-        priorities = {"low": 4, "medium": 3, "high": 2}
+        priorities = {"low": "4", "medium": "3", "high": "2"}
         return priorities
