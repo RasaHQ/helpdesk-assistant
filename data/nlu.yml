@@ -57,7 +57,6 @@ nlu:
     - good bye
     - good bye rasa bot!
     - good night
-    - goodbye
     - goodbye.
     - goodnight
     - gotta go
@@ -66,7 +65,6 @@ nlu:
     - ok, bye
     - ok.bye
     - see u later
-    - see ya
     - see you
     - see you . bye
     - take care
@@ -93,20 +91,15 @@ nlu:
     - cool thank you
     - cool, thanks
     - danke
-    - great thanks
-    - ok thanks
     - ok thanks
     - ok thanks!
     - perfect thank you
     - thank u
-    - thank you
     - thank you anyways
     - thanks
     - thanks a bunch for everything
-    - thanks a lot
     - thanks for the help
     - thanks you
-    - thanks!
     - thankyou
     - thnks
     - thx
@@ -123,7 +116,6 @@ nlu:
     - aren't you a bot
     - Are you a bot?
     - are you a BOT
-    - are you a bot?
     - are you a chatbot
     - are you a rasa bot?
     - are you a real bot?
@@ -170,37 +162,67 @@ nlu:
     - How can I reconfigure my pass word
     - pass word reset?
     - forgot my pass word again what now
-    - password help fix 
+    - password help fix
     - show me how to set password again
     - can you tell me how to change my password
     - change pass word
     - I forgot my password what can I do
     - forgot my password help me reset it pls
 - intent: open_incident
-  examples: |
-    - I need to open an incident
-    - Can you open a case for me
-    - I have an issue I need to open a incident for
-    - open incident
-    - can you help me open a incident please
-    - I want to open a new incident
-    - I want to open a incident
-    - I'm having a weird issue.
-    - I'm having a problem
-    - I'm having a issue I need to open a incident for.
-    - I have a issue I need to open a case for.
-    - open an incident for aileen.mottern@example.com
-    - open an [urgent]{"entity": "priority", "value": "high"} issue
-    - I want to open an incident, but it's [low](priority) priority
-    - I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
-    - open an incident
-    - open an incedent
-    - i want to open an incident
-    - i wanna open a incident
-    - I want to open a ticket
-    - can I open a ticket
-    - pls help me open tix support
-    - ticket support incident open now can you do that for me
+  examples:
+  - text: |
+      I need to open an incident
+  - text: |
+      Can you open a case for me
+  - text: |
+      I have an issue I need to open a incident for
+  - text: |
+      open incident
+  - text: |
+      can you help me open a incident please
+  - text: |
+      I want to open a new incident
+  - text: |
+      I want to open a incident
+  - text: |
+      I'm having a weird issue.
+  - text: |
+      I'm having a problem
+  - text: |
+      I'm having a issue I need to open a incident for.
+  - text: |
+      I have a issue I need to open a case for.
+  - text: |
+      open an incident for aileen.mottern@example.com
+  - text: |
+      open an [urgent]{"entity": "priority", "value": "high"} issue
+  - text: |
+      I want to open an incident, but it's [low](priority) priority
+  - text: |
+      I need to open a helpdesk ticket. it's [really important]{"entity": "priority", "value": "high"}
+  - text: |
+      open an incident
+  - text: |
+      open an incedent
+  - text: |
+      i want to open an incident
+  - text: |
+      i wanna open a incident
+  - text: |
+      I want to open a ticket
+  - text: |
+      can I open a ticket
+  - text: |
+      pls help me open tix support
+  - text: |
+      ticket support incident open now can you do that for me
+  - text: |
+      What is the minimum credit score required
+        to create an account ?
+  - text: |
+      What is the minimum credit score required   to create an account ?
+  - text: |
+      What is the minimum credit score required to create an account ?
 - intent: help
   examples: |
     - I need help
@@ -214,7 +236,6 @@ nlu:
     - big problem
     - How can you help me
     - How you help me?
-    - I need some help
     - What are my options
     - What are you able to do?
     - What can I ask you?
@@ -233,7 +254,6 @@ nlu:
     - cool! can I do something else here?
     - hello what can you do for me
     - help
-    - help me
     - help please
     - help pls
     - help?
@@ -316,6 +336,7 @@ nlu:
     - Can you give me your datacenter's password?
     - Can you make sandwiches?
     - Can you please send me an uber
+    - sdf
 - intent: incident_status
   examples: |
     - I want to check if my ticket has been closed
@@ -432,9 +453,6 @@ nlu:
     - i dont wanna talk to a bot
     - i want to speak to a real person
     - i want to speak to customer service
-    - i want to talk to a human
-    - i want to talk to a person
-    - i want to talk to human
     - i want to talk to someone at rasa
     - i want to talk to someone else
     - i want to talk to someone who is smarter than you
@@ -471,7 +489,6 @@ nlu:
     - talk to human
     - i want human :(
     - can i talk to human
-    - i want to talk to a human
     - i want to speak to human
     - can i talk to a real person?
     - connect me to a real person
@@ -480,9 +497,11 @@ nlu:
     - let me speak to a real person
     - let me speak to a real person please
     - i want to talk to a real person
+    - i want to speak
 - synonym: high
   examples: |
     - urgent
     - really important
     - escalated
     - escalate
+    - critical

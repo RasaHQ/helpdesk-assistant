@@ -1,58 +1,95 @@
-version: "2.0"
+version: '2.0'
+config:
+  store_entities_as_slots: true
 session_config:
-  session_expiration_time: 0.0
+  session_expiration_time: 0
   carry_over_slots_to_new_session: true
 intents:
-- greet
-- goodbye
-- bot_challenge
-- password_reset
-- inform
-- thank
-- help
-- problem_email
+- greet:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- bot_challenge:
+    use_entities: true
+- password_reset:
+    use_entities: true
+- inform:
+    use_entities: true
+- thank:
+    use_entities: true
+- help:
+    use_entities: true
+- problem_email:
+    use_entities: true
 - open_incident:
     use_entities: []
-- incident_status
-- out_of_scope
-- restart
-- affirm
-- deny
-- trigger_handoff
-- human_handoff
-- handoff
-
+- incident_status:
+    use_entities: true
+- out_of_scope:
+    use_entities: true
+- restart:
+    use_entities: true
+- affirm:
+    use_entities: true
+- deny:
+    use_entities: true
+- trigger_handoff:
+    use_entities: true
+- human_handoff:
+    use_entities: true
+- handoff:
+    use_entities: true
+- nlu_fallback:
+    use_entities: true
 entities:
 - email
 - priority
 - handoff_to
 slots:
   confirm:
-    type: bool
+    type: rasa.shared.core.slots.BooleanSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   previous_email:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   caller_id:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   email:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   incident_title:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   priority:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   problem_description:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   requested_slot:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
   handoff_to:
-    type: text
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
     influence_conversation: false
 responses:
   utter_out_of_scope:
@@ -70,25 +107,26 @@ responses:
   utter_ask_problem_description:
   - text: What is the problem description for the issue?
   utter_ask_priority:
-  - text: What is the priority of this issue?
-    buttons:
-      - payload: /inform{"priority":"low"}
-        title: low
-      - payload: /inform{"priority":"medium"}
-        title: medium
-      - payload: /inform{"priority":"high"}
-        title: high
+  - buttons:
+    - payload: /inform{"priority":"low"}
+      title: low
+    - payload: /inform{"priority":"medium"}
+      title: medium
+    - payload: /inform{"priority":"high"}
+      title: high
+    text: What is the priority of this issue?
   utter_no_priority:
   - text: Sorry "{priority}" is not a valid priority. Please try again.
   utter_no_email:
   - text: Sorry, "{email}" isn't in our incident management system. Please try again.
   utter_help:
-  - text: "I can help you open a service request ticket, or check the status of your open incidents.
-      \nYou can ask me things like:
-      \n- Open an incident
-      \n- Help me reset my password
-      \n- I'm having a issue with my email
-      \n- What's the status of the ticket I opened?"
+  - text: |-
+      I can help you open a service request ticket, or check the status of your open incidents. 
+      You can ask me things like: 
+      - Open an incident 
+      - Help me reset my password 
+      - I'm having a issue with my email 
+      - What's the status of the ticket I opened?
   utter_welcome:
   - text: You're welcome!
   utter_default:
@@ -96,20 +134,21 @@ responses:
   utter_ask_use_previous_email:
   - text: Would you like to use the last email address you used, {previous_email}?
   utter_ask_confirm:
-  - text: "Should I open an incident with the following details?
-          \n    email: {email}
-          \n    problem description: {problem_description}
-          \n    title: {incident_title}
-          \n    priority: {priority}"
-    buttons:
-    - title: Yes
-      payload: /affirm
-    - title: No, cancel the incident
-      payload: /deny
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the incident
+    text: |-
+      Should I open an incident with the following details?
+          email: {email} 
+          problem description: {problem_description} 
+          title: {incident_title} 
+          priority: {priority}
   utter_incident_creation_canceled:
   - text: Alright, I have cancelled the incident.
   utter_ask_whatelse:
-    - text: What else can I help you with?
+  - text: What else can I help you with?
   utter_ask_handoff:
   - text: It looks like you want to be transferred to a human agent.
   utter_handoff:
@@ -118,63 +157,6 @@ responses:
   - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}.
   utter_no_handoff:
   - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
-
-forms:
-  open_incident_form:
-    required_slots:
-      email:
-        - type: from_entity
-          entity: email
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-      priority:
-        - type: from_entity
-          entity: priority
-      problem_description:
-        - type: from_text
-          not_intent:
-            - incident_status
-            - bot_challenge
-            - help
-            - affirm
-            - deny
-      incident_title:
-        - type: from_trigger_intent
-          intent: password_reset
-          value: "Problem resetting password"
-        - type: from_trigger_intent
-          intent: problem_email
-          value: "Problem with email"
-        - type: from_text
-          not_intent:
-            - incident_status
-            - bot_challenge
-            - help
-            - affirm
-            - deny
-      confirm:
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-  incident_status_form:
-    required_slots:
-      email:
-        - type: from_entity
-          entity: email
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-
 actions:
 - action_ask_email
 - action_check_incident_status
@@ -183,3 +165,59 @@ actions:
 - action_open_incident
 - validate_open_incident_form
 - validate_incident_status_form
+forms:
+  open_incident_form:
+    required_slots:
+      confirm:
+      - intent: affirm
+        type: from_intent
+        value: true
+      - intent: deny
+        type: from_intent
+        value: false
+      email:
+      - entity: email
+        type: from_entity
+      - intent: affirm
+        type: from_intent
+        value: true
+      - intent: deny
+        type: from_intent
+        value: false
+      incident_title:
+      - intent: password_reset
+        type: from_trigger_intent
+        value: Problem resetting password
+      - intent: problem_email
+        type: from_trigger_intent
+        value: Problem with email
+      - not_intent:
+        - incident_status
+        - bot_challenge
+        - help
+        - affirm
+        - deny
+        type: from_text
+      priority:
+      - entity: priority
+        type: from_entity
+      problem_description:
+      - not_intent:
+        - incident_status
+        - bot_challenge
+        - help
+        - affirm
+        - deny
+        type: from_text
+  incident_status_form:
+    required_slots:
+      email:
+      - entity: email
+        type: from_entity
+      - intent: affirm
+        type: from_intent
+        value: true
+      - intent: deny
+        type: from_intent
+        value: false
+e2e_actions: []
