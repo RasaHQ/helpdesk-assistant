@@ -88,9 +88,34 @@ class JiraPy(object):
 
         return result
 
-    # TODO need to use this for setting priority
+    def delete_issue(self, issue_id):
+        issue = self.jira_obj.issue(issue_id)
+        issue.delete()
+        return
+
+    def change_priority(self, issue_id, priority):
+        issue = self.jira_obj.issue(issue_id)
+        issue.update(priority={"id": priority})
+
+    def assigned_issues(self, account_id):
+        issues = self.jira_obj.search_issues(
+            f"assignee = {account_id} ORDER BY priority"
+        )
+        return issues
+
     @staticmethod
     def priority_db() -> Dict[str, int]:
         """Database of supported priorities"""
         priorities = {"low": "4", "medium": "3", "high": "2"}
         return priorities
+
+
+if __name__ == "__main__":
+
+    jira = JiraPy()
+
+    # test assigned issues
+    # email = "ADMINEMAIL" with issues assigned
+    # account_id = jira.email_to_sysid(email).get("account_id")
+    # my_issues = jira.assigned_issues(account_id)
+    # print(my_issues)
