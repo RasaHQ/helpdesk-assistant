@@ -5,7 +5,7 @@ from rasa_sdk.executor import CollectingDispatcher, Action
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import AllSlotsReset, SlotSet
 from actions.snow import SnowAPI
-from actions.jira_actions import JiraPy
+from actions.jira_actions import JiraAPI
 import random
 import ruamel.yaml
 import pathlib
@@ -20,7 +20,7 @@ endpoint_config = (
 )
 mode = endpoint_config.get("helpdesk").get("mode")
 if mode == "jira":
-    jira = JiraPy()
+    jira = JiraAPI()
     print(mode)
 
 if mode == "snow":

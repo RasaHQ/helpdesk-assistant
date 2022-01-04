@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 cred_path = str(pathlib.Path(__file__).parent.parents[0]) + "/.vscode"
 
 
-class JiraPy(object):
+class JiraAPI(object):
     def __init__(self):
         jira_config = (
             ruamel.yaml.safe_load(
@@ -112,7 +112,7 @@ class JiraPy(object):
 
 if __name__ == "__main__":
 
-    jira = JiraPy()
+    jira = JiraAPI()
 
     # test assigned issues
     # email = "ADMINEMAIL" with issues assigned
