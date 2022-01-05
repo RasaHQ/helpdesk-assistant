@@ -9,7 +9,7 @@ from jira.resources import Customer, Priority, User
 
 logger = logging.getLogger(__name__)
 
-cred_path = str(pathlib.Path(__file__).parent.parents[0]) + "/.vscode"
+cred_path = str(pathlib.Path(__file__).parent.absolute())
 
 
 class JiraAPI(object):
@@ -108,14 +108,3 @@ class JiraAPI(object):
         """Database of supported priorities"""
         priorities = {"low": "4", "medium": "3", "high": "2"}
         return priorities
-
-
-if __name__ == "__main__":
-
-    jira = JiraAPI()
-
-    # test assigned issues
-    # email = "ADMINEMAIL" with issues assigned
-    # account_id = jira.email_to_sysid(email).get("account_id")
-    # my_issues = jira.assigned_issues(account_id)
-    # print(my_issues)

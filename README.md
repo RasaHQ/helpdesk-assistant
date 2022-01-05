@@ -14,7 +14,9 @@ Here is an example of a conversation you can have with this bot:
 - [Rasa Helpdesk Assistant Example](#rasa-helpdesk-assistant-example)
   - [Setup](#setup)
     - [Install the dependencies](#install-the-dependencies)
+    - [Configure endpoints](#configure-endpoints)
     - [Optional: Connect to a ServiceNow instance](#optional-connect-to-a-servicenow-instance)
+    - [Optional: Connect to a Jira Instance](#optional-connect-to-a-jira-instance)
   - [Running the bot](#running-the-bot)
   - [Things you can ask the bot](#things-you-can-ask-the-bot)
   - [Example conversations](#example-conversations)
@@ -49,13 +51,15 @@ pre-commit install
 > With pre-commit installed, the `black` and `doctoc` hooks will run on every `git commit`.
 > If any changes are made by the hooks, you will need to re-add changed files and re-commit your changes.
 
-### Optional: Connect to a ServiceNow instance
+### Configure endpoints
 
-You can run this bot without connecting to a ServiceNow instance, in which case it will
+You can run this bot without connecting to a ServiceNow or Jira instance, in which case it will
 send responses without creating an incident or checking the actual status of one.
-To run the bot  without connecting ServiceNow,
-you don't need to change anything in `actions/snow_credentials.yml`; `localmode` should already be set
-to `true`
+To run the bot  without connecting to ServiceNow or Jira you don't need to change anything 
+in `endpoints.yml`; `helpdesk:  mode:` should already be set to `local`.
+
+When set to `local` (default in the code), it will just take all the data in and message out the information that would normally be sent.
+### Optional: Connect to a ServiceNow instance
 
 If you do want to connect to ServiceNow, you can get your own free Developer instance
 to test this with [here](https://developer.servicenow.com/app.do#!/home)
@@ -68,7 +72,22 @@ To connect to your ServiceNow developer instance, configure the following in `ac
 
 - `snow_pw` - The password of the service account for the ServiceNow developer instance
 
-- `localmode` -  Whether the action server should **not** try to reach out to a `snow_instance` based on the credentials in `actions/snow_credentials.yml`. When set to `True` (default in the code), it will just take all the data in and message out the information that would normally be sent.
+In `endpoints.yml` configure `helpdesk:  mode:` to `snow`.
+
+### Optional: Connect to a Jira Instance
+
+If you want to connect to Jira Service Management, you can setup a free limited instance [here](https://www.atlassian.com/software/jira/service-management/free)
+
+To connect to your Jira instance, configure the followingin `actions/jira_credentials.yml`:
+- `jira_user` - This is the email of the admin account for the Jira instance
+  
+- `jira_token` - This is the API Token for your Jira instance. Get it [here](https://id.atlassian.com/manage-profile/security/api-tokens)
+  
+- `jira_url` - The url for the Jira instance. Should be in the form https://your-domain.atlassian.net
+  
+- `project: id` - The id for your project. Can be found using the API https://your-domain.atlassian.net/rest/api/3/project
+
+In `endpoints.yml` configure `helpdesk:  mode:` to `jira`.
 
 ## Running the bot
 
@@ -80,7 +99,7 @@ Then, to run, first set up your action server in one terminal window:
 rasa run actions
 ```
 
-In another window, run the duckling server (for entity extraction):
+In another window, run the duckling server (for netentity extraction):
 
 ```bash
 docker run -p 8000:8000 rasa/duckling
