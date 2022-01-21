@@ -78,7 +78,7 @@ In `endpoints.yml` configure `helpdesk:  mode:` to `snow`.
 
 If you want to connect to Jira Service Management, you can setup a free limited instance [here](https://www.atlassian.com/software/jira/service-management/free)
 
-To connect to your Jira instance, configure the followingin `actions/jira_credentials.yml`:
+To connect to your Jira instance, configure the following in `actions/jira_credentials.yml`:
 - `jira_user` - This is the email of the admin account for the Jira instance
   
 - `jira_token` - This is the API Token for your Jira instance. Get it [here](https://id.atlassian.com/manage-profile/security/api-tokens)
@@ -141,7 +141,7 @@ If configured, the bot can also hand off to another bot in response to the user 
 
 ## Example conversations
 
-With `localmode=true`:
+With `helpdesk:  mode: local`:
 
 ```
 Bot loaded. Type a message and press enter (use '/stop' to exit):
@@ -177,7 +177,7 @@ Your input ->  Yes please
     The most recent incident for anything@example.com is currently awaiting triage
 ```
 
-With `localmode=false`:
+With `helpdesk:  mode: snow`:
 
 With a Service Now instance connected, it will check if the email address is in the instance database and provide an incident number for the final response:
 
