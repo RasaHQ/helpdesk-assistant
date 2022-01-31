@@ -42,4 +42,4 @@ action_endpoint:
 #  queue: queue
 
 helpdesk:
-  mode: snow #local, snow, jira
+  mode: local #local, snow, jira

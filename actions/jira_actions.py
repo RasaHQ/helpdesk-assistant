@@ -4,7 +4,7 @@ import ruamel.yaml
 from typing import Dict, Text, Any
 from jira import (
     JIRA,
-)  # requires jira 3.1.0rc1 for the search_user function to work
+)
 from jira.resources import Customer, Priority, User
 
 logger = logging.getLogger(__name__)
