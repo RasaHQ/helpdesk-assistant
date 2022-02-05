@@ -112,12 +112,15 @@ class ValidateOpenIncidentForm(FormValidationAction):
                 dispatcher.utter_message(template="utter_no_priority")
                 return {"priority": None}
 
-        else:  # handles local mode and snow
+        elif mode == "snow":  # handles local mode and snow
             if value.lower() in snow.priority_db():
                 return {"priority": value}
             else:
                 dispatcher.utter_message(template="utter_no_priority")
                 return {"priority": None}
+
+        else:
+            return {"priority": value}
 
 
 class ActionOpenIncident(Action):
